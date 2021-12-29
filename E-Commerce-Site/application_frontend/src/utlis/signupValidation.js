@@ -3,7 +3,9 @@ export const signupValidation = (formData) => {
     const {firstName, lastName, email, password, confirmPassword} = formData;
     const errorList = {};
 
-    const isStrongPassword = false
+    errorList.isStrongPassword = false
+    errorList.isPasswordMatched = false
+    errorList.isValid = false
 
     if (!firstName) {
         errorList.firstName = 'firstName should not be blank';
@@ -41,7 +43,8 @@ export const signupValidation = (formData) => {
         )) {
             no = 2;
         }
-        if (password.length >= 6 && (regweek.test(password)) && (regmedium.test(password)) && (regstrong.test(password))) {
+
+        if (password.length >= 6 && regweek.test(password) && regmedium.test(password) && regstrong.test(password)) {
             no = 3;
         }
 
@@ -56,7 +59,7 @@ export const signupValidation = (formData) => {
 
         else if (no === 3) {
             errorList.password = 'Password is strong'
-            isStrongPassword = true
+            errorList.isStrongPassword = true
         }
     }
     else {
@@ -64,11 +67,12 @@ export const signupValidation = (formData) => {
     }
 
 
-    if (password === confirmPassword && isStrongPassword) {
+    if (password === confirmPassword && errorList.isStrongPassword) {
         errorList.confirmPassword = 'Password Matched'
+        errorList.isPasswordMatched = true
     }
 
-    else if (password !== confirmPassword && isStrongPassword) {
+    else if (password !== confirmPassword && errorList.isStrongPassword) {
         errorList.confirmPassword = 'Password Mismatch';
     }
 
@@ -76,5 +80,9 @@ export const signupValidation = (formData) => {
         errorList.confirmPassword = 'Valid password required';
     }
 
+    if(errorList.isStrongPassword && errorList.isPasswordMatched && !errorList.firstName && !errorList.lastName && !errorList.email){
+        errorList.isValid = true
+    }
+    
     return errorList;
 }

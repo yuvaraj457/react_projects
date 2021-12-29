@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import SignUp from '../components/signupPage/signup'
+import { signup } from '../core/apiCalls/user';
 import { signupValidation } from '../utlis/signupValidation';
 
 export default class SignupContainer extends Component {
@@ -11,26 +12,28 @@ export default class SignupContainer extends Component {
         }
     }
 
+    onChange = e => {
+        this.setState({
+            formData : {
+                ...this.state.formData,
+                [e.target.name] : e.target.value
+            }
+        })
+    }
 
     handleSubmit = (event) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        this.setState({
-          formData : {
-              firstName : data.get('firstName'), 
-              lastName : data.get('lastName'),
-              email: data.get('email'), 
-              password: data.get('password'),
-              confirmPassword : data.get('cofirmPassword')
-            }
-        });
-         const errors = signupValidation(data)
-         console.log(errors)
+         const errors = signupValidation(this.state.formData)
+         this.setState({errors})
+         if(errors.isValid){
+             signup(this.state.formData)
+             .then(res => console.log(res))
+         }
       };
+
     render() {
-        console.log(this.state)
         return (
-            <SignUp handleSubmit={this.handleSubmit}/>
+            <SignUp onChange = {this.onChange} handleSubmit={this.handleSubmit} errors={this.state.errors}/>
         )
     }
 }

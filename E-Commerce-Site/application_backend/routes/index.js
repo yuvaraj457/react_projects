@@ -1,9 +1,11 @@
 const express = require('express')
+const { login } = require('./user/loginRoute')
+const { signup } = require('./user/signupRoute')
 const router = express.Router()
 
-router.get('/', (req, res) => {
-  res.send('Hello World')
-})
+router.post('/signup', signup)
+
+router.post('/login', login)
 
 
 module.exports = router

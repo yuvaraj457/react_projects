@@ -12,19 +12,11 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Alert } from '@mui/material';
 
 const theme = createTheme();
 
-export default function SignIn() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
+export default function Login({onChange, handleSubmit, errors}) {
 
   return (
     <ThemeProvider theme={theme}>
@@ -44,7 +36,7 @@ export default function SignIn() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={e => handleSubmit(e)} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
@@ -54,6 +46,9 @@ export default function SignIn() {
               name="email"
               autoComplete="email"
               autoFocus
+              onChange = {e => onChange(e)}
+              error = {!errors.email ? false : true}
+              helperText= {!errors.email ? '' : errors.email}
             />
             <TextField
               margin="normal"
@@ -64,7 +59,14 @@ export default function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange = {e => onChange(e)}
+              error = {!errors.password ? false : true}
+              helperText= {!errors.password ? '' : errors.password}
             />
+            {
+              errors.authFail && <Alert severity="error">{errors.authFail}</Alert>
+            }
+            
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"

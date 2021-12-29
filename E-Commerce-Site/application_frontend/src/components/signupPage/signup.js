@@ -3,7 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -11,11 +10,12 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Alert from '@mui/material/Alert';
+
 
 const theme = createTheme();
 
-export default function SignUp({handleSubmit}) {
-
+export default function SignUp({onChange, handleSubmit, errors}) {
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -44,7 +44,10 @@ export default function SignUp({handleSubmit}) {
                   fullWidth
                   id="firstName"
                   label="First Name"
+                  onChange = {e => onChange(e)}
                   autoFocus
+                  error = {!errors.firstName ? false : true}
+                  helperText= {!errors.firstName ? '' : errors.firstName}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -55,6 +58,9 @@ export default function SignUp({handleSubmit}) {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
+                  onChange = {e => onChange(e)}
+                  error = {!errors.lastName ? false : true}
+                  helperText= {!errors.lastName ? '' : errors.lastName}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -65,6 +71,9 @@ export default function SignUp({handleSubmit}) {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  onChange = {e => onChange(e)}
+                  error = {!errors.email ? false : true}
+                  helperText= {!errors.email ? '' : errors.email}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -75,16 +84,25 @@ export default function SignUp({handleSubmit}) {
                   label="Password"
                   type="password"
                   id="password"
+                  onChange = {e => onChange(e)}
+                  error = {errors.password && !errors.isStrongPassword? true : false}
+                  helperText= {errors.password && errors.password !== 'Password is strong' ? errors.password : ''}
                 />
+                {
+                  errors.isStrongPassword && <Alert severity="success">{errors.password} </Alert>
+                }
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
-                  name="ConfirmPassword"
-                  label="ConfirmPassword"
-                  type="ConfirmPassword"
-                  id="ConfirmPassword"
+                  name="confirmPassword"
+                  label="confirmPassword"
+                  type="password"
+                  id="confirmPassword"
+                  onChange = {e => onChange(e)}
+                  error = {errors.confirmPassword && errors.confirmPassword !== 'Password Matched'? true : false}
+                  helperText= {!errors.confirmPassword ? '' : errors.confirmPassword}
                 />
               </Grid>
             </Grid>
