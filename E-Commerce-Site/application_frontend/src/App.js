@@ -8,7 +8,7 @@ function App() {
     <>
       {/* <Home/> */}
       {/* <SignupContainer/> */}
-      <LoginContainer/>
+      <LoginContainer />
     </>
   )
 }
