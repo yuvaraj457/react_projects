@@ -8,9 +8,9 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
 
-import picture1 from "../assets/images/carouselPicture1.jpg"
-import picture2 from "../assets/images/carouselPicture2.jpg"
-import picture3 from "../assets/images/carouselPicture3.jpg"
+import picture1 from "../../assets/images/carouselPicture1.jpg"
+import picture2 from "../../assets/images/carouselPicture2.jpg"
+import picture3 from "../../assets/images/carouselPicture3.jpg"
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -29,7 +29,7 @@ const images = [
   },
 ];
 
-function Carousel() {
+export const Carousel = () => {
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
   const maxSteps = images.length;
@@ -55,7 +55,7 @@ function Carousel() {
         enableMouseEvents
       >
         {images.map((step, index) => (
-          <div key={step.label}>
+          <div key={index}>
             {Math.abs(activeStep - index) <= 2 ? (
               <Box
                 component="img"
@@ -106,4 +106,3 @@ function Carousel() {
   );
 }
 
-export default Carousel;

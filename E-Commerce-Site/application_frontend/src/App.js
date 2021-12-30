@@ -1,14 +1,13 @@
+import { BrowserRouter } from 'react-router-dom';
 import './assets/styles/style.css';
-import LoginContainer from './containers/loginContainer';
-// import Home from './components/homePage/home';
-import SignupContainer from './containers/signupContainer';
+import AppRouter from './routes/routes';
 
 function App() {
   return (
     <>
-      {/* <Home/> */}
-      {/* <SignupContainer/> */}
-      <LoginContainer />
+      <BrowserRouter>
+        <AppRouter />
+      </BrowserRouter>
     </>
   )
 }

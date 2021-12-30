@@ -15,7 +15,7 @@ import Alert from '@mui/material/Alert';
 
 const theme = createTheme();
 
-export default function SignUp({onChange, handleSubmit, errors}) {
+export const SignUp = ({onChange, handleSubmit, errors}) => {
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">

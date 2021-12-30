@@ -18,7 +18,7 @@ import logo from '../assets/images/logo.png'
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-const NavBar = () => {
+export const NavBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -149,4 +149,4 @@ const NavBar = () => {
     </AppBar>
   );
 };
-export default NavBar;
+

@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
-import Login from '../components/loginPage/login'
-import { login } from '../core/apiCalls/user';
-import { loginValidation } from '../utlis/loginValidation';
+import { useNavigate } from 'react-router-dom';
+import Login from '../../components/loginPage/login'
+import { login } from '../../core/apiCalls/user';
+import { setAuthToken } from '../../shared/authToken';
+import { loginValidation } from '../../utlis/loginValidation';
 
 export default class LoginContainer extends Component {
     constructor() {
@@ -28,7 +30,8 @@ export default class LoginContainer extends Component {
             login(this.state.formData)
             .then((res) => {
                 this.setState({errors : {}})
-                console.log(res.token)
+                setAuthToken(res.token)
+                this.props.navigate('/')
             })
             .catch(() => this.setState({ errors: { authFail: 'Invaild email or password' } }))
         }
