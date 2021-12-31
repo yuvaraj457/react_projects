@@ -3,6 +3,7 @@ import {apiTarget}  from '../config';
 
 export const axiosInstance = axios.create({
     baseURL: apiTarget,
+    withCredentials: true,
 });
 
 

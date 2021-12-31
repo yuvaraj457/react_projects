@@ -11,9 +11,8 @@ const login = async (req, res) => {
          bcrypt.compare(password, data.password)
         .then((result) => {
                 if(result){
-                    const token = jwt.sign({_id:data._id}, process.env.TOKEN_SECRET);
-                    res.cookie('token', token, {httpOnly : true})
-                    res.status(200).send({token:token});
+                    const token = jwt.sign({_id:data._id}, process.env.TOKEN_SECRET)
+                    res.cookie('token', token).status(200).send({token:token})
                 }
                 else{
                     res.status(401).send("Invalid email or password.");

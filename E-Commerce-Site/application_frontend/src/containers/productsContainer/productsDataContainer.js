@@ -1,23 +1,30 @@
 import React, { Component } from 'react'
-import { getProducts } from '../../core/apiCalls/products';
+import {connect} from 'react-redux'
 
-export default class ProductsDataContainer extends Component {
-    constructor() {
-        super();
-        this.state = {
-            products : []
-        }
-    }
+import {fetchProducts} from '../../action/productAction'
+import ProductCard from '../../components/products/productCard'
+
+ class ProductsDataContainer extends Component {
 
     componentDidMount(){
-        getProducts()
-        .then((res) => this.setState({products : res}))
+        console.log(this.props)
+        this.props.productsDispatch()
     }
+
     render() {
+        console.log(this.props.products)
         return (
-            <div>
-                
-            </div>
+            this.props.products && this.props.products.map((item, index) => <ProductCard product={item} />)
         )
     }
 }
+
+const mapStateToProps = state =>  ({products : state.products})
+    
+const mapDispatchToProps = (dispatch) => {
+    return {
+        productsDispatch : () => dispatch(fetchProducts())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductsDataContainer)

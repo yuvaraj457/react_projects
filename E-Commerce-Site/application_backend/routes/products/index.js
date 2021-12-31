@@ -14,6 +14,12 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage})
 
+const products = (req, res) => {
+    productDetailsModel.find({})
+    .then((response) => res.status(200).send(response))
+    .catch((error) => console.log(error))
+}
+
 const productUpload = (req, res) => {
     const { productName, productMRP, productPrice, productStar, productQuantity, productType } = req.body
     const data = productDetailsModel({
@@ -30,4 +36,4 @@ const productUpload = (req, res) => {
     .catch((error) => console.log(error))
 }
 
-module.exports = {upload, productUpload}
+module.exports = {upload, productUpload, products}
