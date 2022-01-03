@@ -1,32 +1,54 @@
 import * as React from 'react';
 import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { CardActionArea } from '@mui/material';
+import { Button, CardActionArea, Stack } from '@mui/material';
 
-import {apiTarget}  from '../../config'
+import {Link} from 'react-router-dom'
 
-export default function ProductCard({product}) {
+import StarRatings from 'react-star-ratings'
+
+import { apiTarget } from '../../config'
+
+export default function ProductCard({ product }) {
   return (
-    <Card sx={{ maxWidth: 250 }}>
+    <Card variant="outlined" sx={{ width: 200 }}>
       <CardActionArea>
         <CardMedia
           component="img"
+          sx={{ width: 'auto' }}
           height="140"
-          image ={`${apiTarget}/static/images/${product.productImage}`}
+          image={`${apiTarget}/static/images/${product.productImage}`}
           alt="product_image"
         />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {product.productName}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
-          </Typography>
-        </CardContent>
       </CardActionArea>
+      <div className={'product-card-style'}>
+        <Link to={`productDetails/${product._id}`}>
+          {product.productName}
+        </Link>
+        <StarRatings
+          rating={product.productStar}
+          starRatedColor="gold"
+          starDimension="20px"
+          starSpacing="2px"
+          numberOfStars={5}
+          name="rating"
+        />
+        <Typography variant="body2" color="text.secondary">
+          <del>MRP : {product.productMRP}</del>
+        </Typography>
+        <Typography gutterBottom variant="body1" >
+          Price : {product.productPrice}
+        </Typography>
+        <Stack spacing={1} direction='row'>
+          <Button size='small' variant="contained" color='cartButtonColor'>
+            Cart
+          </Button>
+          <Button size='small' variant="contained" color="buyButtonColor">
+            buy
+          </Button>
+        </Stack>
+      </div>
     </Card>
   );
 }

@@ -36,4 +36,12 @@ const productUpload = (req, res) => {
     .catch((error) => console.log(error))
 }
 
-module.exports = {upload, productUpload, products}
+const productDetails = (req, res) => {
+    const {productId} = req.query
+    productDetailsModel.findOne({ _id: productId })
+    .then((response) => res.status(200).send(response))
+    .catch((error) => console.log(error));
+}
+
+
+module.exports = {upload, productUpload, products, productDetails}

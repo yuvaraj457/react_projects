@@ -15,7 +15,7 @@ import MenuItem from '@mui/material/MenuItem';
 import TwitterIcon from '@mui/icons-material/Twitter';
 
 import logo from '../assets/images/logo.png'
-const pages = ['Products', 'Pricing', 'Blog'];
+const pages = ['Mens', 'Womens', 'Electronics'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 export const NavBar = () => {

@@ -1,3 +1,4 @@
+import { Grid } from '@mui/material'
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 
@@ -14,7 +15,11 @@ import ProductCard from '../../components/products/productCard'
     render() {
         console.log(this.props.products)
         return (
-            this.props.products && this.props.products.map((item, index) => <ProductCard product={item} />)
+            <Grid item xs={12}>
+                <Grid container justifyContent="space-around" spacing={3} sx={{ mb: 2 }}>
+                    {this.props.products && this.props.products.map((item, index) => <Grid item key={index} ><ProductCard product={item}/></Grid>)}
+                </Grid>
+            </Grid>
         )
     }
 }
