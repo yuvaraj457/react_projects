@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { SignUp } from '../../components/signupPage/signup';
 import { signup } from '../../core/apiCalls/user';
-// import SignUp from '../components/signupPage/signup'
-// import { signup } from '../core/apiCalls/user';
 import { signupValidation } from '../../utlis/signupValidation'
 
 export default class SignupContainer extends Component {

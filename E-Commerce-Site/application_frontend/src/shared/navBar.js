@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useSelector} from 'react-redux'
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -15,12 +16,16 @@ import MenuItem from '@mui/material/MenuItem';
 import TwitterIcon from '@mui/icons-material/Twitter';
 
 import logo from '../assets/images/logo.png'
+import { Link } from 'react-router-dom';
+import { getAuthToken } from './authToken';
 const pages = ['Mens', 'Womens', 'Electronics'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 export const NavBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  const {isLogin} = useSelector(state => state.userReducer)
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -38,7 +43,7 @@ export const NavBar = () => {
   };
 
   const style = {
-      background : 'black',
+    background: 'black',
   }
 
   return (
@@ -46,15 +51,18 @@ export const NavBar = () => {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
 
-        <Box
-            style = {{alignItems : 'center'}}
+          <Box
+            style={{ alignItems: 'center' }}
             sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
           >
-              <TwitterIcon/>
-            <img src={logo} className='brand-logo' alt='logo_pic'/>
+            
+              <TwitterIcon />
+              <Link to='/'>
+              <img src={logo} className='brand-logo' alt='logo_pic' />
+            </Link>
           </Box>
 
-          
+
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -95,32 +103,34 @@ export const NavBar = () => {
           </Box>
 
           <Box
-            style = {{alignItems : 'center'}}
+            style={{ alignItems: 'center' }}
             sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
           >
-            <TwitterIcon/>
-            <img src={logo} className='brand-logo' alt='logo_pic'/>
-          </Box>
-          
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page}
-              </Button>
-            ))}
+            <TwitterIcon />
+            <img src={logo} className='brand-logo' alt='logo_pic' />
           </Box>
 
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            {pages.map((page) => (
+              <Link to={`/${page}`} key={page}>
+                <Button
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  {page}
+                </Button>
+              </Link>
+            ))}
+          </Box>
+            { 
+           (isLogin || getAuthToken()) &&
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
-            
+
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"
@@ -144,6 +154,7 @@ export const NavBar = () => {
               ))}
             </Menu>
           </Box>
+}
         </Toolbar>
       </Container>
     </AppBar>

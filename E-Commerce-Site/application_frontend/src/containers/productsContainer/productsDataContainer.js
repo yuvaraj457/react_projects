@@ -1,35 +1,35 @@
 import { Grid } from '@mui/material'
-import React, { Component } from 'react'
-import {connect} from 'react-redux'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+// import {connect} from 'react-redux'
 
 import {fetchProducts} from '../../action/productAction'
 import ProductCard from '../../components/products/productCard'
 
- class ProductsDataContainer extends Component {
+ export const ProductsDataContainer = () => {
+     const {products} = useSelector(state => state.productsReducer)
+     const dispatch = useDispatch()
 
-    componentDidMount(){
-        console.log(this.props)
-        this.props.productsDispatch()
-    }
+        useEffect(() => {
+            dispatch(fetchProducts())
+        },[])
 
-    render() {
-        console.log(this.props.products)
         return (
             <Grid item xs={12}>
-                <Grid container justifyContent="space-around" spacing={3} sx={{ mb: 2 }}>
-                    {this.props.products && this.props.products.map((item, index) => <Grid item key={index} ><ProductCard product={item}/></Grid>)}
+                <Grid container justifyContent="center" spacing={2} sx={{ mb: 2 }}>
+                    {products.length > 0  && products.map((item, index) => <Grid item key={index} ><ProductCard product={item}/></Grid>)}
                 </Grid>
             </Grid>
         )
-    }
-}
-
-const mapStateToProps = state =>  ({products : state.products})
     
-const mapDispatchToProps = (dispatch) => {
-    return {
-        productsDispatch : () => dispatch(fetchProducts())
-    }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProductsDataContainer)
+// const mapStateToProps = state =>  ({products : state.products})
+    
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//         productsDispatch : () => dispatch(fetchProducts())
+//     }
+// }
+
+// export default connect(mapStateToProps, mapDispatchToProps)(ProductsDataContainer)

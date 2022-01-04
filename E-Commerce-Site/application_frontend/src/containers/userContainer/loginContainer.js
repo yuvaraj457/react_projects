@@ -1,11 +1,13 @@
+import { connect } from 'react-redux'
 import React, { Component } from 'react'
-import { useNavigate } from 'react-router-dom';
 import Login from '../../components/loginPage/login'
-import { login } from '../../core/apiCalls/user';
-import { setAuthToken } from '../../shared/authToken';
-import { loginValidation } from '../../utlis/loginValidation';
+import { login } from '../../core/apiCalls/user'
+import { setAuthToken } from '../../shared/authToken'
+import { loginValidation } from '../../utlis/loginValidation'
 
-export default class LoginContainer extends Component {
+import {loginAction} from '../../action/userAction'
+
+class LoginContainer extends Component {
     constructor() {
         super();
         this.state = {
@@ -31,6 +33,8 @@ export default class LoginContainer extends Component {
             .then((res) => {
                 this.setState({errors : {}})
                 setAuthToken(res.token)
+                console.log(this.props)
+                this.props.loginDispatch()
                 this.props.navigate('/')
             })
             .catch(() => this.setState({ errors: { authFail: 'Invaild email or password' } }))
@@ -43,9 +47,16 @@ export default class LoginContainer extends Component {
       }
 
     render() {
-        
         return (
             <Login onChange = {this.onChange} handleSubmit={this.handleSubmit} errors={this.state.errors}/>
         )
     }
 }
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        loginDispatch : () => dispatch(loginAction(true))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(LoginContainer)

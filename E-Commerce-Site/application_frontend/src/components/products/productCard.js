@@ -9,23 +9,26 @@ import {Link} from 'react-router-dom'
 import StarRatings from 'react-star-ratings'
 
 import { apiTarget } from '../../config'
+import { addToCart } from '../../core/apiCalls/products';
 
 export default function ProductCard({ product }) {
   return (
     <Card variant="outlined" sx={{ width: 200 }}>
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          sx={{ width: 'auto' }}
-          height="140"
-          image={`${apiTarget}/static/images/${product.productImage}`}
-          alt="product_image"
-        />
-      </CardActionArea>
+      <Link to={`productDetails/${product._id}`}>
+        <CardActionArea>
+          <CardMedia
+            component="img"
+            sx={{ width: 'auto' }}
+            height="140"
+            image={`${apiTarget}/static/images/${product.productImage}`}
+            alt="product_image"
+          />
+        </CardActionArea>
+      </Link>
       <div className={'product-card-style'}>
-        <Link to={`productDetails/${product._id}`}>
+        
           {product.productName}
-        </Link>
+        
         <StarRatings
           rating={product.productStar}
           starRatedColor="gold"
@@ -41,7 +44,7 @@ export default function ProductCard({ product }) {
           Price : {product.productPrice}
         </Typography>
         <Stack spacing={1} direction='row'>
-          <Button size='small' variant="contained" color='cartButtonColor'>
+          <Button size='small' variant="contained" color='cartButtonColor' onClick={() => addToCart(product._id)}>
             Cart
           </Button>
           <Button size='small' variant="contained" color="buyButtonColor">

@@ -12,15 +12,15 @@ export const ProductDetailedViewContainer = () => {
     useEffect(()=>{
         const fetchData = () => {
             getProductDetails(productId)
-        .then(res => setProduct(res))
+        .then(res => setProduct([res]))
         .catch(error => console.log(error))
         }
         fetchData()
     },[])
-
+console.log(product)
     
     return (
-        <ProductDetailedViewCard product={product}/>
+        product.length > 0 && <ProductDetailedViewCard product={product[0]}/>
     )
 }
 

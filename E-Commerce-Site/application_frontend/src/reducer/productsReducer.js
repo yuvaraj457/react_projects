@@ -5,7 +5,7 @@ const initialState = {
     error : ''
 }
 
-export const userReducer = (state=initialState, action) => {
+export const productsReducer = (state=initialState, action) => {
     switch(action.type){
         case product:
             return {

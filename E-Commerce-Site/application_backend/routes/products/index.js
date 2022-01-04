@@ -2,6 +2,7 @@ const multer = require('multer')
 const path = require('path')
 
 const productDetailsModel = require('../../models/productsModel')
+const userDetailsModel = require('../../models/userModel')
 
 const storage = multer.diskStorage({
     destination : (req, file, cb) => {
@@ -43,5 +44,16 @@ const productDetails = (req, res) => {
     .catch((error) => console.log(error));
 }
 
+const addToCart = (req, res) => {
+    const {productId} = req.body
+    const {_id} = req.user
 
-module.exports = {upload, productUpload, products, productDetails}
+    userDetailsModel.updateMany(
+        {_id },
+        {$addToSet : {cartProducts : productId}}
+        )
+        .then(res => console.log(res))
+        .catch(error => console.log(error))
+}
+
+module.exports = {upload, productUpload, products, productDetails, addToCart}
