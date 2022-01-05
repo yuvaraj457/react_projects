@@ -56,4 +56,11 @@ const addToCart = (req, res) => {
         .catch(error => console.log(error))
 }
 
-module.exports = {upload, productUpload, products, productDetails, addToCart}
+const getCartProducts = (req, res) => {
+    const {_id} = req.user
+    userDetailsModel.find({_id}).select('cartProducts -_id')
+    .then(response => res.status(200).send(response[0].cartProducts))
+    .catch(error => console.log(error))
+}
+
+module.exports = {upload, productUpload, products, productDetails, addToCart, getCartProducts}

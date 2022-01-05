@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useSelector} from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -14,10 +14,13 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 
 import TwitterIcon from '@mui/icons-material/Twitter';
+import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 
 import logo from '../assets/images/logo.png'
 import { Link } from 'react-router-dom';
 import { getAuthToken } from './authToken';
+import { Badge } from '@mui/material';
+import { fetchCartProducts } from '../action/cartAction';
 const pages = ['Mens', 'Womens', 'Electronics'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
@@ -25,7 +28,9 @@ export const NavBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  const {isLogin} = useSelector(state => state.userReducer)
+  const { isLogin } = useSelector(state => state.userReducer)
+  const {cartProducts} = useSelector(state => state.cartReducer)
+  const dispatch = useDispatch()
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -46,6 +51,12 @@ export const NavBar = () => {
     background: 'black',
   }
 
+  React.useEffect(() => {
+    if (!cartProducts) {
+      dispatch(fetchCartProducts())
+    }
+  }, [])
+
   return (
     <AppBar style={style} position="static" >
       <Container maxWidth="xl">
@@ -55,9 +66,9 @@ export const NavBar = () => {
             style={{ alignItems: 'center' }}
             sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
           >
-            
-              <TwitterIcon />
-              <Link to='/'>
+
+            <TwitterIcon />
+            <Link to='/'>
               <img src={logo} className='brand-logo' alt='logo_pic' />
             </Link>
           </Box>
@@ -122,39 +133,46 @@ export const NavBar = () => {
               </Link>
             ))}
           </Box>
-            { 
-           (isLogin || getAuthToken()) &&
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
+          {
+            (isLogin || getAuthToken()) &&
+            <>
+              <Badge color="secondary" badgeContent={cartProducts?cartProducts.length:0}>
+                <Link to='/cart' style={{ color: '#FFF' }}>
+                <ShoppingBagIcon />
+                </Link>
+              </Badge>
+              <Box sx={{ flexGrow: 0, ml: 4 }}>
+                <Tooltip title="Open settings">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  </IconButton>
+                </Tooltip>
 
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-}
+                <Menu
+                  sx={{ mt: '45px' }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  {settings.map((setting) => (
+                    <MenuItem key={setting} onClick={handleCloseNavMenu}>
+                      <Typography textAlign="center">{setting}</Typography>
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </Box>
+            </>
+          }
         </Toolbar>
       </Container>
     </AppBar>

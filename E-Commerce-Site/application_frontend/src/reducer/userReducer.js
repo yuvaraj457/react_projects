@@ -1,4 +1,4 @@
-import { loginStatus } from "../action/actionType"
+import { loginStatus, cart } from "../action/actionType"
 
 const initialState = {
     isLogin : false

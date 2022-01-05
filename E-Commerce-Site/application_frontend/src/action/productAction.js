@@ -9,7 +9,7 @@ const productAction = (data) => {
 }
 
 const productErrorAction = error => {
-    return{
+    return {
         type : errorOccured,
         errorMessage : error
     }

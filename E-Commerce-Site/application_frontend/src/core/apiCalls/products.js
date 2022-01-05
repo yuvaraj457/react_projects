@@ -13,3 +13,8 @@ export const getProductDetails = async (id) => {
 export const addToCart = async (id) => {
     const {data} = await axiosInstance.post('/addToCart', {productId: id})
 }
+
+export const getCartProducts = async () => {
+    const {data} = await axiosInstance.get('/getCartProducts')
+    return data
+}
