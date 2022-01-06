@@ -54,7 +54,6 @@ export const Cart = ({ productId }) => {
                 </Button>
               </Grid>
             </Grid>
-
             <Grid item>
               <Typography variant="subtitle1" component="div">
                 Rs {product.productPrice}/-
