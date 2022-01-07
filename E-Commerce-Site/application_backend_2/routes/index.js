@@ -4,11 +4,6 @@ const { login } = require('./user/loginRoute')
 
 module.exports = [
     {
-    method : 'GET',
-    path : '/',
-    handler : (req, h) => 'hello world'
-    },
-    {
         method : 'POST',
         path : '/login',
         handler : login

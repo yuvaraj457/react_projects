@@ -10,11 +10,17 @@ export const getProductDetails = async (id) => {
     return data
 }
 
-export const addToCart = async (id) => {
-    const {data} = await axiosInstance.post('/addToCart', {productId: id})
-}
-
 export const getCartProducts = async () => {
     const {data} = await axiosInstance.get('/getCartProducts')
+    return data
+}
+
+export const addToCart = async (id) => {
+    const {data} = await axiosInstance.post('/addToCart', {productId: id})
+    return data
+}
+
+export const productQuantityUpdate = async (id, quantity) => {
+    const {data} = await axiosInstance.post('/productQuantityUpdate', {productId: id, quantity})
     return data
 }

@@ -30,6 +30,8 @@ export const NavBar = () => {
 
   const { isLogin } = useSelector(state => state.userReducer)
   const {cartProducts} = useSelector(state => state.cartReducer)
+  console.log(cartProducts)
+
   const dispatch = useDispatch()
 
   const handleOpenNavMenu = (event) => {
@@ -52,10 +54,10 @@ export const NavBar = () => {
   }
 
   React.useEffect(() => {
-    if (!cartProducts) {
-      dispatch(fetchCartProducts())
-    }
-  }, [])
+    // if (!cartProducts.length) {
+    //   dispatch(fetchCartProducts())
+    // }
+  }, [dispatch, cartProducts])
 
   return (
     <AppBar style={style} position="static" >

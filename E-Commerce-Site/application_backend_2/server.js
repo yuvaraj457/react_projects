@@ -1,5 +1,4 @@
 const Hapi = require('@hapi/hapi')
-const cors = require('cors')
 
 const Routes = require('./routes')
 const { dbConfig } = require('./config')
@@ -28,11 +27,6 @@ const init = async () => {
 }
 
 init()
-
-// server.register({
-//     plugin : cors,
-//     options : {credentials: true, origin: 'http://localhost:3000'}
-// })
 
 
 

@@ -1,10 +1,11 @@
-import { getCartProducts } from "../core/apiCalls/products"
-import { cart, errorOccured } from "./actionType"
+import { addToCart, getCartProducts } from "../core/apiCalls/products"
+import { cart, errorOccured, productDecrement, productIncrement } from "./actionType"
 
 const cartAction = (data) => {
     return {
         type : cart,
-        payload : data
+        payload : data,
+
     }
 }
 
@@ -15,6 +16,20 @@ const cartErrorAction = error => {
     }
 }
 
+export const productIncrementAction = (id) => {
+    return {
+        type : productIncrement,
+        productId : id
+    }
+}
+
+export const productDecrementAction = (id) => {
+    return {
+        type : productDecrement,
+        productId : id
+    }
+}
+
 export const fetchCartProducts = () => {
     return (dispatch) => {
         getCartProducts()
@@ -22,3 +37,11 @@ export const fetchCartProducts = () => {
         .catch(error => dispatch(cartErrorAction(error)))
     }
 }
+
+export const addCartProducts = (productId, quantity) => {
+    return (dispatch) => {
+        addToCart(productId, quantity)
+        .then(dispatch(fetchCartProducts()))
+    }
+}
+

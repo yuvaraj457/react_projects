@@ -10,10 +10,11 @@ import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import { getProductDetails } from '../../core/apiCalls/products';
 import { apiTarget } from '../../config';
 import { Box } from '@mui/system';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { productIncrementAction } from '../../action/cartAction';
 
-export const Cart = ({ productId }) => {
+export const Cart = ({productId, quantity, productIncrementHandler}) => {
   const [product, setProduct] = React.useState(null)
-
   const Img = styled('img')({
     margin: 'auto',
     display: 'block',
@@ -29,35 +30,43 @@ export const Cart = ({ productId }) => {
   return (
     product &&
     <>
-      <Paper sx={{ p: 2, maxWidth: 700, flexGrow: 1, mt: 2 }}>
+      <Paper sx={{ p: 2, maxWidth: 600, flexGrow: 0, mt: 2 }}>
         <Grid container spacing={2}>
           <Grid item>
-            <ButtonBase sx={{ width: 128, height: 128 }}>
+            <ButtonBase sx={{ width: 140, height: 140 }}>
               <Img alt="complex" src={`${apiTarget}/static/images/${product.productImage}`} />
             </ButtonBase>
           </Grid>
-          <Grid item xs={12} sm container>
-            <Grid item xs container direction="column" spacing={2}>
+          <Grid item xs={8} sm container>
+            <Grid item xs container alignItems={'center'} direction="column" spacing={1}>
               <Grid item xs>
                 <Typography gutterBottom variant="h5" component="div">
                   {product.productName}
                 </Typography>
+                </Grid>
+
+                <Grid item>
                 <ButtonGroup variant="text" aria-label="text button group">
                   <Button><ArrowDropDownIcon /></Button>
-                  <Box style={{ borderRight: '1px solid rgba(9, 113, 241, 0.5)' }} sx={{ p: 2 }}>0</Box>
-                  <Button><ArrowDropUpIcon /></Button>
+                  <Box style={{ borderRight: '1px solid rgba(9, 113, 241, 0.5)' }} sx={{ p: 2 }}>{quantity}</Box>
+                  <Button onClick={() => productIncrementHandler(product._id)}><ArrowDropUpIcon /></Button>
                 </ButtonGroup>
+                </Grid>
+
+            </Grid>
+            <Grid item xs container direction="column" justifyContent={'space-between'} alignItems={'center'}> 
+              
+              <Grid>
+              <Typography variant="subtitle1" component="div">
+                Rs {product.productPrice}/-
+              </Typography>
               </Grid>
+          
               <Grid item>
                 <Button variant="outlined" size="small" startIcon={<DeleteIcon />}>
                   Delete
                 </Button>
               </Grid>
-            </Grid>
-            <Grid item>
-              <Typography variant="subtitle1" component="div">
-                Rs {product.productPrice}/-
-              </Typography>
             </Grid>
 
           </Grid>
