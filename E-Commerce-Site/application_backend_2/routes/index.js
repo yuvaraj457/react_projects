@@ -6,7 +6,20 @@ module.exports = [
     {
         method : 'POST',
         path : '/login',
-        handler : login
+        handler : login,
+        options: {
+            auth: {
+                mode: 'try'
+            }
+        }
+    },
+    {
+        method : 'GET',
+        path : '/',
+        handler : (req, h) => {
+            return 'This is private Page'
+        }
+        
     }
 
 ]

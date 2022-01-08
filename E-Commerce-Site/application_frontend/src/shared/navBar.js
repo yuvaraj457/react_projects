@@ -30,7 +30,6 @@ export const NavBar = () => {
 
   const { isLogin } = useSelector(state => state.userReducer)
   const {cartProducts} = useSelector(state => state.cartReducer)
-  console.log(cartProducts)
 
   const dispatch = useDispatch()
 
@@ -54,9 +53,9 @@ export const NavBar = () => {
   }
 
   React.useEffect(() => {
-    // if (!cartProducts.length) {
-    //   dispatch(fetchCartProducts())
-    // }
+    if (!cartProducts.length) {
+      dispatch(fetchCartProducts())
+    }
   }, [dispatch, cartProducts])
 
   return (
@@ -120,7 +119,9 @@ export const NavBar = () => {
             sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
           >
             <TwitterIcon />
-            <img src={logo} className='brand-logo' alt='logo_pic' />
+            <Link to='/'>
+              <img src={logo} className='brand-logo' alt='logo_pic' />
+            </Link>
           </Box>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
