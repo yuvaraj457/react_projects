@@ -58,6 +58,7 @@ export const NavBar = () => {
     }
   }, [dispatch, cartProducts])
 
+  
   return (
     <AppBar style={style} position="static" >
       <Container maxWidth="xl">

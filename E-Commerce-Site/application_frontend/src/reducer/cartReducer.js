@@ -1,7 +1,8 @@
-import { cart, productDecrement, productIncrement } from "../action/actionType"
+import { cart, cartDetails, productDecrement, productIncrement } from "../action/actionType"
 
 const initialState = {
-    cartProducts: []
+    cartProducts: [],
+    cartProductDetails : []
 }
 
 export const cartReducer = (state = initialState, action) => {
@@ -9,6 +10,7 @@ export const cartReducer = (state = initialState, action) => {
          
         case cart:
             return {
+                ...state,
                 cartProducts: action.payload
             }
 
@@ -16,6 +18,7 @@ export const cartReducer = (state = initialState, action) => {
             const indexProduct = state.cartProducts.findIndex((item) => item.productId === action.productId)
             const product = state.cartProducts.find((item) => item.productId === action.productId)
             return {
+                ...state,
                 cartProducts: [
                     ...state.cartProducts.slice(0, indexProduct),
                     {
@@ -30,6 +33,7 @@ export const cartReducer = (state = initialState, action) => {
             const indexProduct2 = state.cartProducts.findIndex((item) => item.productId === action.productId)
             const product2 = state.cartProducts.find((item) => item.productId === action.productId)
             return {
+                ...state,
                 cartProducts: [
                     ...state.cartProducts.slice(0, indexProduct2),
                     {
@@ -38,6 +42,11 @@ export const cartReducer = (state = initialState, action) => {
                     },
                     ...state.cartProducts.slice(indexProduct2 + 1)
                 ]
+            }
+        case cartDetails:
+            return {
+                ...state,
+                cartProductDetails : action.payload
             }
 
         default:

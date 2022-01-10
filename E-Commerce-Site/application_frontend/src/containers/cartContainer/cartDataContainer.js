@@ -4,23 +4,26 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchCartProducts, productDecrementAction, productIncrementAction } from '../../action/cartAction'
 import { Box, Grid, Paper } from '@mui/material'
 import { productQuantityUpdate } from '../../core/apiCalls/products'
+import CartTable from '../../components/cartProducts/cartProductsTotal'
 
 export const CartDataContainer = () => {
     const [id, setId] = useState('')
-    const {cartProducts} = useSelector(state => state.cartReducer)
+    const [quantity, setQuantity] = useState(0)
+    const cartProducts = useSelector(state => state.cartReducer.cartProductDetails)
+    const productIds = useSelector(state => state.cartReducer.cartProducts)
+    console.log(cartProducts)
     const dispatch = useDispatch()
-    
     useEffect(() => {
-        if (cartProducts && !cartProducts.length) {
+        if (productIds && !productIds.length) {
             dispatch(fetchCartProducts())
         }
         if(id){
-            const product = cartProducts.find((item) => item.productId === id)
+            const product = productIds.find((item) => item.productId === id)
             productQuantityUpdate(id, product.quantity)
             setId('')
         }
         
-    }, [dispatch, cartProducts, id])
+    }, [dispatch, productIds, id])
 
     const productIncrementHandler = (id) => {
         dispatch(productIncrementAction(id))
@@ -32,26 +35,32 @@ export const CartDataContainer = () => {
         setId(id)
     }
 
+    const productQuantityHandler = (value) => {
+        setQuantity(value)
+    }
     return (
-        <Box>
-            <Paper sx={{ mt: 2, p: 2 }}>
-                <Grid container >
+        <Box sx={{mt: 2}}>
+            {/* <Paper sx={{ mt: 2, p: 2 }}> */}
+                <Grid container spacing={1}>
                     <Grid item container xs={8}  direction="column">
                         {cartProducts && cartProducts.map((item, index) => 
                         <Cart 
                             key = {index} 
-                            productId = {item.productId} 
-                            quantity = {item.quantity}
+                            product = {item}
+                            productIds = {productIds}
                             productIncrementHandler = {productIncrementHandler}
                             productDecrementHandler = {productDecrementHandler}
+                            productQuantityHandler={productQuantityHandler}
                         />
                         )}
                     </Grid>
-                    <Grid item xs={4} container sm direction="column">
-                        ....pro
+                    <Grid item xs={4} container sm direction="column" >
+                        <Paper>
+                            <CartTable cartProducts={cartProducts} quantity={quantity}/>
+                        </Paper>
                     </Grid>
                 </Grid>
-            </Paper>
+            {/* </Paper> */}
         </Box>
     )
 }

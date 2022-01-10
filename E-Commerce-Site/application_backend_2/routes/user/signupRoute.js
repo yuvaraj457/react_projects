@@ -1,9 +1,8 @@
 const bcrypt = require('bcrypt')
 const userDetailsModel = require('../../models/userModel')
 
-const signup = (req, res) => {
-    try{
-        const {email, firstName, lastName, password} = req.body
+const signup = (req, h) => {
+        const {email, firstName, lastName, password} = req.payload
         bcrypt.hash(password, 10)
         .then(async(hashed) => {
             const data = await userDetailsModel({
@@ -14,12 +13,8 @@ const signup = (req, res) => {
             })
             data.save()
         })
-        .then(() => res.status(201).send('Successfully registered.'))
-        .catch(error => console.log(error))
-    }
-    catch(error){
-        console.log(error)
-    }
+        .then(() => h.response('Successfully registered').code(201))
+        .catch(error => Boom.unauthorized(error))
 }
 
 module.exports = {signup}

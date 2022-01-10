@@ -1,9 +1,17 @@
-import { addToCart, getCartProducts } from "../core/apiCalls/products"
-import { cart, errorOccured, productDecrement, productIncrement } from "./actionType"
+import { addToCart, getCartProducts, getProductDetails } from "../core/apiCalls/products"
+import { cart, cartDetails, errorOccured, productDecrement, productIncrement } from "./actionType"
 
 const cartAction = (data) => {
     return {
         type : cart,
+        payload : data,
+
+    }
+}
+
+const cartProductDetailsAction = (data) => {
+    return {
+        type : cartDetails,
         payload : data,
 
     }
@@ -30,13 +38,26 @@ export const productDecrementAction = (id) => {
     }
 }
 
+// export const fetchCartProducts = () => {
+//     return (dispatch) => {
+//         getCartProducts()
+//         .then(res => dispatch(cartAction(res)))
+//         .catch(error => dispatch(cartErrorAction(error)))
+//     }
+// }
+
 export const fetchCartProducts = () => {
-    return (dispatch) => {
-        getCartProducts()
-        .then(res => dispatch(cartAction(res)))
+    return async(dispatch) => {
+        const cartProductIds = await getCartProducts()
+        dispatch(cartAction(cartProductIds))
+        
+        const cartProducts = await cartProductIds.map(item =>  getProductDetails(item.productId))
+        Promise.all(cartProducts)
+        .then(res =>  dispatch(cartProductDetailsAction(res)))
         .catch(error => dispatch(cartErrorAction(error)))
     }
 }
+
 
 export const addCartProducts = (productId, quantity) => {
     return (dispatch) => {

@@ -11,8 +11,8 @@ import { getProductDetails } from '../../core/apiCalls/products';
 import { apiTarget } from '../../config';
 import { Box } from '@mui/system';
 
-export const Cart = ({ productId, quantity, productIncrementHandler, productDecrementHandler}) => {
-  const [product, setProduct] = React.useState(null)
+export const Cart = ({product, productIds,  productQuantityHandler, productIncrementHandler, productDecrementHandler}) => {
+
   const Img = styled('img')({
     margin: 'auto',
     display: 'block',
@@ -20,24 +20,22 @@ export const Cart = ({ productId, quantity, productIncrementHandler, productDecr
     maxHeight: '100%',
   });
 
-  React.useEffect(() => {
-    getProductDetails(productId)
-      .then((res) => setProduct(res))
-  }, [productId])
+ const {quantity} =  productIds.filter(item => item.productId === product._id)[0]
 
+ React.useEffect(() => productQuantityHandler(quantity),[productQuantityHandler, quantity])
+ 
   return (
-    product &&
     <>
-      <Paper sx={{ p: 2, maxWidth: 600, flexGrow: 0, mt: 2 }}>
+      <Paper sx={{ p: 1,  mt: 2, mr:2 }}>
         <Grid container spacing={2}>
 
           <Grid item>
-            <ButtonBase sx={{ width: 140, height: 140 }}>
+            <ButtonBase sx={{ width: 120, height: 120 }}>
               <Img alt="complex" src={`${apiTarget}/static/images/${product.productImage}`} />
             </ButtonBase>
           </Grid>
 
-          <Grid item xs={8} sm container>
+          <Grid item xs={12} sm container>
             <Grid item xs container alignItems={'center'} direction="column" spacing={1}>
               <Grid item xs>
                 <Typography gutterBottom variant="h5" component="div">

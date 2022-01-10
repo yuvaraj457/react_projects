@@ -12,7 +12,7 @@ import ProductCard from '../../components/products/productCard'
 
         useEffect(() => {
             dispatch(fetchProducts())
-        },[])
+        },[dispatch])
 
         return (
             <Grid item xs={12}>
@@ -21,7 +21,6 @@ import ProductCard from '../../components/products/productCard'
                 </Grid>
             </Grid>
         )
-    
 }
 
 // const mapStateToProps = state =>  ({products : state.products})
