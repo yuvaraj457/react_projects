@@ -33,7 +33,6 @@ class LoginContainer extends Component {
             .then((res) => {
                 this.setState({errors : {}})
                 setAuthToken(res.token)
-                console.log(this.props)
                 this.props.loginDispatch()
                 this.props.navigate('/')
             })

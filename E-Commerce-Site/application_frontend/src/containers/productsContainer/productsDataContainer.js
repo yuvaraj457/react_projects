@@ -1,7 +1,6 @@
 import { Grid } from '@mui/material'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-// import {connect} from 'react-redux'
 
 import {fetchProducts} from '../../action/productAction'
 import ProductCard from '../../components/products/productCard'
@@ -16,7 +15,7 @@ import ProductCard from '../../components/products/productCard'
 
         return (
             <Grid item xs={12}>
-                <Grid container justifyContent="center" spacing={2} sx={{ mb: 2 }}>
+                <Grid container justifyContent="center" spacing={3} sx={{ mb: 2 }}>
                     {products.length > 0  && products.map((item, index) => <Grid item key={index} ><ProductCard product={item}/></Grid>)}
                 </Grid>
             </Grid>

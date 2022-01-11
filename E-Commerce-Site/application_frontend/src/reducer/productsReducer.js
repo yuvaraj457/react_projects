@@ -9,6 +9,7 @@ export const productsReducer = (state=initialState, action) => {
     switch(action.type){
         case product:
             return {
+                ...state,
                 products : action.payload
             }
         case errorOccured:

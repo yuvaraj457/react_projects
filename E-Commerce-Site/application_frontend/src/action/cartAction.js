@@ -5,7 +5,6 @@ const cartAction = (data) => {
     return {
         type : cart,
         payload : data,
-
     }
 }
 
@@ -13,7 +12,6 @@ const cartProductDetailsAction = (data) => {
     return {
         type : cartDetails,
         payload : data,
-
     }
 }
 

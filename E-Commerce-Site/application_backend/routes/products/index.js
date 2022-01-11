@@ -46,14 +46,25 @@ const productDetails = (req, res) => {
 
 const addToCart = (req, res) => {
     const {productId} = req.body
-    console.log(productId)
     const {_id} = req.user
 
     userDetailsModel.updateMany(
         {_id },
-        {$addToSet : {cartProducts : {productId, quantity : 0 }}}
+        {$addToSet : {cartProducts : {productId, quantity : 1 }}}
         )
-        .then(() => res.status(200))
+        .then(() => res.status(200).send('Added to cart successfully'))
+        .catch(error => console.log(error))
+}
+
+const deleteCartProduct = (req, res) => {
+    const {productId} = req.body
+    const {_id} = req.user
+
+    userDetailsModel.updateMany(
+        {_id },
+        {$pull : {cartProducts : {productId}}}
+        )
+        .then(() => res.status(200).send('Deleted Successfully'))
         .catch(error => console.log(error))
 }
 
@@ -66,7 +77,7 @@ const productQuantityUpdate = (req, res) => {
         {
             $set : {'cartProducts.$.quantity' : quantity}}
         )
-        .then(() => res.status(200))
+        .then(() => res.status(200).send('updated'))
         .catch(error => console.log(error))
 }
 
@@ -77,4 +88,4 @@ const getCartProducts = (req, res) => {
     .catch(error => console.log(error))
 }
  
-module.exports = {upload, productUpload, products, productDetails, addToCart, getCartProducts, productQuantityUpdate}
+module.exports = {upload, productUpload, products, productDetails, addToCart, deleteCartProduct, getCartProducts, productQuantityUpdate}

@@ -9,8 +9,7 @@ export const MensProduct = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        if (!products.length > 0) {
-            console.log('reloaded')
+        if (!(products.length > 0)) {
             dispatch(fetchProducts())
         }
     }, [])

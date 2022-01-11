@@ -28,10 +28,12 @@ export const NavBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
+  const dispatch = useDispatch()
+
+  // dispatch(fetchCartProducts())
+
   const { isLogin } = useSelector(state => state.userReducer)
   const {cartProducts} = useSelector(state => state.cartReducer)
-
-  const dispatch = useDispatch()
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -53,12 +55,9 @@ export const NavBar = () => {
   }
 
   React.useEffect(() => {
-    if (!cartProducts.length) {
       dispatch(fetchCartProducts())
-    }
-  }, [dispatch, cartProducts])
+  },[])
 
-  
   return (
     <AppBar style={style} position="static" >
       <Container maxWidth="xl">

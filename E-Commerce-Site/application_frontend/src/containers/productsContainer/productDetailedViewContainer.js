@@ -17,7 +17,7 @@ export const ProductDetailedViewContainer = () => {
         }
         fetchData()
     },[])
-console.log(product)
+
     
     return (
         product.length > 0 && <ProductDetailedViewCard product={product[0]}/>

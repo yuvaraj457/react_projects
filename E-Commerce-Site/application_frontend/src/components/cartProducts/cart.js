@@ -6,12 +6,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 
-
-import { getProductDetails } from '../../core/apiCalls/products';
 import { apiTarget } from '../../config';
 import { Box } from '@mui/system';
 
-export const Cart = ({product, productIds,  productQuantityHandler, productIncrementHandler, productDecrementHandler}) => {
+export const Cart = ({product, deleteCartProductHandler, productQuantityHandler, productIncrementHandler, productDecrementHandler}) => {
 
   const Img = styled('img')({
     margin: 'auto',
@@ -20,9 +18,9 @@ export const Cart = ({product, productIds,  productQuantityHandler, productIncre
     maxHeight: '100%',
   });
 
- const {quantity} =  productIds.filter(item => item.productId === product._id)[0]
 
- React.useEffect(() => productQuantityHandler(quantity),[productQuantityHandler, quantity])
+//  const {quantity} =  productIds.filter(item => item.productId === product._id)[0]
+const quantity = productQuantityHandler(product._id)
  
   return (
     <>
@@ -45,9 +43,9 @@ export const Cart = ({product, productIds,  productQuantityHandler, productIncre
 
               <Grid item>
                 <ButtonGroup variant="text" aria-label="text button group">
-                  <Button><ArrowDropDownIcon onClick={() => productDecrementHandler(product._id)} /></Button>
+                  <Button disabled={quantity > 1 ? false : true}><ArrowDropDownIcon onClick={() => productDecrementHandler(product._id)} /></Button>
                   <Box style={{ borderRight: '1px solid rgba(9, 113, 241, 0.5)' }} sx={{ p: 2 }}>{quantity}</Box>
-                  <Button onClick={() => productIncrementHandler(product._id)}><ArrowDropUpIcon /></Button>
+                  <Button disabled={quantity < 10 ? false : true} onClick={() => productIncrementHandler(product._id)}><ArrowDropUpIcon /></Button>
                 </ButtonGroup>
               </Grid>
 
@@ -61,7 +59,7 @@ export const Cart = ({product, productIds,  productQuantityHandler, productIncre
               </Grid>
 
               <Grid item>
-                <Button variant="outlined" size="small" startIcon={<DeleteIcon />}>
+                <Button variant="outlined" size="small" onClick={() => deleteCartProductHandler(product._id)} startIcon={<DeleteIcon />}>
                   Delete
                 </Button>
               </Grid>

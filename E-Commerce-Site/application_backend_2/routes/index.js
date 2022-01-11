@@ -1,5 +1,5 @@
 const { login } = require('./user/loginRoute')
-// const { signup } = require('./user/signupRoute')
+const { signup } = require('./user/signupRoute')
 // const {upload, productUpload, products, productDetails, addToCart, getCartProducts} = require('./products')
 
 module.exports = [
@@ -14,19 +14,13 @@ module.exports = [
         }
     },
     {
-        method : 'GET',
-        path : '/',
-        handler : (req, h) => {
-            return 'This is private Page'
-        }
+        method : 'POST',
+        path : '/signup',
+        handler : signup,
         
     }
 
 ]
-
-// router.post('/signup', signup)
-
-// router.post('/login', login)
 
 // router.get('/products', products)
 

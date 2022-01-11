@@ -20,6 +20,10 @@ export const addToCart = async (id) => {
     return data
 }
 
+export const deleteCartProduct = async(id) => {
+    const {data} = await axiosInstance.post('/deleteCartProduct', {productId: id})
+    return data
+}
 export const productQuantityUpdate = async (id, quantity) => {
     const {data} = await axiosInstance.post('/productQuantityUpdate', {productId: id, quantity})
     return data

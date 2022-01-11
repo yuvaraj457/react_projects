@@ -12,7 +12,7 @@ const init = async () => {
         port: 5000,
         host: 'localhost',
         routes: {
-            cors: true
+            cors: {origin: ['*'],credentials: true}
         }
     })
 
@@ -39,7 +39,6 @@ const init = async () => {
         },
 
         validateFunc: validate
-
     })
 
     server.auth.default('session')
