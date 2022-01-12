@@ -1,4 +1,3 @@
-import axios from "axios"
 import {axiosInstance} from ".."
 import {url} from "../../config"
 
@@ -12,4 +11,7 @@ export const login = async (formData) => {
     return data
 }
 
-
+export const getUser = async () => {
+    const {data} = await axiosInstance.get(url.getUser)
+    return data
+}

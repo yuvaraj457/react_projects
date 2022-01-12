@@ -1,6 +1,7 @@
 const express = require('express')
 const { login } = require('./user/loginRoute')
 const { signup } = require('./user/signupRoute')
+const { getUser } = require('./user/userRoute')
 const {upload, productUpload, products, productDetails, addToCart, getCartProducts, productQuantityUpdate, deleteCartProduct} = require('./products')
 const router = express.Router()
 
@@ -21,5 +22,7 @@ router.get('/getCartProducts', getCartProducts)
 router.post('/productQuantityUpdate', productQuantityUpdate)
 
 router.post('/deleteCartProduct', deleteCartProduct)
+
+router.get('/getUser', getUser)
 
 module.exports = router

@@ -1,8 +1,17 @@
+import { getUser } from "../core/apiCalls/user"
 import { loginStatus } from "./actionType"
 
-export const loginAction = (payload) => {
+const loginAction = (setStatus, data) => {
     return {
         type : loginStatus,
-        status : payload
+        status : setStatus,
+        payload : data
+    }
+}
+
+export const fetchUser = () => {
+    return (dispatch) => {
+        getUser()
+        .then(res => dispatch(loginAction(true, res)))
     }
 }

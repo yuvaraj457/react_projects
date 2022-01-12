@@ -21,6 +21,7 @@ import { Link } from 'react-router-dom';
 import { getAuthToken } from './authToken';
 import { Badge } from '@mui/material';
 import { fetchCartProducts } from '../action/cartAction';
+import { fetchUser } from '../action/userAction';
 const pages = ['Mens', 'Womens', 'Electronics'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
@@ -55,7 +56,9 @@ export const NavBar = () => {
   }
 
   React.useEffect(() => {
+    console.log('reloaded')
       dispatch(fetchCartProducts())
+      dispatch(fetchUser())
   },[])
 
   return (

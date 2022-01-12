@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Alert from '@mui/material/Alert';
+import MuiPhoneNumber from "material-ui-phone-number";
 
 
 const theme = createTheme();
@@ -75,6 +76,25 @@ export const SignUp = ({onChange, handleSubmit, errors}) => {
                   error = {!errors.email ? false : true}
                   helperText= {!errors.email ? '' : errors.email}
                 />
+              </Grid>
+              <Grid item xs={12}>
+                <MuiPhoneNumber
+                      required
+                      fullWidth
+                      name="phone"
+                      label="Phone Number"
+                      data-cy="user-phone"
+                      defaultCountry={"in"}
+                      onChange = {(value) => {
+                        const e = {
+                          target : {
+                            name : 'phone',
+                            value  
+                          }
+                        }
+                        return onChange(e)
+                      }}
+                    />
               </Grid>
               <Grid item xs={12}>
                 <TextField

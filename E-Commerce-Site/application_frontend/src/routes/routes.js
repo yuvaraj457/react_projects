@@ -12,6 +12,7 @@ import { getAuthToken } from '../shared/authToken'
 import { WomensProduct } from '../components/products/womensProduct'
 import { ElectronicsProduct } from '../components/products/electronicsProduct'
 import {CartDataContainer} from '../containers/cartContainer/cartDataContainer'
+import UserProfileContainer from '../containers/userContainer/userProfileContainer'
 
 const PrivateRoutes = ({children}) => {
     return(
@@ -32,6 +33,7 @@ export default function AppRouter() {
                 <Route path='/Womens' element = {<WomensProduct/>}/>
                 <Route path = '/Electronics' element = {<ElectronicsProduct/>} />
                 <Route path='/cart' element = {<CartDataContainer/>}/>
+                <Route path='/myAccount' element = {<UserProfileContainer/>}/>
             </Routes>
     )
 }

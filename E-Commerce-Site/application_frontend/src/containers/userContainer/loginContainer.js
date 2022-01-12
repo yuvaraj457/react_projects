@@ -5,7 +5,7 @@ import { login } from '../../core/apiCalls/user'
 import { setAuthToken } from '../../shared/authToken'
 import { loginValidation } from '../../utlis/loginValidation'
 
-import {loginAction} from '../../action/userAction'
+import {fetchUser} from '../../action/userAction'
 
 class LoginContainer extends Component {
     constructor() {
@@ -54,7 +54,7 @@ class LoginContainer extends Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        loginDispatch : () => dispatch(loginAction(true))
+        loginDispatch : () => dispatch(fetchUser(true))
     }
 }
 

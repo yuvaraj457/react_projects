@@ -1,14 +1,17 @@
 import { loginStatus, cart } from "../action/actionType"
 
 const initialState = {
-    isLogin : false
+    isLogin : false,
+    userDetails : []
 }
 
 export const userReducer = (state = initialState, action)=>{
     switch(action.type) {
         case loginStatus:
             return {
-                isLogin : action.status
+                ...state,
+                isLogin : action.status,
+                userDetails  : action.payload
             }
         default:
             return state
