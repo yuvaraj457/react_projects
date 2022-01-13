@@ -1,5 +1,6 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux'
+
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
@@ -13,8 +14,64 @@ import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { Link } from 'react-router-dom';
+import { Grid } from '@mui/material';
 
-function Row({row, user}) {
+function Row({ row, user }) {
+  let profile = '';
+  if (row === 'My Profile') {
+    profile = user
+    delete profile['cartProducts']
+  }
+
+  const { cartProductDetails } = useSelector(state => state.cartReducer)
+
+  const selectedOption = (option) => {
+    if (option === 'My Profile') {
+      const data = <>
+        <TableBody>
+          {Object.keys(profile).map((key, index) =>
+            <TableRow key={index}>
+              <TableCell align="center">
+                <b>{key.toUpperCase()}</b>
+              </TableCell>
+              <TableCell align="center">
+                 <Grid container justifyContent={'space-between'}>
+                     <Grid item>
+                        {profile[key]}
+                    </Grid>
+                    <Grid item>
+                        {(key === 'phone' || key === 'address') && <Link to=''>Edit</Link>}
+                    </Grid>
+                </Grid> 
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </>
+      return data
+    }
+
+    else if (option === 'My Cart') {
+      const data = <>
+        <TableHead>
+          <TableRow>
+            <TableCell>Products</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {cartProductDetails.map((item, index) =>
+            <TableRow key={index}>
+              <TableCell align="center">
+                {item.productName.toUpperCase()}
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </>
+      return data
+    }
+  }
+
   const [open, setOpen] = React.useState(false);
   return (
     <React.Fragment>
@@ -27,30 +84,18 @@ function Row({row, user}) {
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
-                {row}
+          {row}
         </TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1, padding:3 }}>
-              
-              <Table size="small" aria-label="purchases">
-                  <TableHead>
-                     <Link to=''>Edit</Link> 
-                  </TableHead>
-                <TableBody>
-                   {
-                    Object.keys(user).map((key, index) => 
-                        <TableRow key={index}>
-                            <TableCell align="center">
-                            {key.toUpperCase()}
-                            </TableCell>
-                            <TableCell align="center">{user[key]}</TableCell>
-                        </TableRow>
-                        )
-                   }  
-                </TableBody>
+            <Box sx={{ margin: 1, padding: 3 }}>
+
+              <Table  aria-label="purchases">
+                {
+                  selectedOption(row)
+                }
               </Table>
             </Box>
           </Collapse>
@@ -61,17 +106,16 @@ function Row({row, user}) {
 }
 
 const rows = [
-'Profile'
+  'My Profile', 'My Cart'
 ];
 
-export const ProfileCard = ({user}) => {
-    console.log(user)
+export const ProfileCard = ({ user }) => {
   return (
     <TableContainer component={Paper}>
-      <Table aria-label="collapsible table">
+      <Table  aria-label="collapsible table">
         <TableBody>
           {rows.map((row) => (
-            <Row key={row} row={row} user={user}/>
+            <Row key={row} row={row} user={user} />
           ))}
         </TableBody>
       </Table>

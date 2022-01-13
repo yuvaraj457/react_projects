@@ -12,26 +12,24 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-
 import TwitterIcon from '@mui/icons-material/Twitter';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
+import { Badge } from '@mui/material';
+
 
 import logo from '../assets/images/logo.png'
 import { Link } from 'react-router-dom';
 import { getAuthToken } from './authToken';
-import { Badge } from '@mui/material';
 import { fetchCartProducts } from '../action/cartAction';
 import { fetchUser } from '../action/userAction';
 const pages = ['Mens', 'Womens', 'Electronics'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = [ 'MyAccount', 'Dashboard', 'Logout'];
 
 export const NavBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const dispatch = useDispatch()
-
-  // dispatch(fetchCartProducts())
 
   const { isLogin } = useSelector(state => state.userReducer)
   const {cartProducts} = useSelector(state => state.cartReducer)
@@ -56,7 +54,6 @@ export const NavBar = () => {
   }
 
   React.useEffect(() => {
-    console.log('reloaded')
       dispatch(fetchCartProducts())
       dispatch(fetchUser())
   },[])
@@ -172,7 +169,7 @@ export const NavBar = () => {
                 >
                   {settings.map((setting) => (
                     <MenuItem key={setting} onClick={handleCloseNavMenu}>
-                      <Typography textAlign="center">{setting}</Typography>
+                      <Typography textAlign="center"><Link to={setting} style={{ textDecoration: 'none' }}>{setting}</Link></Typography>
                     </MenuItem>
                   ))}
                 </Menu>

@@ -33,7 +33,7 @@ export default function AppRouter() {
                 <Route path='/Womens' element = {<WomensProduct/>}/>
                 <Route path = '/Electronics' element = {<ElectronicsProduct/>} />
                 <Route path='/cart' element = {<CartDataContainer/>}/>
-                <Route path='/myAccount' element = {<UserProfileContainer/>}/>
+                <Route path='/MyAccount' element = {<UserProfileContainer/>}/>
             </Routes>
     )
 }

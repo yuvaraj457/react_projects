@@ -20,7 +20,7 @@ app.use(expressJWT({
     secret: process.env.TOKEN_SECRET,
     algorithms: ['HS256'],
     getToken: req => req.cookies.token
-}).unless({ path: ['/login', '/logout'] }))
+}).unless({ path: ['/login','/signup', '/logout'] }))
 
 app.use('/', indexRouter)
 
