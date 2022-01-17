@@ -17,7 +17,9 @@ module.exports = [
         method : 'POST',
         path : '/signup',
         handler : signup,
-        
+        options : {
+            auth : false
+        }
     }
 
 ]

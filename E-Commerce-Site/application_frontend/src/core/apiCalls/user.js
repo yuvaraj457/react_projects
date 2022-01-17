@@ -3,6 +3,7 @@ import {url} from "../../config"
 
 export const signup = async (formData) => {
     const data = await axiosInstance.post(url.signup, formData)
+    console.log(data)
     return data
 }
 

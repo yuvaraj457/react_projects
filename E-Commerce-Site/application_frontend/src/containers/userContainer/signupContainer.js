@@ -8,7 +8,7 @@ export default class SignupContainer extends Component {
         super();
         this.state = {
             formData: {},
-            errors: {}
+            errors: []
         }
     }
 
@@ -23,15 +23,24 @@ export default class SignupContainer extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-         const errors = signupValidation(this.state.formData)
-         this.setState({errors})
-         if(errors.isValid){
-             signup(this.state.formData)
+        //  const errors = signupValidation(this.state.formData)
+        //  this.setState({errors})
+        //  if(errors.isValid){
+        //      signup(this.state.formData)
              
-         }
-      };
+        //  }
+        signup(this.state.formData)
+        .then(res => console.log(res))
+        .catch(async err => {
+         const errors =  err.response.data
+         const errorLst = {}
+         await errors.map(item => errorLst[item.path[0]] = item.message)
+         this.setState({errors : errorLst})
+        })
+    }
 
     render() {
+        
         return (
             <SignUp onChange = {this.onChange} handleSubmit={this.handleSubmit} errors={this.state.errors}/>
         )
