@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import Login from '../../components/loginPage/login'
 import { login } from '../../core/apiCalls/user'
 import { setAuthToken } from '../../shared/authToken'
-import { loginValidation } from '../../utlis/loginValidation'
 
 import {fetchUser} from '../../action/userAction'
 
@@ -27,22 +26,34 @@ class LoginContainer extends Component {
 
      handleSubmit = (event) => {
         event.preventDefault()
-        const errors = loginValidation(this.state.formData)
-        if(errors.isValid){
-            login(this.state.formData)
-            .then((res) => {
-                this.setState({errors : {}})
-                setAuthToken(res.token)
-                this.props.loginDispatch()
-                this.props.navigate('/')
-            })
-            .catch(() => this.setState({ errors: { authFail: 'Invaild email or password' } }))
-        }
-        else{
-            this.setState({
-                errors
-            })
-        }
+        login(this.state.formData)
+        .then((res) => {
+            setAuthToken(res.token)
+            this.props.loginDispatch()
+            this.props.navigate('/')
+        })
+        .catch(error => {
+            const errors =  error.response.data
+            const errorLst = {}
+            errors.map(item => errorLst[item.path[0]] = item.message)
+            this.setState({errors : errorLst})
+        })
+        // const errors = loginValidation(this.state.formData)
+        // if(errors.isValid){
+        //     login(this.state.formData)
+        //     .then((res) => {
+        //         this.setState({errors : {}})
+        //         setAuthToken(res.token)
+        //         this.props.loginDispatch()
+        //         this.props.navigate('/')
+        //     })
+        //     .catch(() => this.setState({ errors: { authFail: 'Invaild email or password' } }))
+        // }
+        // else{
+        //     this.setState({
+        //         errors
+        //     })
+        // }
       }
 
     render() {

@@ -9,4 +9,9 @@ const schema = Joi.object({
     confirmPassword : Joi.any().equal(Joi.ref('password')).required().label('confirm password').messages({ 'any.only': 'Password Mismatch' })
 })
 
-module.exports = {schema}
+const loginSchema = Joi.object({
+    email : Joi.string().email().required(),
+    password : Joi.string().required()
+})
+
+module.exports = {schema, loginSchema}

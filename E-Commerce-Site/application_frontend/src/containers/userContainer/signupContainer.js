@@ -31,10 +31,10 @@ export default class SignupContainer extends Component {
         //  }
         signup(this.state.formData)
         .then(res => console.log(res))
-        .catch(async err => {
+        .catch( err => {
          const errors =  err.response.data
          const errorLst = {}
-         await errors.map(item => errorLst[item.path[0]] = item.message)
+         errors.map(item => errorLst[item.path[0]] = item.message)
          this.setState({errors : errorLst})
         })
     }

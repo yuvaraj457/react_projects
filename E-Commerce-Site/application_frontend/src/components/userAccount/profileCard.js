@@ -37,10 +37,13 @@ function Row({ row, user }) {
               <TableCell align="center">
                  <Grid container justifyContent={'space-between'}>
                      <Grid item>
-                        {profile[key]}
+                        {key === 'address' ?
+                        profile[key].map((item => item['No']+', ' + item['Area']+', '+ item['locality']+', '+item['pincode']+', '+ item['state'])) 
+                        :
+                        profile[key]}
                     </Grid>
                     <Grid item>
-                        {(key === 'phone' || key === 'address') && <Link to=''>Edit</Link>}
+                        {(key === 'phone' || key === 'address') && <Link to={`/edit/${key}`}>Edit</Link>}
                     </Grid>
                 </Grid> 
               </TableCell>

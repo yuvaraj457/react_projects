@@ -3,7 +3,6 @@ import {url} from "../../config"
 
 export const signup = async (formData) => {
     const data = await axiosInstance.post(url.signup, formData)
-    console.log(data)
     return data
 }
 
@@ -14,5 +13,15 @@ export const login = async (formData) => {
 
 export const getUser = async () => {
     const {data} = await axiosInstance.get(url.getUser)
+    return data
+}
+
+export const editPhone = async (e) => {
+    const {data} = await axiosInstance.post(url.editPhone, {phone : e})
+    return data
+}
+
+export const editAddress = async(e) => {
+    const {data} = await axiosInstance.post(url.editAddress, e)
     return data
 }

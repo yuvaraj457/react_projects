@@ -1,5 +1,5 @@
 import React from 'react'
-import {Routes, Route, Navigate,  useNavigate, useParams} from 'react-router-dom'
+import {Routes, Route, Navigate,  useNavigate} from 'react-router-dom'
 import Home from '../components/homePage/home'
 import {ProductDetailedViewContainer} from '../containers/productsContainer/productDetailedViewContainer'
 
@@ -13,6 +13,7 @@ import { WomensProduct } from '../components/products/womensProduct'
 import { ElectronicsProduct } from '../components/products/electronicsProduct'
 import {CartDataContainer} from '../containers/cartContainer/cartDataContainer'
 import UserProfileContainer from '../containers/userContainer/userProfileContainer'
+import {EditProfileContainer} from '../containers/userContainer/editProfileContainer'
 
 const PrivateRoutes = ({children}) => {
     return(
@@ -22,7 +23,6 @@ const PrivateRoutes = ({children}) => {
 
 export default function AppRouter() {
     const navigate = useNavigate()
-    const params = useParams()
     return (
             <Routes>
                 <Route path='/login' element = {<LoginContainer navigate={navigate} />}/>
@@ -34,6 +34,7 @@ export default function AppRouter() {
                 <Route path = '/Electronics' element = {<ElectronicsProduct/>} />
                 <Route path='/cart' element = {<CartDataContainer/>}/>
                 <Route path='/MyAccount' element = {<UserProfileContainer/>}/>
+                <Route path='/edit/:field' element = {<EditProfileContainer/>}/>
             </Routes>
     )
 }
