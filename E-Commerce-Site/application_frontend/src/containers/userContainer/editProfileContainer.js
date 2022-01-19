@@ -43,5 +43,4 @@ export const EditProfileContainer = () => {
                 <EditAddressCard onChangeAddress={onChangeAddress} handleSubmitAddress={handleSubmitAddress} />
             )
     }
-    
 }

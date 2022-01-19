@@ -17,7 +17,6 @@ const login = async (req, h) => {
         const data = await userDetailsModel.findOne({ userEmail: email });
 
         if(!data || !(await  bcrypt.compare(password, data.password))){
-            // throw Boom.unauthorized()
             return h.response([{message : 'Invalid email or password', path : ['authFail']}]).code(401)
         }
 

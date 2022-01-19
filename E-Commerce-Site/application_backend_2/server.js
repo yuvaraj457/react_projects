@@ -1,10 +1,13 @@
 require('dotenv').config()
 
 const Hapi = require('@hapi/hapi')
+const jwt = require('jsonwebtoken')
+const Path = require('path')
 
 const Routes = require('./routes')
 const { dbConfig } = require('./config')
-const jwt = require('jsonwebtoken')
+
+
 const userDetailsModel = require('./models/userModel')
 
 const init = async () => {
@@ -12,7 +15,10 @@ const init = async () => {
         port: 5000,
         host: 'localhost',
         routes: {
-            cors: {origin: ['*'],credentials: true}
+            cors: {origin: ['*'],credentials: true},
+            files: {
+                relativeTo: Path.join(__dirname, 'public')
+            }
         }
     })
 
@@ -31,6 +37,7 @@ const init = async () => {
     }
 
     await server.register(require('@hapi/cookie'))
+    await server.register(require('@hapi/inert'))
 
     server.auth.strategy('session', 'cookie', {
         cookie: {
