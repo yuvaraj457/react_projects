@@ -17,7 +17,7 @@ const init = async () => {
         routes: {
             cors: {origin: ['*'],credentials: true},
             files: {
-                relativeTo: Path.join(__dirname, 'public')
+                relativeTo: Path.join(__dirname, 'uploads')
             }
         }
     })
@@ -28,8 +28,8 @@ const init = async () => {
         isHttpOnly: true
     })
 
-    const validate = async (request, session) => {
-        const data = await userDetailsModel.findOne({ _id : session.id });
+    const validate = async (request, sid) => {
+        const data = await userDetailsModel.findOne({ _id : sid });
         if(!data){
             return {valid : false}
         }

@@ -38,16 +38,18 @@ export const CartDataContainer = () => {
 
     const productQuantityHandler = (value) => {
         if(alertMessage){
-            return 0
+            return 1
         }
         const {quantity} =  productIds.filter(item => item.productId === value)[0]
         return quantity
+        
+        
     }
 
     const deleteCartProductHandler = (id) => {
         deleteCartProduct(id)
         .then((res) => setAlertMessage(res))
-        setTimeout(() => setAlertMessage(false), 2000)
+        setTimeout(() => setAlertMessage(false), 6000)
     }
 
 

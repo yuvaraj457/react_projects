@@ -20,7 +20,7 @@ const login = async (req, h) => {
             return h.response([{message : 'Invalid email or password', path : ['authFail']}]).code(401)
         }
 
-        req.cookieAuth.set({id : data._id})
+        req.cookieAuth.set( data._id)
         return {id : data._id}
 }
 

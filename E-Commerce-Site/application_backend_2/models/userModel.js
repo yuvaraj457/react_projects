@@ -6,7 +6,9 @@ const userDetails = new Schema({
     lastName : {type : String, required : true},
     email : {type : String, required : true},
     password : {type : String, required : true},
-    cartProducts : []
+    phone : {type : String, required : true},
+    cartProducts : [],
+    address : []
 })
 
 const userDetailsModel = mongoose.model('userDetails', userDetails)

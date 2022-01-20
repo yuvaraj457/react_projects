@@ -14,6 +14,7 @@ import { ElectronicsProduct } from '../components/products/electronicsProduct'
 import {CartDataContainer} from '../containers/cartContainer/cartDataContainer'
 import UserProfileContainer from '../containers/userContainer/userProfileContainer'
 import {EditProfileContainer} from '../containers/userContainer/editProfileContainer'
+import AutoGridNoWrap from '../components/userAccount/addressListCard'
 
 const PrivateRoutes = ({children}) => {
     return(
@@ -35,6 +36,7 @@ export default function AppRouter() {
                 <Route path='/cart' element = {<CartDataContainer/>}/>
                 <Route path='/MyAccount' element = {<UserProfileContainer/>}/>
                 <Route path='/edit/:field' element = {<EditProfileContainer/>}/>
+                <Route path='/card' element = {<AutoGridNoWrap/>} />
             </Routes>
     )
 }

@@ -56,7 +56,7 @@ export const NavBar = () => {
   React.useEffect(() => {
       dispatch(fetchCartProducts())
       dispatch(fetchUser())
-  },[])
+  },[dispatch])
 
   return (
     <AppBar style={style} position="static" >
