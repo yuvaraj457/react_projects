@@ -2,7 +2,7 @@ const { addToCart, getCartProducts, productQuantityUpdate, deleteCartProduct } =
 const { products, productsUpload, productDetails } = require('./products/product')
 const { login } = require('./user/loginRoute')
 const { signup } = require('./user/signupRoute');
-const { getUser } = require('./user/userRoute');
+const { getUser, editAddress, editPhone } = require('./user/userRoute');
 // const {upload, productUpload, products, productDetails, addToCart, getCartProducts} = require('./products')
 
 module.exports = [
@@ -81,17 +81,19 @@ module.exports = [
         method : 'GET',
         path : '/getUser',
         handler : getUser
+    },
+    {
+        method : 'POST',
+        path : '/editPhone',
+        handler : editPhone
+    },
+    {
+        method : 'POST',
+        path : '/editAddress',
+        handler : editAddress
     }
 
 ]
-
-
-
-// router.post('/editPhone', editPhone)
-
-// router.post('/editAddress', editAddress)
-
-// module.exports = router
 
 
 

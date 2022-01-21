@@ -22,14 +22,14 @@ export const EditProfileContainer = () => {
     const handleSubmitAddress = e => {
         e.preventDefault()
         editAddress(address)
-        .then(res => navigate('/myAcoount'))
+        .then(res => navigate('/MyAccount'))
         .catch(error => console.log(error))
     }
 
     const handleSubmitPhone = e => {
         e.preventDefault()
         editPhone(phone)
-            .then(res => navigate('/myAcoount'))
+            .then(res => navigate('/MyAccount'))
             .catch(error => console.log(error))
     }
 
