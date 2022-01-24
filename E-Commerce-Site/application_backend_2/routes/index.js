@@ -2,7 +2,7 @@ const { addToCart, getCartProducts, productQuantityUpdate, deleteCartProduct } =
 const { products, productsUpload, productDetails } = require('./products/product')
 const { login } = require('./user/loginRoute')
 const { signup } = require('./user/signupRoute');
-const { getUser, editAddress, editPhone } = require('./user/userRoute');
+const { getUser, editAddress, editPhone, activeAddress } = require('./user/userRoute');
 // const {upload, productUpload, products, productDetails, addToCart, getCartProducts} = require('./products')
 
 module.exports = [
@@ -91,6 +91,11 @@ module.exports = [
         method : 'POST',
         path : '/editAddress',
         handler : editAddress
+    },
+    {
+        method : 'GET',
+        path : '/activeAddress',
+        handler : activeAddress
     }
 
 ]

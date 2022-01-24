@@ -25,3 +25,8 @@ export const editAddress = async(e) => {
     const {data} = await axiosInstance.post(url.editAddress, e)
     return data
 }
+
+export const activeAddress = async (e) => {
+    const {data} = await axiosInstance.post(url.activeAddress, {activeAddress : e})
+    return data
+}

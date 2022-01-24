@@ -8,7 +8,8 @@ const userDetails = new Schema({
     password : {type : String, required : true},
     phone : {type : String, required : true},
     cartProducts : [],
-    address : []
+    address : [],
+    activeAddress : {type : String, required : true}
 })
 
 const userDetailsModel = mongoose.model('userDetails', userDetails)

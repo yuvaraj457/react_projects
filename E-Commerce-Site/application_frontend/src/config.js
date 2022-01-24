@@ -4,5 +4,6 @@ export const url = {
         login : '/login',
         getUser: '/getUser',
         editPhone : '/editPhone',
-        editAddress : '/editAddress'
+        editAddress : '/editAddress',
+        activeAddress : '/activeAddress'
     }

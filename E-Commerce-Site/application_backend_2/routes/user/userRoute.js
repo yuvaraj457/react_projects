@@ -1,4 +1,5 @@
 const userDetailsModel = require('../../models/userModel')
+const { addressFormSchema } = require('../../validationSchema')
 
 const getUser = async(req, h) => {
     const {sid} = req.state
@@ -25,13 +26,19 @@ const editPhone = async(req, h) => {
 
 const editAddress = async(req, h) => {
     const address = req.payload
-    console.log(address)
+    console.log(address, req.state)
     const {sid} = req.state
+
+    const {value, error} = addressFormSchema.validate(req.payload, {abortEarly: false})
+            if(error){
+                return h.response(error.details).code(422)
+            }
+
     try{
-        userDetailsModel.updateMany(
+        await userDetailsModel.updateMany(
             {_id : sid},
             {
-                $addToSet : {address : {address}}
+                $addToSet : {address}
             }
         )
         return h.response('updated').code(200)
@@ -42,4 +49,21 @@ const editAddress = async(req, h) => {
 
 }
 
-module.exports = {getUser, editPhone, editAddress}
+const activeAddress = (req, h) => {
+    const {activeAddress} = req.payload
+    const {sid} = req.state
+    try{
+       await userDetailsModel.updateMany(
+            {_id : sid},
+            {
+                $set : {activeAddress}
+            }
+        )
+        return h.response('updated').code(200)
+    }
+    catch(error){
+        return error
+    }
+}
+
+module.exports = {getUser, editPhone, editAddress, activeAddress}

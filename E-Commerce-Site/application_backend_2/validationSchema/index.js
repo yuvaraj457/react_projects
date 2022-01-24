@@ -14,4 +14,12 @@ const loginSchema = Joi.object({
     password : Joi.string().required()
 })
 
-module.exports = {schema, loginSchema}
+const addressFormSchema = Joi.object({
+    'Plot no/House no' : Joi.number().required(),
+    area : Joi.string().required(),
+    locality : Joi.string().required(),
+    state : Joi.string().required(),
+    pincode : Joi.number().required()
+})
+
+module.exports = {schema, loginSchema, addressFormSchema}

@@ -23,12 +23,6 @@ export default class SignupContainer extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        //  const errors = signupValidation(this.state.formData)
-        //  this.setState({errors})
-        //  if(errors.isValid){
-        //      signup(this.state.formData)
-             
-        //  }
         signup(this.state.formData)
         .then(res => console.log(res))
         .catch( err => {
