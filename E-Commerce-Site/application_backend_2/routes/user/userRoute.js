@@ -49,7 +49,7 @@ const editAddress = async(req, h) => {
 
 }
 
-const activeAddress = (req, h) => {
+const activeAddress = async (req, h) => {
     const {activeAddress} = req.payload
     const {sid} = req.state
     try{

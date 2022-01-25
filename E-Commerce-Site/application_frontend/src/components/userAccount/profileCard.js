@@ -31,22 +31,24 @@ function Row({ row, user }) {
         <TableBody>
           {Object.keys(profile).map((key, index) =>
             <TableRow key={index}>
-              <TableCell align="center">
-                <b>{key.toUpperCase()}</b>
-              </TableCell>
-              <TableCell align="center">
-                 <Grid container justifyContent={'space-between'}>
-                     <Grid item>
-                        {key === 'address' ?
-                        profile[key].map((item => item['No']+', ' + item['Area']+', '+ item['locality']+', '+item['pincode']+', '+ item['state'])) 
-                        :
-                        profile[key]}
+              {(key !== 'address') &&
+                <>
+                  <TableCell align="center">
+                    <b>{key.toUpperCase()}</b>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Grid container justifyContent={'space-between'}>
+                      <Grid item>
+                        {profile[key]}
+                      </Grid>
+                      <Grid item>
+                        {(key === 'phone' || key === 'activeAddress') && <Link to={`/edit/${key}`}>Edit</Link>}
+                      </Grid>
                     </Grid>
-                    <Grid item>
-                        {(key === 'phone' || key === 'address') && <Link to={`/edit/${key}`}>Edit</Link>}
-                    </Grid>
-                </Grid> 
-              </TableCell>
+                  </TableCell>
+                </>
+              }
+
             </TableRow>
           )}
         </TableBody>
@@ -95,7 +97,7 @@ function Row({ row, user }) {
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1, padding: 3 }}>
 
-              <Table  aria-label="purchases">
+              <Table aria-label="purchases">
                 {
                   selectedOption(row)
                 }
@@ -115,7 +117,7 @@ const rows = [
 export const ProfileCard = ({ user }) => {
   return (
     <TableContainer component={Paper}>
-      <Table  aria-label="collapsible table">
+      <Table aria-label="collapsible table">
         <TableBody>
           {rows.map((row) => (
             <Row key={row} row={row} user={user} />

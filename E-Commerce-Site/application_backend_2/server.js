@@ -28,11 +28,14 @@ const init = async () => {
         isHttpOnly: true
     })
 
-    const validate = async (request, sid) => {
-        const data = await userDetailsModel.findOne({ _id : sid });
-        if(!data){
-            return {valid : false}
-        }
+    const validate = async (req, token) => {
+        // const sid = jwt.verify(token, process.env.TOKEN_SECRET)
+        console.log(token)
+        // const data = await userDetailsModel.findOne({ _id : sid });
+        // if(!data){
+        //     return {valid : false}
+        // }
+
         return {valid: true, credential : data}
     }
 

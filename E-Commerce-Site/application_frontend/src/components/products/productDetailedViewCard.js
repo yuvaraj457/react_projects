@@ -8,7 +8,7 @@ import { apiTarget } from '../../config';
 import { Button, Grid, Stack } from '@mui/material';
 import StarRatings from 'react-star-ratings';
 
-export default function ProductDetailedViewCard({ product }) {
+export default function ProductDetailedViewCard({ product, addToCartHandler }) {
     return (
         <Card sx={{ display: 'flex' }}>
             <Grid container spacing={2}>
@@ -41,7 +41,7 @@ export default function ProductDetailedViewCard({ product }) {
                                 Price : {product.productPrice}
                             </Typography>
                             <Stack spacing={1} direction='row'>
-                                <Button size='small' variant="contained" color='cartButtonColor'>
+                                <Button size='small' variant="contained" color='cartButtonColor' onClick={() => addToCartHandler(product._id)}>
                                     Cart
                                 </Button>
                                 <Button size='small' variant="contained" color="buyButtonColor">

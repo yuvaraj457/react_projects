@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config()
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const Boom = require('@hapi/boom')
@@ -20,8 +20,11 @@ const login = async (req, h) => {
             return h.response([{message : 'Invalid email or password', path : ['authFail']}]).code(401)
         }
 
-        req.cookieAuth.set( data._id)
-        return {id : data._id}
+        const authToken = jwt.sign({_id:data._id}, process.env.TOKEN_SECRET)
+
+        req.cookieAuth.set(authToken)
+
+        return {authToken}
 }
 
 

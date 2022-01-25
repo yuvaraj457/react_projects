@@ -49,7 +49,7 @@ export const CartDataContainer = () => {
     const deleteCartProductHandler = (id) => {
         deleteCartProduct(id)
         .then((res) => setAlertMessage(res))
-        setTimeout(() => setAlertMessage(false), 6000)
+        setTimeout(() => setAlertMessage(false), 8000)
     }
 
 

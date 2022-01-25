@@ -93,7 +93,7 @@ module.exports = [
         handler : editAddress
     },
     {
-        method : 'GET',
+        method : 'POST',
         path : '/activeAddress',
         handler : activeAddress
     }

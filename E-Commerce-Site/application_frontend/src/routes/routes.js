@@ -12,7 +12,7 @@ import { getAuthToken } from '../shared/authToken'
 import { WomensProduct } from '../components/products/womensProduct'
 import { ElectronicsProduct } from '../components/products/electronicsProduct'
 import {CartDataContainer} from '../containers/cartContainer/cartDataContainer'
-import UserProfileContainer from '../containers/userContainer/userProfileContainer'
+import {UserProfileContainer} from '../containers/userContainer/userProfileContainer'
 import {EditProfileContainer} from '../containers/userContainer/editProfileContainer'
 
 
@@ -29,6 +29,9 @@ export default function AppRouter() {
                 <Route path='/login' element = {<LoginContainer navigate={navigate} />}/>
                 <Route path='/signup' element = {<SignupContainer/>} />
                 <Route path='/' element = {<PrivateRoutes><Home/></PrivateRoutes>} />
+                <Route path='/mens/productDetails/:productId' element = {<ProductDetailedViewContainer/>}/>
+                <Route path='/womens/productDetails/:productId' element = {<ProductDetailedViewContainer/>}/>
+                <Route path='/electronics/productDetails/:productId' element = {<ProductDetailedViewContainer/>}/>
                 <Route path='/productDetails/:productId' element = {<ProductDetailedViewContainer/>}/>
                 <Route path='/Mens' element = {<MensProduct/>}/>
                 <Route path='/Womens' element = {<WomensProduct/>}/>

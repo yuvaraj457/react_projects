@@ -28,7 +28,7 @@ class LoginContainer extends Component {
         event.preventDefault()
         login(this.state.formData)
         .then((res) => {
-            setAuthToken(res.token)
+            setAuthToken(res.authToken)
             this.props.loginDispatch()
             this.props.navigate('/')
         })
@@ -38,22 +38,6 @@ class LoginContainer extends Component {
             errors.map(item => errorLst[item.path[0]] = item.message)
             this.setState({errors : errorLst})
         })
-        // const errors = loginValidation(this.state.formData)
-        // if(errors.isValid){
-        //     login(this.state.formData)
-        //     .then((res) => {
-        //         this.setState({errors : {}})
-        //         setAuthToken(res.token)
-        //         this.props.loginDispatch()
-        //         this.props.navigate('/')
-        //     })
-        //     .catch(() => this.setState({ errors: { authFail: 'Invaild email or password' } }))
-        // }
-        // else{
-        //     this.setState({
-        //         errors
-        //     })
-        // }
       }
 
     render() {

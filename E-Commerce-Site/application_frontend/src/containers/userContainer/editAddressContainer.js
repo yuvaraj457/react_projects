@@ -1,17 +1,19 @@
-import { Box, Button, Grid, TextField } from '@mui/material'
+import { Box, Button, Grid } from '@mui/material'
 import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { fetchUser } from '../../action/userAction';
+import {  useSelector } from 'react-redux'
+
+
 import { AddAddressCard } from '../../components/userAccount/addAddressCard';
 import { AddressListCard } from '../../components/userAccount/addressListCard';
 import { activeAddress, editAddress } from '../../core/apiCalls/user';
 
 
-export const EditAddressContainer = ({navigate}) => {
+export const EditAddressContainer = ({navigate, renderUser}) => {
     const [selectedValue, setSelectedValue] = useState('a')
     const [newAddress, setNewAddress] = useState({})
     const [errors, setErrors] = useState({})
-    const dispatch = useDispatch()
+    const { address } = useSelector(state => state.userReducer.userDetails)
+    
 
     const handleChange = (event) => {
         setSelectedValue(event.target.value)
@@ -29,7 +31,7 @@ export const EditAddressContainer = ({navigate}) => {
         e.preventDefault()
         editAddress(newAddress)
         .then(() => {
-            dispatch(fetchUser())
+            renderUser()
             setErrors({})
         })
         .catch(err => {
@@ -44,7 +46,10 @@ export const EditAddressContainer = ({navigate}) => {
     const handleActiveAddress = e => {
         e.preventDefault()
         activeAddress(selectedValue)
-        .then(() => navigate('/myAccount'))
+        .then(() =>  {
+            renderUser()
+            navigate('/myAccount')
+        })
         .catch(error => console.log(error))
 
     }
@@ -53,7 +58,6 @@ export const EditAddressContainer = ({navigate}) => {
         setNewAddress({...newAddress,[e.target.name] : e.target.value})
     }
 
-    const { address } = useSelector(state => state.userReducer.userDetails)
     return (
         <Box container
             sx={{

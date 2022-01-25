@@ -5,8 +5,8 @@ const addToCart = async (req, h) => {
     const {sid} = req.state
     try{
         await userDetailsModel.updateMany(
-            {_id : sid},
-            {$addToSet : {cartProducts : {productId, quantity : 1 }}}
+            {_id : sid, 'cartProducts.productId':{$ne : productId}},
+            {$push : {cartProducts : {productId, quantity : 1 }}}
             )
         return h.response('Added to cart successfully').code(201)
     }

@@ -3,27 +3,32 @@ import { useDispatch } from 'react-redux'
 import { useParams, useNavigate } from "react-router-dom"
 import { fetchUser } from '../../action/userAction'
 
+
 import { EditProfileCard } from '../../components/userAccount/editPhoneCard'
-import { editAddress, editPhone } from '../../core/apiCalls/user'
+import { editPhone } from '../../core/apiCalls/user'
 import { EditAddressContainer } from './editAddressContainer'
 
 export const EditProfileContainer = () => {
     const {field} = useParams()
     const [phone, setPhone] = useState('')
     const navigate = useNavigate() 
+    const dispatch = useDispatch()
 
     const onChangePhone = e => {
         setPhone(e)
     }
 
-    const onChangeAddress = e => {
-        setAddress({...address,[e.target.name] : e.target.value})
+    const renderUser = () => {
+        dispatch(fetchUser())
     }
 
     const handleSubmitPhone = e => {
         e.preventDefault()
         editPhone(phone)
-            .then(() => navigate('/MyAccount'))
+            .then(() => {
+                renderUser()
+                navigate('/MyAccount')
+            })
             .catch(error => console.log(error))
     }
 
@@ -32,9 +37,13 @@ export const EditProfileContainer = () => {
             return (
                 <EditProfileCard onChangePhone={onChangePhone} handleSubmitPhone={handleSubmitPhone} />
             )
-        case 'address':
+
+        case 'activeAddress':
             return (
-                <EditAddressContainer navigate={navigate}/>
+                <EditAddressContainer navigate={navigate} renderUser={renderUser}/>
             )
+
+        default:
+            return <></>
     }
 }

@@ -5,19 +5,11 @@ import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, Stack } from '@mui/material';
 
 import {Link} from 'react-router-dom'
-import {useDispatch} from 'react-redux'
 
 import StarRatings from 'react-star-ratings'
 import { apiTarget } from '../../config'
-// import { addToCart } from '../../core/apiCalls/products';
-import {addCartProducts} from '../../action/cartAction'
 
-export default function ProductCard({ product }) {
-  const dispatch = useDispatch()
-
-  const addToCartHandler = (id) => {
-    dispatch(addCartProducts(id))
-  }
+export default function ProductCard({ product, addToCartHandler }) {
 
   return (
     <Card variant="outlined" sx={{ width: 200 }}>
