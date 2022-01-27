@@ -1,29 +1,31 @@
 import { Box, Button, Grid } from '@mui/material'
 import React, { useState } from 'react'
 import {  useSelector } from 'react-redux'
-
+import DeleteIcon from '@mui/icons-material/Delete'
 
 import { AddAddressCard } from '../../components/userAccount/addAddressCard';
 import { AddressListCard } from '../../components/userAccount/addressListCard';
-import { activeAddress, editAddress } from '../../core/apiCalls/user';
+import { activeAddress, deleteAddress, editAddress } from '../../core/apiCalls/user';
 
 
 export const EditAddressContainer = ({navigate, renderUser}) => {
-    const [selectedValue, setSelectedValue] = useState('a')
+    const [selectedValue, setSelectedValue] = useState('')
+    const [selectedAddress, setSelectedAddress] = useState('')
     const [newAddress, setNewAddress] = useState({})
     const [errors, setErrors] = useState({})
     const { address } = useSelector(state => state.userReducer.userDetails)
     
 
-    const handleChange = (event) => {
+    const handleChange = (event, address) => {
         setSelectedValue(event.target.value)
+        setSelectedAddress(address)
     }
 
-    const controlProps = (item) => ({
+    const controlProps = (item, address) => ({
         checked: selectedValue === item,
-        onChange: handleChange,
+        onChange: (e) => handleChange(e, address),
         value: item,
-        name: 'color-radio-button-demo',
+        name: 'radio-button',
         inputProps: { 'aria-label': item },
     })
 
@@ -43,8 +45,7 @@ export const EditAddressContainer = ({navigate, renderUser}) => {
         })
     }
 
-    const handleActiveAddress = e => {
-        e.preventDefault()
+    const handleActiveAddress = () => {
         activeAddress(selectedValue)
         .then(() =>  {
             renderUser()
@@ -52,6 +53,11 @@ export const EditAddressContainer = ({navigate, renderUser}) => {
         })
         .catch(error => console.log(error))
 
+    }
+
+    const handleDeleteAddress = () => {
+        deleteAddress(selectedAddress)
+        .then(() => renderUser())
     }
 
     const onChangeAddress = e => {
@@ -69,23 +75,37 @@ export const EditAddressContainer = ({navigate, renderUser}) => {
             <Box component="form" noValidate onSubmit={e => handleSubmitAddress(e)}>
                 <AddAddressCard errors={errors} onChangeAddress={onChangeAddress} />
             </Box>
-
-            <Box component="form" noValidate onSubmit={e => handleActiveAddress(e)}>
-                <Grid container sx={{ maxWidth: '400px' }} spacing={2}>
+            {
+           ( address && address.length > 0) &&
+            <Box>
+                <Grid container  sx={{ maxWidth: '400px' }} spacing={2}>
                     <Grid item>
-                        {address && address.length > 0 && address.map((item, index) => <AddressListCard key={index} controlProps={controlProps} address={item} />)}
+                        {address.map((item, index) => <AddressListCard key={index} controlProps={controlProps} address={item} />)}
                     </Grid>
 
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2, ml: 2 }}
-                    >
-                        Update
-                    </Button>
+                    <Grid item >
+                        <Button
+                            type="submit"
+                            startIcon={<DeleteIcon />}
+                            color="error"
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2, ml: 2 }}
+                            onClick = {() => handleDeleteAddress()}
+                        >
+                            Delete
+                        </Button>
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2, ml: 2 }}
+                            onClick = {() => handleActiveAddress()}
+                        >
+                            Set
+                        </Button>
+                    </Grid>
                 </Grid>
             </Box>
+            }
         </Box>
     )
 }

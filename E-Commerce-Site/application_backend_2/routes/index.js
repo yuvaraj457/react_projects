@@ -2,7 +2,7 @@ const { addToCart, getCartProducts, productQuantityUpdate, deleteCartProduct } =
 const { products, productsUpload, productDetails } = require('./products/product')
 const { login } = require('./user/loginRoute')
 const { signup } = require('./user/signupRoute');
-const { getUser, editAddress, editPhone, activeAddress } = require('./user/userRoute');
+const { getUser, editAddress, editPhone, activeAddress, logout, deleteAddress } = require('./user/userRoute');
 // const {upload, productUpload, products, productDetails, addToCart, getCartProducts} = require('./products')
 
 module.exports = [
@@ -11,9 +11,7 @@ module.exports = [
         path : '/login',
         handler : login,
         options: {
-            auth: {
-                mode: 'try'
-            }
+            auth: false
         }
     },
     {
@@ -50,12 +48,19 @@ module.exports = [
         path: '/static/images/{file}',
         handler: function (request, h) {
             return h.file('images/'+request.params.file);
+        },
+        options : {
+            auth : false
         }
+        
     },
     {
         method : 'GET',
         path : '/productDetails',
-        handler : productDetails
+        handler : productDetails,
+        options : {
+            auth : false
+        }
     },
     {
         method : 'POST',
@@ -80,7 +85,8 @@ module.exports = [
     {
         method : 'GET',
         path : '/getUser',
-        handler : getUser
+        handler : getUser,
+        
     },
     {
         method : 'POST',
@@ -96,7 +102,18 @@ module.exports = [
         method : 'POST',
         path : '/activeAddress',
         handler : activeAddress
-    }
+    },
+    {
+        method : 'POST',
+        path : '/deleteAddress',
+        handler : deleteAddress
+    },
+    {
+        method : 'GET',
+        path : '/logout',
+        handler : logout
+    },
+
 
 ]
 

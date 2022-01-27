@@ -9,7 +9,7 @@ const userDetails = new Schema({
     phone : {type : String, required : true},
     cartProducts : [],
     address : [],
-    activeAddress : {type : String, required : true}
+    activeAddress : {type : String}
 })
 
 const userDetailsModel = mongoose.model('userDetails', userDetails)

@@ -1,56 +1,46 @@
-import { connect } from 'react-redux'
-import React, { Component } from 'react'
+import { useDispatch } from 'react-redux'
+import React, { useState } from 'react'
 import Login from '../../components/loginPage/login'
 import { login } from '../../core/apiCalls/user'
 import { setAuthToken } from '../../shared/authToken'
 
 import {fetchUser} from '../../action/userAction'
+import {  useNavigate } from 'react-router-dom'
 
-class LoginContainer extends Component {
-    constructor() {
-        super();
-        this.state = {
-            formData: {},
-            errors: {}
-        }
-    }
 
-    onChange = e => {
-        this.setState({
-            formData : {
-                ...this.state.formData,
+export const LoginContainer = () => {
+    const navigate = useNavigate()
+    const [formData, setFormData] = useState({})
+    const [errors, setErrors] = useState({})
+    const dispatch = useDispatch()
+
+    const onChange = e => {
+        
+            setFormData({
+                ...formData,
                 [e.target.name] : e.target.value
-            }
-        })
+            }) 
+        
     }
 
-     handleSubmit = (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault()
-        login(this.state.formData)
+        login(formData)
         .then((res) => {
             setAuthToken(res.authToken)
-            this.props.loginDispatch()
-            this.props.navigate('/')
+            dispatch(fetchUser(true))
+            navigate('/')
         })
         .catch(error => {
             const errors =  error.response.data
             const errorLst = {}
             errors.map(item => errorLst[item.path[0]] = item.message)
-            this.setState({errors : errorLst})
+            setErrors(errorLst)
         })
       }
 
-    render() {
         return (
-            <Login onChange = {this.onChange} handleSubmit={this.handleSubmit} errors={this.state.errors}/>
+            <Login onChange = {onChange} handleSubmit={handleSubmit} errors={errors}/>
         )
-    }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        loginDispatch : () => dispatch(fetchUser(true))
-    }
-}
-
-export default connect(null, mapDispatchToProps)(LoginContainer)

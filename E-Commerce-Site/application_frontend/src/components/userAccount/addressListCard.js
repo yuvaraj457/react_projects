@@ -15,8 +15,8 @@ export const AddressListCard = ({address, controlProps}) => {
     <Box sx={{ flexGrow: 1, overflow: 'hidden', px: 3, border : '1px solid grey' }}>
       <Paper sx={{ maxWidth: 400, my: 1, mx: 'auto', p: 2 }}>
         <Grid container wrap="nowrap" spacing={2}>
-          <Grid item>
-          <Radio {...controlProps(addressCard)} />
+          <Grid item alignSelf={'center'}>
+          <Radio {...controlProps(addressCard, address)} />
           </Grid>
           <Grid item xs>
             <p>{addressCard}</p>

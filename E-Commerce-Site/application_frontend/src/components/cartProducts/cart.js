@@ -8,9 +8,11 @@ import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 
 import { apiTarget } from '../../config';
 import { Box } from '@mui/system';
+import { logout } from '../../core/apiCalls/user';
+import { clearAuthToken } from '../../shared/authToken';
 
 export const Cart = ({product, deleteCartProductHandler, productQuantityHandler, productIncrementHandler, productDecrementHandler}) => {
-
+  
   const Img = styled('img')({
     margin: 'auto',
     display: 'block',

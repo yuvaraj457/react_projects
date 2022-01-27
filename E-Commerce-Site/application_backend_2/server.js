@@ -28,15 +28,14 @@ const init = async () => {
         isHttpOnly: true
     })
 
-    const validate = async (req, token) => {
-        // const sid = jwt.verify(token, process.env.TOKEN_SECRET)
-        console.log(token)
-        // const data = await userDetailsModel.findOne({ _id : sid });
+    const validate = async (req, {authToken}) => {
+        // const _id = jwt.verify(authToken, process.env.TOKEN_SECRET)
+        // const data = await userDetailsModel.findOne({ _id });
         // if(!data){
         //     return {valid : false}
         // }
 
-        return {valid: true, credential : data}
+        return {valid: true}
     }
 
     await server.register(require('@hapi/cookie'))

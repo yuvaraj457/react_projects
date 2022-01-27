@@ -27,7 +27,15 @@ export const editAddress = async(e) => {
 }
 
 export const activeAddress = async (e) => {
-    console.log(e)
     const {data} = await axiosInstance.post(url.activeAddress, {activeAddress : e})
     return data
+}
+
+export const deleteAddress = async (e) => {
+    const {data} = await axiosInstance.post(url.deleteAddress, {address : e})
+    return data
+}
+
+export const logout = async () => {
+    await axiosInstance.get(url.logout)
 }

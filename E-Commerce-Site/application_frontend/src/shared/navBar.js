@@ -18,20 +18,22 @@ import { Badge } from '@mui/material';
 
 
 import logo from '../assets/images/logo.png'
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { getAuthToken } from './authToken';
 import { fetchCartProducts } from '../action/cartAction';
 import { fetchUser } from '../action/userAction';
+import { deepPurple } from '@mui/material/colors';
 const pages = ['Mens', 'Womens', 'Electronics'];
-const settings = [ 'MyAccount', 'Dashboard', 'Logout'];
+const settings = [ 'MyAccount', 'Logout'];
 
 export const NavBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-
+  const location = useLocation()
   const dispatch = useDispatch()
 
-  const { isLogin } = useSelector(state => state.userReducer)
+
+  const user = useSelector(state => state.userReducer.userDetails)
   const {cartProducts} = useSelector(state => state.cartReducer)
 
   const handleOpenNavMenu = (event) => {
@@ -58,6 +60,7 @@ export const NavBar = () => {
       dispatch(fetchUser())
   },[dispatch])
 
+  console.log()
   return (
     <AppBar style={style} position="static" >
       <Container maxWidth="xl">
@@ -137,7 +140,7 @@ export const NavBar = () => {
             ))}
           </Box>
           {
-            (isLogin || getAuthToken()) &&
+            ( getAuthToken()) ?
             <>
               <Badge color="secondary" badgeContent={cartProducts?cartProducts.length:0}>
                 <Link to='/cart' style={{ color: '#FFF' }}>
@@ -147,10 +150,9 @@ export const NavBar = () => {
               <Box sx={{ flexGrow: 0, ml: 4 }}>
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                    <Avatar sx={{ bgcolor: deepPurple[500] }}>{user.firstName && user.firstName[0].toUpperCase()}</Avatar>
                   </IconButton>
                 </Tooltip>
-
                 <Menu
                   sx={{ mt: '45px' }}
                   id="menu-appbar"
@@ -174,6 +176,13 @@ export const NavBar = () => {
                   ))}
                 </Menu>
               </Box>
+            </>
+            :
+            <>{
+            !(location.pathname === '/login' )&&
+            <Link to='/login'>
+              <Button sx={{ my: 2, color: 'white', display: 'block' }}>Login</Button>
+            </Link>}
             </>
           }
         </Toolbar>

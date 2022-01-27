@@ -20,11 +20,12 @@ const theme = createTheme();
 export const SignUp = ({onChange, handleSubmit, errors}) => {
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs" >
         <CssBaseline />
         <Box
           sx={{
             marginTop: 8,
+            marginBottom : 8,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -95,6 +96,8 @@ export const SignUp = ({onChange, handleSubmit, errors}) => {
                         }
                         return onChange(e)
                       }}
+                      error = {!errors.phone ? false : true}
+                  helperText= {!errors.phone ? '' : errors.phone}
                     />
               </Grid>
               <Grid item xs={12}>
@@ -138,7 +141,7 @@ export const SignUp = ({onChange, handleSubmit, errors}) => {
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link to="/login" >
-                  Already have an account? Sign in
+                  Already have an account? Login in
                 </Link>
               </Grid>
             </Grid>

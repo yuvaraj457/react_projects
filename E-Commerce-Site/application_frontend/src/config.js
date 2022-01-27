@@ -5,5 +5,7 @@ export const url = {
         getUser: '/getUser',
         editPhone : '/editPhone',
         editAddress : '/editAddress',
-        activeAddress : '/activeAddress'
+        activeAddress : '/activeAddress',
+        logout : '/logout',
+        deleteAddress : '/deleteAddress'
     }

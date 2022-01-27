@@ -66,4 +66,25 @@ const activeAddress = async (req, h) => {
     }
 }
 
-module.exports = {getUser, editPhone, editAddress, activeAddress}
+const deleteAddress = async (req, h) => {
+    const {address} = req.payload
+    const {sid} = req.state
+    try{
+        await userDetailsModel.updateMany(
+             {_id : sid},
+             {
+                $pull : {address}
+             }
+         )
+         return h.response('Deleted Successfully').code(200)
+     }
+     catch(error){
+         return error
+     }
+}
+
+const logout = async (req, h) => {
+    return h.response('Bye').unstate('sid')
+}
+
+module.exports = {getUser, editPhone, editAddress, activeAddress, logout, deleteAddress}
