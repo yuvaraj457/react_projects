@@ -7,5 +7,6 @@ export const url = {
         editAddress : '/editAddress',
         activeAddress : '/activeAddress',
         logout : '/logout',
-        deleteAddress : '/deleteAddress'
+        deleteAddress : '/deleteAddress',
+        authenticate : '/authenticate'
     }

@@ -4,8 +4,9 @@ import Login from '../../components/loginPage/login'
 import { login } from '../../core/apiCalls/user'
 import { setAuthToken } from '../../shared/authToken'
 
-import {fetchUser} from '../../action/userAction'
+import {fetchUser, verifyAuth} from '../../action/userAction'
 import {  useNavigate } from 'react-router-dom'
+import { fetchCartProducts } from '../../action/cartAction'
 
 
 export const LoginContainer = () => {
@@ -28,7 +29,9 @@ export const LoginContainer = () => {
         login(formData)
         .then((res) => {
             setAuthToken(res.authToken)
-            dispatch(fetchUser(true))
+            dispatch(verifyAuth(true))
+            dispatch(fetchUser())
+            dispatch(fetchCartProducts())
             navigate('/')
         })
         .catch(error => {

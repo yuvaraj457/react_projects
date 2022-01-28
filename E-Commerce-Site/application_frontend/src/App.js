@@ -14,7 +14,7 @@ function App() {
     <ThemeProvider theme={theme}>
     <Provider store={store}>
         <BrowserRouter>
-        <NavBar/>
+        
           <AppRouter />
         </BrowserRouter>
     </Provider>

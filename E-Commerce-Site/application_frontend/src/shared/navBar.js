@@ -19,10 +19,11 @@ import { Badge } from '@mui/material';
 
 import logo from '../assets/images/logo.png'
 import { Link, useLocation } from 'react-router-dom';
-import { getAuthToken } from './authToken';
+import { authVerify, getAuthToken } from './authToken';
 import { fetchCartProducts } from '../action/cartAction';
-import { fetchUser } from '../action/userAction';
+import { fetchUser, verifyAuth } from '../action/userAction';
 import { deepPurple } from '@mui/material/colors';
+import { authenticate } from '../core/apiCalls/user';
 const pages = ['Mens', 'Womens', 'Electronics'];
 const settings = [ 'MyAccount', 'Logout'];
 
@@ -31,9 +32,12 @@ export const NavBar = () => {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const location = useLocation()
   const dispatch = useDispatch()
-
+  
+  
+  
 
   const user = useSelector(state => state.userReducer.userDetails)
+  const {isAuthenticated} = useSelector(state => state.userReducer)
   const {cartProducts} = useSelector(state => state.cartReducer)
 
   const handleOpenNavMenu = (event) => {
@@ -56,11 +60,15 @@ export const NavBar = () => {
   }
 
   React.useEffect(() => {
+    authenticate()
+    .then(() => {
+      dispatch(verifyAuth(true))
       dispatch(fetchCartProducts())
       dispatch(fetchUser())
+    })
   },[dispatch])
 
-  console.log()
+ 
   return (
     <AppBar style={style} position="static" >
       <Container maxWidth="xl">
@@ -140,7 +148,7 @@ export const NavBar = () => {
             ))}
           </Box>
           {
-            ( getAuthToken()) ?
+              isAuthenticated ?
             <>
               <Badge color="secondary" badgeContent={cartProducts?cartProducts.length:0}>
                 <Link to='/cart' style={{ color: '#FFF' }}>

@@ -11,6 +11,12 @@ export const login = async (formData) => {
     return data
 }
 
+export const authenticate =  async() => {
+    
+    const {data} = await axiosInstance.get(url.authenticate)
+    return data
+ 
+}
 export const getUser = async () => {
     const {data} = await axiosInstance.get(url.getUser)
     return data

@@ -1,7 +1,7 @@
-import { loginStatus, cart } from "../action/actionType"
+import { loginStatus, checkAuth } from "../action/actionType"
 
 const initialState = {
-    isLogin : false,
+    isAuthenticated : false,
     userDetails : []
 }
 
@@ -10,8 +10,12 @@ export const userReducer = (state = initialState, action)=>{
         case loginStatus:
             return {
                 ...state,
-                isLogin : action.status,
                 userDetails  : action.payload
+            }
+        case checkAuth:
+            return {
+                ...state,
+                isAuthenticated : action.status
             }
         default:
             return state

@@ -7,6 +7,10 @@ const getUser = async(req, h) => {
     return h.response(user).code(200)
 }
 
+const authenticate = async (req, h) => {
+    return h.response('Authenticated').code(200)
+}
+
 const editPhone = async(req, h) => {
     const {phone} = req.payload
     const {sid} = req.state
@@ -87,4 +91,4 @@ const logout = async (req, h) => {
     return h.response('Bye').unstate('sid')
 }
 
-module.exports = {getUser, editPhone, editAddress, activeAddress, logout, deleteAddress}
+module.exports = {getUser, editPhone, editAddress, activeAddress, logout, deleteAddress, authenticate}
