@@ -28,7 +28,6 @@ export const LoginContainer = () => {
         event.preventDefault()
         login(formData)
         .then((res) => {
-            setAuthToken(res.authToken)
             dispatch(verifyAuth(true))
             dispatch(fetchUser())
             dispatch(fetchCartProducts())

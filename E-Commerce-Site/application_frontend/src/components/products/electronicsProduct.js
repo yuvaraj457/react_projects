@@ -4,21 +4,12 @@ import { useSelector, useDispatch } from 'react-redux'
 import { fetchProducts } from '../../action/productAction'
 import ProductCard from './productCard'
 
-export const ElectronicsProduct = () => {
-    const { products } = useSelector(state => state.productsReducer)
-    const dispatch = useDispatch()
-
-    useEffect(() => {
-        if (!products.length > 0) {
-            console.log('reloaded')
-            dispatch(fetchProducts())
-        }
-    }, [])
+export const ElectronicsProduct = ({products, addToCartHandler}) => {
 
     return (
         <Grid item xs={12}>
             <Grid container justifyContent="space-around" spacing={3} sx={{ mb: 2, mt : 2 }}>
-                {products.length > 0 && products.map((item, index) => item.productType === 'electronics' && <Grid item key={index} ><ProductCard product={item} /></Grid>)}
+                {products.length > 0 && products.map((item, index) => item.productType === 'electronics' && <Grid item key={index} ><ProductCard product={item} addToCartHandler={addToCartHandler} /></Grid>)}
             </Grid>
         </Grid>
     )

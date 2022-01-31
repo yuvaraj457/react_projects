@@ -38,7 +38,6 @@ export const EditAddressContainer = ({navigate, renderUser}) => {
         })
         .catch(err => {
             const error = err.response.data
-            console.log(error)
             const errorLst = {}
             error.map(item => errorLst[item.path[0]] = item.message)
             setErrors(errorLst)

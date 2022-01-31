@@ -19,10 +19,10 @@ import { authenticate } from '../core/apiCalls/user'
 import { NavBar } from '../shared/navBar'
 import { verifyAuth } from '../action/userAction'
 import { useDispatch, useSelector } from 'react-redux'
+import ProductFilterViewContainer from '../containers/productsContainer/productFilterViewContainer'
 
 
 const PrivateRoutes = ({children, isAuthenticated}) => {
-    console.log(isAuthenticated)
     return (
         isAuthenticated ? children : <Navigate to='/login'/>
     )
@@ -50,7 +50,7 @@ export default function AppRouter() {
             {
                 loading &&
             <Routes>
-                <Route path='/login' element = {<LoginContainer/>}/>
+                <Route path='/login' element = {!isAuthenticated? <LoginContainer/> : <Navigate to='/'/> }/>
                 <Route path='/signup' element = {<SignupContainer/>} />
                 <Route path='/' element = {<Home/>} />
                 <Route path='/mens/productDetails/:productId' element = {<ProductDetailedViewContainer/>}/>
@@ -60,6 +60,7 @@ export default function AppRouter() {
                 <Route path='/Mens' element = {<MensProduct/>}/>
                 <Route path='/Womens' element = {<WomensProduct/>}/>
                 <Route path = '/Electronics' element = {<ElectronicsProduct/>}/>
+                <Route path='productType/:field' element = {<ProductFilterViewContainer/>} />
                 <Route path='/cart' element = {<PrivateRoutes isAuthenticated={isAuthenticated}><CartDataContainer/></PrivateRoutes>}/>
                 <Route path='/MyAccount' element = {<UserProfileContainer/>}/>
                 <Route path='/edit/:field' element = {<EditProfileContainer/>}/>

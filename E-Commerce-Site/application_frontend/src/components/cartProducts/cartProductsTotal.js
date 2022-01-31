@@ -24,15 +24,15 @@ export default function CartTable({cartProducts, productQuantityHandler}) {
         <TableHead>
           <TableRow>
             <TableCell align="center" colSpan={3}>
-              Details
+              <b>Details</b>
             </TableCell>
-            <TableCell align="right">Price</TableCell>
+            <TableCell align="right"><b>Price</b></TableCell>
           </TableRow>
           <TableRow>
-            <TableCell>Desc</TableCell>
-            <TableCell align="right">Price</TableCell>
-            <TableCell align="right">Quantity</TableCell>
-            <TableCell align="right">Sum</TableCell>
+            <TableCell><b>Products</b></TableCell>
+            <TableCell align="right"><b>Price</b></TableCell>
+            <TableCell align="right"><b>Quantity</b></TableCell>
+            <TableCell align="right"><b>Sum</b></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

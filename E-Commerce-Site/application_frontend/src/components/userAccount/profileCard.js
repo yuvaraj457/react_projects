@@ -57,7 +57,7 @@ function Row({ row, user }) {
     }
 
     else if (option === 'My Cart') {
-      const data = <>
+      const data = cartProductDetails.length > 0 ? <>
         <TableHead>
           <TableRow>
             <TableCell>Products</TableCell>
@@ -73,6 +73,14 @@ function Row({ row, user }) {
           )}
         </TableBody>
       </>
+      :
+      <TableBody>
+        <TableRow>
+              <TableCell align="center">
+               <h4>Cart is empty</h4>
+              </TableCell>
+            </TableRow>
+      </TableBody>
       return data
     }
   }

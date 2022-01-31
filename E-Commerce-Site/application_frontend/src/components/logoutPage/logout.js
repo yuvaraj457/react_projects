@@ -12,7 +12,6 @@ export const Logout = () => {
     useEffect(() => {
         logout()
         .then(() => {
-            clearAuthToken()
             dispatch(verifyAuth(false))
             setTimeout(() => navigate('/login'), 2000)
         })
