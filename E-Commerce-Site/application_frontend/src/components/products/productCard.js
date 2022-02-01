@@ -2,10 +2,9 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { Button, CardActionArea, Stack } from '@mui/material';
-
+import { Badge, Button, CardActionArea, Stack } from '@mui/material';
 import { Link } from 'react-router-dom'
-
+import Grid from '@mui/material/Grid'
 import StarRatings from 'react-star-ratings'
 import { apiTarget } from '../../config'
 import { useSelector } from 'react-redux';
@@ -49,38 +48,36 @@ export default function ProductCard({ product, addToCartHandler }) {
           starSpacing="2px"
           numberOfStars={5}
           name="rating"
+       
         />
-        <Typography variant="body2" color="text.secondary">
-          <del>MRP : {product.productMRP}</del>
-        </Typography>
+         <Grid container justifyContent={'center'} mt={2}>
+          
+            <Badge badgeContent={'60%'} color='badgeColor' sx={{ marginRight: '8px' }} anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'left',
+            }} />&nbsp;
+          
+            <Typography variant="body2" color="text.secondary">
+              <del>MRP : {product.productMRP}</del>
+            </Typography>
+          </Grid> 
+        
+
         <Typography gutterBottom variant="body1" >
           Price : {product.productPrice}
         </Typography>
         <Stack spacing={1} direction='row'>
-          {
-            isAuthenticated ?
-              <>
-                <Button size='small' variant="contained" color='cartButtonColor' onClick={() => addToCartHandler(product._id)}>
-                  Cart
-                </Button>
-                <Button size='small' variant="contained" color="buyButtonColor">
-                  buy
-                </Button>
-              </>
-              :
-              <>
-                <Button size='small' variant="contained" color='cartButtonColor' onClick={() => handleClickOpen()}>
-                  Cart
-                </Button>
-                <Button size='small' variant="contained" color="buyButtonColor">
-                  buy
-                </Button>
-              </>
-          }
+
+          <Button size='small' variant="contained" color='cartButtonColor' onClick={() => isAuthenticated ? addToCartHandler(product._id) : handleClickOpen()}>
+            Cart
+          </Button>
+          <Button size='small' variant="contained" color="buyButtonColor">
+            buy
+          </Button>
 
           <AlertDialogSlide handleClose={handleClose} open={open} />
         </Stack>
       </div>
-    </Card>
+    </Card >
   );
 }

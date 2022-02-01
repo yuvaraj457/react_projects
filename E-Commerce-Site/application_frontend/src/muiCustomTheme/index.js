@@ -1,5 +1,4 @@
 import { createTheme } from '@mui/material/styles';
-import { Link } from 'react-router-dom';
 
 export const theme = createTheme({
   status: {
@@ -9,6 +8,10 @@ export const theme = createTheme({
     primary: {
       main: '#0971f1',
       darker: '#053e85',
+    },
+    badgeColor: {
+      main : '#e53935',
+      contrastText: '#fff',
     },
     neutral: {
       main: '#64748B',

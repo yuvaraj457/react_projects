@@ -5,7 +5,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { apiTarget } from '../../config';
 
-import { Button, Grid, Stack } from '@mui/material';
+import { Badge, Button, Grid, Stack } from '@mui/material';
 import StarRatings from 'react-star-ratings';
 
 export default function ProductDetailedViewCard({ product, addToCartHandler }) {
@@ -23,6 +23,10 @@ export default function ProductDetailedViewCard({ product, addToCartHandler }) {
                 <Grid item container xs={8} justifyContent={'center'}>
                     <Grid item>
                         <CardContent>
+                            <Badge badgeContent={'60%'} color='badgeColor' sx={{ marginRight: '8px' }} anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'left',
+                            }} />&nbsp;
                             <Typography gutterBottom variant="h5" component="div">
                                 {product.productName}
                             </Typography>
