@@ -20,6 +20,7 @@ import { NavBar } from '../shared/navBar'
 import { verifyAuth } from '../action/userAction'
 import { useDispatch, useSelector } from 'react-redux'
 import ProductFilterViewContainer from '../containers/productsContainer/productFilterViewContainer'
+import {ProductUploadContainer} from '../containers/adminContainer/productUploadContainer'
 
 
 const PrivateRoutes = ({children, isAuthenticated}) => {
@@ -65,6 +66,7 @@ export default function AppRouter() {
                 <Route path='/MyAccount' element = {<UserProfileContainer/>}/>
                 <Route path='/edit/:field' element = {<EditProfileContainer/>}/>
                 <Route path='/Logout' element = {<Logout/>}/>
+                <Route path='/productUpload' element = {<ProductUploadContainer/>}/>
             </Routes>
 }
             </>

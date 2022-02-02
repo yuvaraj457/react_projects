@@ -27,7 +27,27 @@ const productsUpload = (req, h) => {
     catch(error){
         return error
     }
-    
+}
+
+const productUpdate = async (req, h) => {
+    const {_id, productName, productMRP, productPrice, productStar, productQuantity, productType, productImage } = req.payload
+    try{
+        const update = {
+            productName,
+            productMRP,
+            productPrice,
+            productStar,
+            productQuantity,
+            productType,
+            productImage : fileHandler(productImage)
+        }
+        await productDetailsModel.findOneAndUpdate({ _id }, update)
+        return h.response('Product updated successfully').code(200)
+    }
+    catch(error){
+        return error
+    }
+
 }
 
 const products = async (req, h) => {
@@ -46,4 +66,4 @@ const productDetails = async(req, h) => {
     return data
 }
 
-module.exports = { productsUpload, products, productDetails}
+module.exports = { productsUpload, products, productDetails, productUpdate}
