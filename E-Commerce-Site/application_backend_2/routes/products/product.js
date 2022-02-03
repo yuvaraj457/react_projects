@@ -9,20 +9,22 @@ const fileHandler = file => {
     return fileName
 }
 
-const productsUpload = (req, h) => {
-    const { productName, productMRP, productPrice, productStar, productQuantity, productType, productImage } = req.payload
+const productUpload = (req, h) => {
+    const { productName, productMRP, productStar, productPrice, productDiscount, productQuantity, productType, productImage } = req.payload
+   
     try {
         const data = productDetailsModel({
             productName,
             productMRP,
             productPrice,
+            productDiscount,
             productStar,
             productQuantity,
             productType,
             productImage : fileHandler(productImage)
         })
         data.save()
-        return "Product Uploaded Successfully"
+        return h.response("Product Uploaded Successfully").code(201)
     }
     catch(error){
         return error
@@ -47,7 +49,6 @@ const productUpdate = async (req, h) => {
     catch(error){
         return error
     }
-
 }
 
 const products = async (req, h) => {
@@ -66,4 +67,4 @@ const productDetails = async(req, h) => {
     return data
 }
 
-module.exports = { productsUpload, products, productDetails, productUpdate}
+module.exports = { productUpload, products, productDetails, productUpdate}

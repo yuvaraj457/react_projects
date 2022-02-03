@@ -1,5 +1,5 @@
 const { addToCart, getCartProducts, productQuantityUpdate, deleteCartProduct } = require('./products/cart');
-const { products, productsUpload, productDetails, productUpdate } = require('./products/product')
+const { products, productsUpload, productDetails, productUpdate, productUpload } = require('./products/product')
 const { login } = require('./user/loginRoute')
 const { signup } = require('./user/signupRoute');
 const { getUser, editAddress, editPhone, activeAddress, logout, deleteAddress, authenticate } = require('./user/userRoute');
@@ -29,8 +29,8 @@ module.exports = [
     },
     {
         method: 'POST',
-        path: '/productsUpload',
-        handler: productsUpload,
+        path: '/productUpload',
+        handler: productUpload,
         options: {
             payload: {
                 parse: true,

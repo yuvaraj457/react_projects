@@ -20,13 +20,13 @@ import { Autocomplete, IconButton, Input, InputAdornment, InputLabel } from '@mu
 
 
 
-export const ProductUpload = ({ onChange, fileName, fileHandler }) => {
+export const ProductUpload = ({ onChange, fileName, productPrice, fileHandler, submitHandler }) => {
 
     const flatProps = {
         options: ['mens', 'womens', 'electronics'],
     };
 
-    
+
     return (
         <Container component="main" maxWidth="xs" >
             <CssBaseline />
@@ -45,7 +45,7 @@ export const ProductUpload = ({ onChange, fileName, fileHandler }) => {
                 <Typography component="h1" variant="h5">
                     Products Uploader
                 </Typography>
-                <Box component="form" noValidate mt={2}>
+                <Box component="form" noValidate mt={2} onSubmit={(e) => submitHandler(e)}>
                     <Grid container spacing={2}>
                         <Grid item xs={12} >
                             <TextField
@@ -94,7 +94,7 @@ export const ProductUpload = ({ onChange, fileName, fileHandler }) => {
                                 fullWidth
                                 name="productPrice"
                                 id="standard-adornment-amount"
-                                value={2}
+                                value={productPrice}
                                 startAdornment={<InputAdornment position="start">Rs</InputAdornment>}
                             />
 
@@ -111,15 +111,32 @@ export const ProductUpload = ({ onChange, fileName, fileHandler }) => {
                                 )}
                             />
                         </Grid>
-                        <Grid container xs={12} mt={2} flexDirection={'column'} alignItems={'center'}>
-                            <label htmlFor="icon-button-file">
-                                <input style={{display: 'none'}} onChange={fileHandler} accept="image/*" id="icon-button-file" type="file" />
-                                <IconButton color="primary" aria-label="upload picture" component="span">
-                                    <PhotoCamera />
-                                </IconButton>
-                            </label>
-                            <Grid>
-                                {fileName}
+                        <Grid item xs={12}>
+                        <Grid container>
+                            <Grid item xs={12} sm={6}>
+                            <InputLabel htmlFor="standard-adornment-amount">Product Star</InputLabel>
+                            <Input
+                                fullWidth
+                                type="number"
+                                id="standard-adornment-amount"
+                                name="productStar"
+                                onChange={e => onChange(e)}
+                                // error = {!errors.firstName ? false : true}
+                                // helperText= {!errors.firstName ? '' : errors.firstName}
+                                
+                            />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <label htmlFor="icon-button-file">
+                                    <input style={{ display: 'none' }} onChange={fileHandler} accept="image/*" id="icon-button-file" type="file" />
+                                    <IconButton color="primary" aria-label="upload picture" component="span">
+                                        <PhotoCamera />
+                                    </IconButton>
+                                </label>
+                                <Grid>
+                                    {fileName}
+                                </Grid>
+                            </Grid>
                             </Grid>
                         </Grid>
                     </Grid>
