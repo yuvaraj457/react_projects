@@ -22,4 +22,15 @@ const addressFormSchema = Joi.object({
     pincode : Joi.number().required()
 })
 
-module.exports = {schema, loginSchema, addressFormSchema}
+const productUploadSchema = Joi.object({
+    productName : Joi.string().required(),
+    productMRP : Joi.number().required(),
+    productPrice : Joi.number().required(),
+    productDiscount : Joi.number().required(),
+    productQuantity : Joi.number().required(),
+    productStar : Joi.number().required(),
+    productType : Joi.string().required(),
+    productImage : Joi.string().required()
+})
+
+module.exports = {schema, loginSchema, addressFormSchema, productUploadSchema}

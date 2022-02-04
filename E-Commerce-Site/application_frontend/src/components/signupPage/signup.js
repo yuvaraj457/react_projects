@@ -19,7 +19,6 @@ const theme = createTheme();
 
 export const SignUp = ({onChange, handleSubmit, errors}) => {
   return (
-    <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs" >
         <CssBaseline />
         <Box
@@ -148,6 +147,5 @@ export const SignUp = ({onChange, handleSubmit, errors}) => {
           </Box>
         </Box>
       </Container>
-    </ThemeProvider>
   );
 }

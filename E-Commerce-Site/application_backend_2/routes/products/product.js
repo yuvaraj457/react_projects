@@ -1,6 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const productDetailsModel = require('../../models/productsModel')
+const { productUploadSchema } = require('../../validationSchema')
 
 const fileHandler = file => {
     const fileName = Date.now() + '_product' + path.extname(file.hapi.filename)
@@ -10,9 +11,18 @@ const fileHandler = file => {
 }
 
 const productUpload = (req, h) => {
-    const { productName, productMRP, productStar, productPrice, productDiscount, productQuantity, productType, productImage } = req.payload
-   
+    const { productName, productMRP, productStar, productPrice, productDiscount, productQuantity,  productType, productImage } = req.payload
+    const productData = req.payload
+    const fileName = fileHandler(productImage)
+    productData.productImage = fileName
+    console.log(productData)
     try {
+        const {value, error} = productUploadSchema.validate(productData, {abortEarly: false})
+
+        if(error){
+            return h.response(error.details).code(422)
+        }
+
         const data = productDetailsModel({
             productName,
             productMRP,
@@ -21,7 +31,7 @@ const productUpload = (req, h) => {
             productStar,
             productQuantity,
             productType,
-            productImage : fileHandler(productImage)
+            productImage : fileName
         })
         data.save()
         return h.response("Product Uploaded Successfully").code(201)

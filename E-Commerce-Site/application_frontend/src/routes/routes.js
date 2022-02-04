@@ -21,6 +21,7 @@ import { verifyAuth } from '../action/userAction'
 import { useDispatch, useSelector } from 'react-redux'
 import ProductFilterViewContainer from '../containers/productsContainer/productFilterViewContainer'
 import {ProductUploadContainer} from '../containers/adminContainer/productUploadContainer'
+import CheckoutContainer from '../containers/userContainer/checkoutContainer'
 
 
 const PrivateRoutes = ({children, isAuthenticated}) => {
@@ -67,6 +68,7 @@ export default function AppRouter() {
                 <Route path='/edit/:field' element = {<EditProfileContainer/>}/>
                 <Route path='/Logout' element = {<Logout/>}/>
                 <Route path='/productUpload' element = {<ProductUploadContainer/>}/>
+                <Route path='/checkout' element = {<CheckoutContainer/>}/>
             </Routes>
 }
             </>

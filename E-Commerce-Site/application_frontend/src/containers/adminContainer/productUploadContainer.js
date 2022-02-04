@@ -1,61 +1,59 @@
-import React, { useState, useEffect } from 'react';
-import { ProductUpload } from '../../admin/productUpload';
+import React, { useState } from 'react';
+import { ProductUpload } from '../../components/admin/productUpload';
 import { productUpload } from '../../core/apiCalls/admin';
 
 export const ProductUploadContainer = () => {
     const [formData, setFormData] = useState({})
     const [errors, setErrors] = useState({})
+    const [message, setMessage] = useState('')
 
-    const productPrice = formData.productMRP-(formData.productMRP * formData.productDiscount/100)
-    // console.log(productPrice)
-    // useEffect(() => {
-        
-    //     // if(formData.productMRP && formData.productDiscount){
-    //         setFormData ({
-    //            ...formData,
-    //            productPrice : formData.productMRP-(formData.productMRP * formData.productDiscount/100)
-    //        })
-    // //    }
-    // },[])
+    const productPrice = formData.productMRP - (formData.productMRP * formData.productDiscount / 100)
 
-    const onChange = ( e, value, r )=> {
+    const onChange = (e, value, r) => {
         // console.log(formData.productMRP, formData.productDiscount)
-        if(r =='reset'){
+        if (r === 'reset') {
             const name = e.target.id.split('-')[0]
-            setFormData ({
+            setFormData({
                 ...formData,
-                [name] : value
+                [name]: value
             })
         }
-        else{
-            setFormData ({
+        else {
+            setFormData({
                 ...formData,
-                [e.target.name] : e.target.value
+                [e.target.name]: e.target.value
             })
-        }     
+        }
     }
-    
+
 
     const fileHandler = ({ target }) => {
-        setFormData ({
+        setFormData({
             ...formData,
-            productImage : target.files[0]
+            productImage: target.files[0]
         })
     }
 
-    const submitHandler= (e) => {
+    const submitHandler = (e) => {
         e.preventDefault()
         formData.productPrice = productPrice
         productUpload(formData)
-        .then((res) => console.log(res))
+            .then((res) => setMessage(res))
+            .catch((err) => {
+                const errors = err.response.data
+                const errorLst = {}
+                errors.map(item => errorLst[item.path[0]] = item.message)
+                setErrors(errorLst)
+            })
     }
 
-    console.log(formData)
-  return <ProductUpload 
-            onChange={onChange} 
-            fileName={formData && formData.productImage ? formData.productImage.name : ''} 
-            productPrice={productPrice && productPrice}  
-            fileHandler={fileHandler}
-            submitHandler={submitHandler}
-            />
+    console.log(errors)
+    return <ProductUpload
+        onChange={onChange}
+        fileName={formData && formData.productImage ? formData.productImage.name : ''}
+        productPrice={isNaN(productPrice) ? 0 : productPrice}
+        fileHandler={fileHandler}
+        submitHandler={submitHandler}
+        errors={errors}
+    />
 }
