@@ -18,7 +18,7 @@ import { Autocomplete, IconButton, Input, InputAdornment, InputLabel } from '@mu
 
 
 
-export const ProductUpload = ({ onChange, errors, fileName, productPrice, fileHandler, submitHandler }) => {
+export const ProductUpload = ({ onChange, message, errors, fileName, productPrice, fileHandler, submitHandler }) => {
 
     const flatProps = {
         options: ['mens', 'womens', 'electronics'],
@@ -37,6 +37,7 @@ export const ProductUpload = ({ onChange, errors, fileName, productPrice, fileHa
                     alignItems: 'center',
                 }}
             >
+                {message && <Alert severity="success">{message}</Alert>}
                 <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                     <SellIcon />
                 </Avatar>

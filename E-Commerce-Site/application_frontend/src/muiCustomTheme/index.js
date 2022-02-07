@@ -24,6 +24,9 @@ export const theme = createTheme({
     buyButtonColor : {
         main : '#9c27b0',
         contrastText: '#fff',
+    },
+    bcolor : {
+        main : '#9c27b0'
     }
   },
 });

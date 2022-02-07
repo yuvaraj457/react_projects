@@ -9,7 +9,8 @@ const userDetails = new Schema({
     phone : {type : String, required : true},
     cartProducts : [],
     address : [],
-    activeAddress : {type : String}
+    activeAddress : {type : String},
+    isAdmin : {type : Boolean, required : true}
 })
 
 const userDetailsModel = mongoose.model('userDetails', userDetails)

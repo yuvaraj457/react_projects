@@ -2,7 +2,6 @@ import { useDispatch } from 'react-redux'
 import React, { useState } from 'react'
 import Login from '../../components/loginPage/login'
 import { login } from '../../core/apiCalls/user'
-import { setAuthToken } from '../../shared/authToken'
 
 import {fetchUser, verifyAuth} from '../../action/userAction'
 import {  useNavigate } from 'react-router-dom'

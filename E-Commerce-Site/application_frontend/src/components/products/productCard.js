@@ -52,7 +52,7 @@ export default function ProductCard({ product, addToCartHandler }) {
         />
          <Grid container justifyContent={'center'} mt={2}>
           
-            <Badge badgeContent={'60%'} color='badgeColor' sx={{ marginRight: '8px' }} anchorOrigin={{
+            <Badge badgeContent={product.productDiscount+'%'} color='badgeColor' sx={{ marginRight: '8px' }} anchorOrigin={{
               vertical: 'top',
               horizontal: 'left',
             }} />&nbsp;

@@ -22,6 +22,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import ProductFilterViewContainer from '../containers/productsContainer/productFilterViewContainer'
 import {ProductUploadContainer} from '../containers/adminContainer/productUploadContainer'
 import CheckoutContainer from '../containers/userContainer/checkoutContainer'
+import DebitCard from '../components/checkoutPage/payments/debitCard'
 
 
 const PrivateRoutes = ({children, isAuthenticated}) => {
@@ -69,6 +70,7 @@ export default function AppRouter() {
                 <Route path='/Logout' element = {<Logout/>}/>
                 <Route path='/productUpload' element = {<ProductUploadContainer/>}/>
                 <Route path='/checkout' element = {<CheckoutContainer/>}/>
+                <Route path='/payment' element = {<DebitCard/>}/>
             </Routes>
 }
             </>

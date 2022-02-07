@@ -40,7 +40,7 @@ export const CartDataContainer = () => {
         if(alertMessage){
             return 1
         }
-        const {quantity} =  productIds.filter(item => item.productId === value)[0]
+        const {quantity} =  productIds.find(item => item.productId === value)
         return quantity
         
         

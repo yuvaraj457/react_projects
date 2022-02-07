@@ -10,7 +10,6 @@ export const ProductUploadContainer = () => {
     const productPrice = formData.productMRP - (formData.productMRP * formData.productDiscount / 100)
 
     const onChange = (e, value, r) => {
-        // console.log(formData.productMRP, formData.productDiscount)
         if (r === 'reset') {
             const name = e.target.id.split('-')[0]
             setFormData({
@@ -45,9 +44,9 @@ export const ProductUploadContainer = () => {
                 errors.map(item => errorLst[item.path[0]] = item.message)
                 setErrors(errorLst)
             })
+            setTimeout(() => setMessage(''), 2000)
     }
 
-    console.log(errors)
     return <ProductUpload
         onChange={onChange}
         fileName={formData && formData.productImage ? formData.productImage.name : ''}
@@ -55,5 +54,6 @@ export const ProductUploadContainer = () => {
         fileHandler={fileHandler}
         submitHandler={submitHandler}
         errors={errors}
+        message = {message}
     />
 }
