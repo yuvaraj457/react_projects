@@ -14,11 +14,9 @@ export const CartDataContainer = () => {
   
     const dispatch = useDispatch()
     useEffect(() => {
-        // if (productIds.length) {
             dispatch(fetchCartProducts())
-        // }
         
-    }, [alertMessage])
+    }, [alertMessage, dispatch])
 
     if(id){
         const product = productIds.find((item) => item.productId === id)

@@ -17,7 +17,7 @@ export default function ProductFilterViewContainer() {
         if (!(products.length > 0)) {
             dispatch(fetchProducts())
         }
-    }, [])
+    }, [dispatch, products])
 
     const addToCartHandler = (id) => {
         dispatch(addCartProducts(id))
@@ -30,6 +30,8 @@ export default function ProductFilterViewContainer() {
             return <WomensProduct products={products} addToCartHandler={addToCartHandler}/>
         case 'Electronics':
             return <ElectronicsProduct products={products} addToCartHandler={addToCartHandler}/>
+        default:
+            return <h1>Page Not Found</h1>
     }
 
 }

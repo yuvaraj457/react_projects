@@ -1,7 +1,6 @@
 import { Grid } from '@mui/material'
-import React, { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { fetchProducts } from '../../action/productAction'
+import React from 'react'
+
 import ProductCard from './productCard'
 
 export const ElectronicsProduct = ({products, addToCartHandler}) => {

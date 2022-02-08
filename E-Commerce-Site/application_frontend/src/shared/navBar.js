@@ -19,12 +19,12 @@ import { Badge } from '@mui/material';
 
 import logo from '../assets/images/logo.png'
 import { Link, useLocation } from 'react-router-dom';
-import { authVerify, getAuthToken } from './authToken';
 import { fetchCartProducts } from '../action/cartAction';
 import { fetchUser, verifyAuth } from '../action/userAction';
 import { deepPurple } from '@mui/material/colors';
 import { authenticate } from '../core/apiCalls/user';
 const pages = ['Mens', 'Womens', 'Electronics'];
+const adminMenu = ['Product Upload', 'Product Edit', 'Manage Users']
 const settings = [ 'MyAccount', 'Logout'];
 
 export const NavBar = () => {
@@ -34,10 +34,8 @@ export const NavBar = () => {
   const dispatch = useDispatch()
   
   
-  
-
   const user = useSelector(state => state.userReducer.userDetails)
-  const {isAuthenticated} = useSelector(state => state.userReducer)
+  const {isAuthenticated, userDetails} = useSelector(state => state.userReducer)
   const {cartProducts} = useSelector(state => state.cartReducer)
 
   const handleOpenNavMenu = (event) => {
@@ -150,11 +148,28 @@ export const NavBar = () => {
           {
               isAuthenticated ?
             <>
+            {
+              userDetails.userType === 'admin' && 
+              <Box sx={{ marginRight:'10px', display: { xs: 'none', md: 'flex' } }}>
+                  {adminMenu.map((menu) => (
+                    <Link to={`/${menu}`} key={menu}>
+                      <Button
+                        onClick={handleCloseNavMenu}
+                        sx={{ my: 2, color: 'white', display: 'block' }}
+                      >
+                        {menu}
+                      </Button>
+                    </Link>
+                  ))
+                  }
+              </Box>
+              }
               <Badge color="secondary" badgeContent={cartProducts?cartProducts.length:0}>
                 <Link to='/cart' style={{ color: '#FFF' }}>
-                <ShoppingBagIcon />
+                  <ShoppingBagIcon />
                 </Link>
               </Badge>
+
               <Box sx={{ flexGrow: 0, ml: 4 }}>
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

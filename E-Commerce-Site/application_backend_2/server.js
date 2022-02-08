@@ -28,18 +28,18 @@ const init = async () => {
         isHttpOnly: true
     })
 
-    const validate = async (req, {authToken}) => {
-        // const _id = jwt.verify(authToken, process.env.TOKEN_SECRET)
-        // const data = await userDetailsModel.findOne({ _id });
-        // if(!data){
-        //     return {valid : false}
-        // }
+    const validate = async (req, _id) => {
+        const data = await userDetailsModel.findOne({ _id });
+        if(!data){
+            return {valid : false}
+        }
 
         return {valid: true}
     }
 
     await server.register(require('@hapi/cookie'))
     await server.register(require('@hapi/inert'))
+    await server.register([require('./plugins/productPlugin'), require('./plugins/userPlugin')])
 
     server.auth.strategy('session', 'cookie', {
         cookie: {
@@ -56,8 +56,8 @@ const init = async () => {
 
     await server.start();
     console.log('Server running on port 5000');
-
-    server.route(Routes)
+    
+    // server.route(Routes)
 }
 
 init()

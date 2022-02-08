@@ -6,7 +6,6 @@ import AppRouter from './routes/routes';
 import { store } from './store';
 
 import {theme} from './muiCustomTheme'
-import { NavBar } from './shared/navBar';
 
 function App() {
   return (

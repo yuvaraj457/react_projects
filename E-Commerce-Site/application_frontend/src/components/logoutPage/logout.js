@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { verifyAuth } from '../../action/userAction';
 import { logout } from '../../core/apiCalls/user';
-import { clearAuthToken } from '../../shared/authToken';
 
 export const Logout = () => {
     const navigate = useNavigate()
@@ -15,7 +14,7 @@ export const Logout = () => {
             dispatch(verifyAuth(false))
             setTimeout(() => navigate('/login'), 2000)
         })
-    },[])
+    },[dispatch, navigate])
 
   return  <Alert severity="success">Logout Successfull</Alert>
 }

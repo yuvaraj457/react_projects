@@ -9,13 +9,10 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Alert from '@mui/material/Alert';
 import MuiPhoneNumber from "material-ui-phone-number";
 import { Link } from 'react-router-dom';
 
-
-const theme = createTheme();
 
 export const SignUp = ({onChange, handleSubmit, errors}) => {
   return (

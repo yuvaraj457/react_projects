@@ -8,7 +8,6 @@ import {MensProduct} from '../components/products/mensProduct'
 import {LoginContainer} from '../containers/userContainer/loginContainer'
 import {SignupContainer} from '../containers/userContainer/signupContainer'
 
-import { getAuthToken } from '../shared/authToken'
 import { WomensProduct } from '../components/products/womensProduct'
 import { ElectronicsProduct } from '../components/products/electronicsProduct'
 import {CartDataContainer} from '../containers/cartContainer/cartDataContainer'
@@ -23,6 +22,7 @@ import ProductFilterViewContainer from '../containers/productsContainer/productF
 import {ProductUploadContainer} from '../containers/adminContainer/productUploadContainer'
 import CheckoutContainer from '../containers/userContainer/checkoutContainer'
 import DebitCard from '../components/checkoutPage/payments/debitCard'
+import { ProductEditContainer } from '../containers/adminContainer/productEditContainer'
 
 
 const PrivateRoutes = ({children, isAuthenticated}) => {
@@ -44,7 +44,7 @@ export default function AppRouter() {
     })
     setTimeout(()=> setLoading(true), 1000)
     
-    }, [])
+    }, [dispatch])
 
     
     return (
@@ -62,15 +62,16 @@ export default function AppRouter() {
                 <Route path='/productDetails/:productId' element = {<ProductDetailedViewContainer/>}/>
                 <Route path='/Mens' element = {<MensProduct/>}/>
                 <Route path='/Womens' element = {<WomensProduct/>}/>
-                <Route path = '/Electronics' element = {<ElectronicsProduct/>}/>
+                <Route path='/Electronics' element = {<ElectronicsProduct/>}/>
                 <Route path='productType/:field' element = {<ProductFilterViewContainer/>} />
                 <Route path='/cart' element = {<PrivateRoutes isAuthenticated={isAuthenticated}><CartDataContainer/></PrivateRoutes>}/>
                 <Route path='/MyAccount' element = {<UserProfileContainer/>}/>
                 <Route path='/edit/:field' element = {<EditProfileContainer/>}/>
                 <Route path='/Logout' element = {<Logout/>}/>
-                <Route path='/productUpload' element = {<ProductUploadContainer/>}/>
+                <Route path='/Product%20Upload' element = {<ProductUploadContainer/>}/>
                 <Route path='/checkout' element = {<CheckoutContainer/>}/>
                 <Route path='/payment' element = {<DebitCard/>}/>
+                <Route path='/product%20Edit' element = {<ProductEditContainer/>}/>
             </Routes>
 }
             </>

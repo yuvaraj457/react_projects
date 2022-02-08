@@ -19,10 +19,10 @@ const login = async (req, h) => {
             return h.response([{message : 'Invalid email or password', path : ['authFail']}]).code(401)
         }
 
-        const authToken = jwt.sign({_id:data._id}, process.env.TOKEN_SECRET)
+        // const authToken = jwt.sign({_id:data._id}, process.env.TOKEN_SECRET)
         req.cookieAuth.set(data._id)
 
-        return {authToken}
+        return 'Login Successfully'
 }
 
 

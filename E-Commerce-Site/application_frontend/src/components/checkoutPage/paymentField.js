@@ -15,7 +15,7 @@ export default function PaymentField() {
     };
     let show;
 
-    if(value == 'DebitCard'){
+    if(value === 'DebitCard'){
         show = <DebitCard/>
     }
 

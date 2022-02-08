@@ -10,7 +10,7 @@ const userDetails = new Schema({
     cartProducts : [],
     address : [],
     activeAddress : {type : String},
-    isAdmin : {type : Boolean, required : true}
+    userType : {type : String, required : true},
 })
 
 const userDetailsModel = mongoose.model('userDetails', userDetails)
