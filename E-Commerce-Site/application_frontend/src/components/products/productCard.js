@@ -7,12 +7,13 @@ import { Link } from 'react-router-dom'
 import Grid from '@mui/material/Grid'
 import StarRatings from 'react-star-ratings'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import copy from 'copy-to-clipboard';
 
 
 import { apiTarget } from '../../config'
 import { useSelector } from 'react-redux';
 import { AlertDialogSlide } from '../../shared/alertDialog';
-import { UseCopy } from '../../shared/copyToClipboard';
+// import { UseCopy } from '../../shared/copyToClipboard';
 
 
 export default function ProductCard({ product, addToCartHandler }) {
@@ -21,18 +22,16 @@ export default function ProductCard({ product, addToCartHandler }) {
 
   const [open, setOpen] = React.useState(false);
   const [toolTipOpen, setToolTipOpen] = React.useState(false);
-  const [isCopied, handleCopy] = UseCopy(2000)
 
   const handleTooltipClose = () => {
     setToolTipOpen(false);
   };
 
-  const handleTooltipOpen = (id) => {
-    handleCopy(id)
-    if(isCopied){
+  const handleTooltipOpen =  (id) => {
+      copy(id.toString())
       setToolTipOpen(true)
       setTimeout(() => setToolTipOpen(false), 2000)
-    }
+    
   };
 
 

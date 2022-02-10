@@ -56,9 +56,9 @@ export default function AppRouter() {
                 <Route path='/login' element = {!isAuthenticated? <LoginContainer/> : <Navigate to='/'/> }/>
                 <Route path='/signup' element = {<SignupContainer/>} />
                 <Route path='/' element = {<Home/>} />
-                <Route path='/mens/productDetails/:productId' element = {<ProductDetailedViewContainer/>}/>
+                {/* <Route path='/mens/productDetails/:productId' element = {<ProductDetailedViewContainer/>}/>
                 <Route path='/womens/productDetails/:productId' element = {<ProductDetailedViewContainer/>}/>
-                <Route path='/electronics/productDetails/:productId' element = {<ProductDetailedViewContainer/>}/>
+                <Route path='/electronics/productDetails/:productId' element = {<ProductDetailedViewContainer/>}/> */}
                 <Route path='/productDetails/:productId' element = {<ProductDetailedViewContainer/>}/>
                 <Route path='/Mens' element = {<MensProduct/>}/>
                 <Route path='/Womens' element = {<WomensProduct/>}/>
@@ -67,6 +67,7 @@ export default function AppRouter() {
                 <Route path='/cart' element = {<PrivateRoutes isAuthenticated={isAuthenticated}><CartDataContainer/></PrivateRoutes>}/>
                 <Route path='/MyAccount' element = {<UserProfileContainer/>}/>
                 <Route path='/edit/:field' element = {<EditProfileContainer/>}/>
+                {/* <Route path='/admin/:Product%20Upload'/> */}
                 <Route path='/Logout' element = {<Logout/>}/>
                 <Route path='/Product%20Upload' element = {<ProductUploadContainer/>}/>
                 <Route path='/checkout' element = {<CheckoutContainer/>}/>

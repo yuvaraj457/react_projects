@@ -42,18 +42,29 @@ const productUpload = (req, h) => {
 }
 
 const productUpdate = async (req, h) => {
-    const {_id, productName, productMRP, productPrice, productStar, productQuantity, productType, productImage } = req.payload
+    const {_id, productName, productMRP, productPrice, productDiscount, productStar, productQuantity, productType, productImage } = req.payload
+    const data = req.payload
+    delete data['_id']
+    delete data['__v']
     try{
+        const {value, error} = productUploadSchema.validate(data, {abortEarly: false})
+
+        if(error){
+            return h.response(error.details).code(422)
+        }
+
         const update = {
             productName,
-            productMRP,
-            productPrice,
-            productStar,
-            productQuantity,
+            productMRP : Number(productMRP),
+            productPrice : Number(productPrice),
+            productStar : Number(productStar),
+            productQuantity : Number(productQuantity),
+            productDiscount : Number(productDiscount),
             productType,
-            productImage : fileHandler(productImage)
+            productImage, 
         }
-        await productDetailsModel.findOneAndUpdate({ _id }, update)
+
+        await productDetailsModel.findOneAndUpdate({ _id }, update,  {new: true})
         return h.response('Product updated successfully').code(200)
     }
     catch(error){

@@ -21,6 +21,7 @@ function Row({ row, user }) {
   if (row === 'My Profile') {
     profile = user
     delete profile['cartProducts']
+    delete profile['userType']
   }
 
   const { cartProductDetails } = useSelector(state => state.cartReducer)

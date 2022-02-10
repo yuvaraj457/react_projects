@@ -9,8 +9,8 @@ const userDetails = new Schema({
     phone : {type : String, required : true},
     cartProducts : [],
     address : [],
-    activeAddress : {type : String},
-    userType : {type : String, required : true},
+    activeAddress : {type : String, default:'-'},
+    userType : {type : String, default:'user'},
 })
 
 const userDetailsModel = mongoose.model('userDetails', userDetails)

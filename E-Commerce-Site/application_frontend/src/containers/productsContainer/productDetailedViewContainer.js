@@ -1,10 +1,10 @@
 import { useParams } from "react-router-dom"
 import React, { useEffect, useState } from 'react'
+import { useDispatch } from "react-redux"
 
 import ProductDetailedViewCard from '../../components/products/productDetailedViewCard'
 import { getProductDetails } from "../../core/apiCalls/products"
 import { addCartProducts } from "../../action/cartAction"
-import { useDispatch } from "react-redux"
 
 export const ProductDetailedViewContainer = () => {
     const [product, setProduct] = useState([])
@@ -16,7 +16,7 @@ export const ProductDetailedViewContainer = () => {
       }
 
     useEffect(() => {
-            getProductDetails(productId)
+        getProductDetails(productId)
         .then(res => setProduct([res]))
         .catch(error => console.log(error))
     },[productId])

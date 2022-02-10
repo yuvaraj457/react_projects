@@ -69,7 +69,7 @@ export const EditAddressContainer = ({navigate, renderUser}) => {
                 marginTop: 3,
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'space-around'
+                justifyContent: 'center'
             }}>
             <Box component="form" noValidate onSubmit={e => handleSubmitAddress(e)}>
                 <AddAddressCard errors={errors} onChangeAddress={onChangeAddress} />
@@ -77,7 +77,7 @@ export const EditAddressContainer = ({navigate, renderUser}) => {
             {
            ( address && address.length > 0) &&
             <Box>
-                <Grid container  sx={{ maxWidth: '400px' }} spacing={2}>
+                <Grid container  sx={{ maxWidth: '400px' }} justifyContent={'center'} spacing={2}>
                     <Grid item>
                         {address.map((item, index) => <AddressListCard key={index} controlProps={controlProps} address={item} />)}
                     </Grid>

@@ -9,5 +9,6 @@ export const url = {
         logout : '/logout',
         deleteAddress : '/deleteAddress',
         authenticate : '/authenticate',
-        productUpload : '/productUpload'
+        productUpload : '/productUpload',
+        productUpdate : '/productUpdate'
     }

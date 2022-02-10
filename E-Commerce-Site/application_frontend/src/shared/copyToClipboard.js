@@ -6,7 +6,7 @@ export const UseCopy = (interval = null) => {
 
     useEffect(() => {
         if(isCopied && interval){
-            setCopied(false)
+           setTimeout(()=>setCopied(false), interval) 
         }
     },[isCopied, interval])
 

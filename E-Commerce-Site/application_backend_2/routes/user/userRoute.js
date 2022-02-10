@@ -30,7 +30,6 @@ const editPhone = async(req, h) => {
 
 const editAddress = async(req, h) => {
     const address = req.payload
-    console.log(address, req.state)
     const {sid} = req.state
 
     const {value, error} = addressFormSchema.validate(req.payload, {abortEarly: false})
@@ -73,6 +72,7 @@ const activeAddress = async (req, h) => {
 const deleteAddress = async (req, h) => {
     const {address} = req.payload
     const {sid} = req.state
+
     try{
         await userDetailsModel.updateMany(
              {_id : sid},
@@ -80,6 +80,17 @@ const deleteAddress = async (req, h) => {
                 $pull : {address}
              }
          )
+
+        const user = await userDetailsModel.findOne({_id:sid})
+         if(!(user.address.length > 0)){
+            await userDetailsModel.updateMany(
+                {_id : sid},
+                {
+                   $set : {activeAddress : '-'}
+                }
+            )
+        }
+        
          return h.response('Deleted Successfully').code(200)
      }
      catch(error){

@@ -1,13 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ProductUpload } from '../../components/admin/productUpload';
-import { productUpload } from '../../core/apiCalls/admin';
+import { productUpdate, productUpload } from '../../core/apiCalls/admin';
 
-export const ProductUploadContainer = () => {
+export const ProductUploadContainer = ({product}) => {
     const [formData, setFormData] = useState({})
     const [errors, setErrors] = useState({})
     const [message, setMessage] = useState('')
 
     const productPrice = formData.productMRP - (formData.productMRP * formData.productDiscount / 100)
+
+    useEffect(() => {
+        if(product)
+        {
+            setFormData(product)
+        }
+    },[product])
 
     const onChange = (e, value, r) => {
         if (r === 'reset') {
@@ -25,7 +32,6 @@ export const ProductUploadContainer = () => {
         }
     }
 
-
     const fileHandler = ({ target }) => {
         setFormData({
             ...formData,
@@ -36,7 +42,9 @@ export const ProductUploadContainer = () => {
     const submitHandler = (e) => {
         e.preventDefault()
         formData.productPrice = productPrice
-        productUpload(formData)
+        console.log(formData)
+        if(!product){
+            productUpload(formData)
             .then((res) => setMessage(res))
             .catch((err) => {
                 const errors = err.response.data
@@ -44,12 +52,25 @@ export const ProductUploadContainer = () => {
                 errors.map(item => errorLst[item.path[0]] = item.message)
                 setErrors(errorLst)
             })
-            setTimeout(() => setMessage(''), 2000)
+        }
+        else{
+            productUpdate(formData)
+            .then(res => setMessage(res))
+            .catch((err) => {
+                console.log(err)
+                // const errors = err.response.data
+                // const errorLst = {}
+                // errors.map(item => errorLst[item.path[0]] = item.message)
+                // setErrors(errorLst)
+            })
+        }
+        setTimeout(() => setMessage(''), 2000)
     }
 
     return <ProductUpload
         onChange={onChange}
         fileName={formData && formData.productImage ? formData.productImage.name : ''}
+        formData={formData}
         productPrice={isNaN(productPrice) ? 0 : productPrice}
         fileHandler={fileHandler}
         submitHandler={submitHandler}
