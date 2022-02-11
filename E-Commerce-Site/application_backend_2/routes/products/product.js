@@ -13,10 +13,13 @@ const fileHandler = file => {
 const productUpload = (req, h) => {
     const { productName, productMRP, productStar, productPrice, productDiscount, productQuantity,  productType, productImage } = req.payload
     const productData = req.payload
-    const fileName = fileHandler(productImage)
-    productData.productImage = fileName
-    console.log(productData)
+    if(productImage){
+        const fileName = fileHandler(productImage)
+        productData.productImage = fileName
+    }
+
     try {
+       
         const {value, error} = productUploadSchema.validate(productData, {abortEarly: false})
 
         if(error){
@@ -31,7 +34,7 @@ const productUpload = (req, h) => {
             productStar,
             productQuantity,
             productType,
-            productImage : fileName
+            productImage : productData.productImage
         })
         data.save()
         return h.response("Product Uploaded Successfully").code(201)
