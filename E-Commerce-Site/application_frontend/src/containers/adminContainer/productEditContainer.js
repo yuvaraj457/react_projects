@@ -1,9 +1,9 @@
-import { Container, CssBaseline, Grid } from '@mui/material';
+import { Alert, AlertTitle, Container, CssBaseline, Grid } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useState } from 'react';
 import { ProductEdit } from '../../components/admin/productEdit';
 import { ProductEditForm } from '../../components/admin/productEditForm';
-import { productUpdate } from '../../core/apiCalls/admin';
+import { productDelete, productUpdate } from '../../core/apiCalls/admin';
 import { getProductDetails } from '../../core/apiCalls/products';
 
 export const ProductEditContainer = (e) => {
@@ -66,6 +66,15 @@ export const ProductEditContainer = (e) => {
         setTimeout(() => setMessage(''), 2000)
     }
 
+    const productDeleteHandler = () => {
+        productDelete(value)
+            .then(res => {
+                setFormData({})
+                setMessage(res)
+            })
+        setTimeout(() => setMessage(''), 4000)
+    }
+
     return <Container component="main"  >
         <CssBaseline />
         <Box
@@ -79,18 +88,31 @@ export const ProductEditContainer = (e) => {
             }}
         >
             <Grid container justifyContent={'center'}>
-                <ProductEdit productIdHandler={productIdHandler} value={value} productDataHandler={productDataHandler} />
-            {Object.keys(formData).length > 0 &&
+
                 <Grid item xs={6}>
-                    <ProductEditForm
-                        formData={formData}
-                        submitHandler={submitHandler}
-                        inputHandler={inputHandler}
-                        errors={errors}
-                        productPrice={isNaN(productPrice) ? 0 : productPrice}
-                        fileHandler={fileHandler}
+                    {message && <Alert severity="info">
+                        <AlertTitle>{message}</AlertTitle>
+                    </Alert>}
+                    <ProductEdit
+                        productIdHandler={productIdHandler}
+                        value={value}
+                        productDataHandler={productDataHandler}
+                        formData={Object.keys(formData).length > 0 && formData}
+                        productDeleteHandler={productDeleteHandler}
                     />
-                </Grid>}
+                </Grid>
+
+                {Object.keys(formData).length > 0 &&
+                    <Grid item xs={6}>
+                        <ProductEditForm
+                            formData={formData}
+                            submitHandler={submitHandler}
+                            inputHandler={inputHandler}
+                            errors={errors}
+                            productPrice={isNaN(productPrice) ? 0 : productPrice}
+                            fileHandler={fileHandler}
+                        />
+                    </Grid>}
             </Grid>
         </Box>
     </Container>

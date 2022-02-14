@@ -6,7 +6,7 @@ import { productUpdate, productUpload } from '../../core/apiCalls/admin';
 export const ProductUploadContainer = () => {
     const [formData, setFormData] = useState([])
     const [errors, setErrors] = useState({})
-    const [message, setMessage] = useState('')
+    const [message, setMessage] = useState({})
     const productPrice = formData.productMRP - (formData.productMRP * formData.productDiscount / 100)
 
 
@@ -42,11 +42,18 @@ export const ProductUploadContainer = () => {
         formData.productPrice = productPrice
         console.log(formData)
         productUpload(formData)
-            .then((res) => setMessage(res))
+            .then((res) => setMessage({type : 'success', text : res}))
             .catch((err) => {
                 const errors = err.response.data
+                console.log(errors)
                 const errorLst = {}
-                errors.map(item => errorLst[item.path[0]] = item.message)
+                errors.map(item => {
+                    if(item.path[0] === 'Exists'){
+                        setMessage({type : 'failure', text : item.message})
+                        return null
+                    }
+                    errorLst[item.path[0]] = item.message
+                })
                 setErrors(errorLst)
             })
         setTimeout(() => setMessage(''), 2000)

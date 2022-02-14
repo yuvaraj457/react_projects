@@ -23,6 +23,7 @@ import {ProductUploadContainer} from '../containers/adminContainer/productUpload
 import CheckoutContainer from '../containers/userContainer/checkoutContainer'
 import DebitCard from '../components/checkoutPage/payments/debitCard'
 import { ProductEditContainer } from '../containers/adminContainer/productEditContainer'
+import { UserEditContainer } from '../containers/adminContainer/userEditContainer'
 
 
 const PrivateRoutes = ({children, isAuthenticated}) => {
@@ -73,6 +74,7 @@ export default function AppRouter() {
                 <Route path='/checkout' element = {<CheckoutContainer/>}/>
                 <Route path='/payment' element = {<DebitCard/>}/>
                 <Route path='/product%20Edit' element = {<ProductEditContainer/>}/>
+                <Route path='/Manage%20Users' element = {<UserEditContainer/>}/>
             </Routes>
 }
             </>

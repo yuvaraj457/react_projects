@@ -1,5 +1,6 @@
-const { getCartProducts } = require("../routes/products/cart");
-const { productUpload, productUpdate, products, productDetails } = require("../routes/products/product");
+const { getCartProducts } = require("../routes/user/cart");
+const { productUpload, productUpdate, productDetails, productDelete } = require("../routes/admin/product");
+const { products } = require("../routes/product/productsRoute");
 
 exports.plugin = {
     name : 'productPlugin', 
@@ -30,6 +31,11 @@ exports.plugin = {
                     },
                     auth : false
                 }
+            },
+            {
+                method : 'POST',
+                path : '/productDelete',
+                handler : productDelete,
             },
             {
                 method : 'GET',

@@ -1,5 +1,5 @@
-const { addToCart, getCartProducts, productQuantityUpdate, deleteCartProduct } = require('./products/cart');
-const { products, productsUpload, productDetails, productUpdate, productUpload } = require('./products/product')
+const { addToCart, getCartProducts, productQuantityUpdate, deleteCartProduct } = require('./user/cart');
+const { products, productsUpload, productDetails, productUpdate, productUpload } = require('./admin/product')
 const { login } = require('./user/loginRoute')
 const { signup } = require('./user/signupRoute');
 const { getUser, editAddress, editPhone, activeAddress, logout, deleteAddress, authenticate } = require('./user/userRoute');

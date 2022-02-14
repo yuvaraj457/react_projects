@@ -10,5 +10,7 @@ export const url = {
         deleteAddress : '/deleteAddress',
         authenticate : '/authenticate',
         productUpload : '/productUpload',
-        productUpdate : '/productUpdate'
+        productUpdate : '/productUpdate',
+        productDelete : '/productDelete',
+        getAllUsers : '/getAllUsers'
     }

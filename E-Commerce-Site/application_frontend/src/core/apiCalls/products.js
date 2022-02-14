@@ -28,3 +28,5 @@ export const productQuantityUpdate = async (id, quantity) => {
     const {data} = await axiosInstance.post('/productQuantityUpdate', {productId: id, quantity})
     return data
 }
+
+

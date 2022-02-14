@@ -28,8 +28,9 @@ const init = async () => {
         isHttpOnly: true
     })
 
-    const validate = async (req, _id) => {
+    const validate = async (request, _id) => {
         const data = await userDetailsModel.findOne({ _id });
+        request.logger.info('In handler %s', request.path)
         if(!data){
             return {valid : false}
         }
@@ -39,7 +40,13 @@ const init = async () => {
 
     await server.register(require('@hapi/cookie'))
     await server.register(require('@hapi/inert'))
-    await server.register([require('./plugins/productPlugin'), require('./plugins/userPlugin')])
+    await server.register(require('hapi-pino'))
+
+    await server.register([
+        require('./plugins/productPlugin'),
+        require('./plugins/userPlugin'), 
+        require('./plugins/adminPlugin')
+    ])
 
     server.auth.strategy('session', 'cookie', {
         cookie: {

@@ -18,7 +18,7 @@ import { Autocomplete, IconButton, Input, InputAdornment, InputLabel } from '@mu
 
 export const ProductUpload = ({inputHandler, message, errors, fileName, productPrice, fileHandler, submitHandler }) => {
     const options = ['mens', 'womens', 'electronics'];
-
+    
     let form =
         <Box component="form" noValidate mt={2} onSubmit={(e) => submitHandler(e)}>
             <Grid container spacing={2}>
@@ -141,7 +141,14 @@ export const ProductUpload = ({inputHandler, message, errors, fileName, productP
                         alignItems: 'center',
                     }}
                 >
-                    {message && <Alert severity="success">{message}</Alert>}
+                    {(Object.keys(message).length > 0)?  
+                    message.type === 'success'?
+                    <Alert severity="success">{message.text}</Alert> 
+                    : 
+                    <Alert severity="error">{message.text}</Alert>
+                    :
+                    ''
+                    }
                     <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                         <SellIcon />
                     </Avatar>

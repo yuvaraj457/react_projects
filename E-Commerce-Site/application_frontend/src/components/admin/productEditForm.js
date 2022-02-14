@@ -158,7 +158,7 @@ export const ProductEditForm = ({formData, submitHandler, inputHandler, errors, 
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
             >
-                upload
+                update
             </Button>
         </Box>
     )

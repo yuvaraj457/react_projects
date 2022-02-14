@@ -10,22 +10,27 @@ const fileHandler = file => {
     return fileName
 }
 
-const productUpload = (req, h) => {
+const productUpload = async(req, h) => {
     const { productName, productMRP, productStar, productPrice, productDiscount, productQuantity,  productType, productImage } = req.payload
     const productData = req.payload
+    
     if(productImage){
         const fileName = fileHandler(productImage)
         productData.productImage = fileName
     }
 
+    const product = await productDetailsModel.find({productName})
+    if(product.length > 0){
+        return h.response([{path : ['Exists'], message : 'Product already Exisits'}]).code(422)
+    }
     try {
-       
         const {value, error} = productUploadSchema.validate(productData, {abortEarly: false})
 
         if(error){
             return h.response(error.details).code(422)
         }
 
+        console.log(productData)
         const data = productDetailsModel({
             productName,
             productMRP,
@@ -75,15 +80,18 @@ const productUpdate = async (req, h) => {
     }
 }
 
-const products = async (req, h) => {
+const productDelete = async(req, h) => {
+    const {_id} = req.payload
+    console.log(_id)
     try{
-        const data = await productDetailsModel.find({})
-        return h.response(data).code(200)
+        const data = await productDetailsModel.deleteOne({_id})
+        return h.response('Deleted successfully').code(202)
     }
     catch(error){
         return error
     }
 }
+
 
 const productDetails = async(req, h) => {
     const {productId} = req.query
@@ -91,4 +99,4 @@ const productDetails = async(req, h) => {
     return data
 }
 
-module.exports = { productUpload, products, productDetails, productUpdate}
+module.exports = { productUpload, productDetails, productUpdate, productDelete}

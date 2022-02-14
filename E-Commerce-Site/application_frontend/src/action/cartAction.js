@@ -36,14 +36,6 @@ export const productDecrementAction = (id) => {
     }
 }
 
-// export const fetchCartProducts = () => {
-//     return (dispatch) => {
-//         getCartProducts()
-//         .then(res => dispatch(cartAction(res)))
-//         .catch(error => dispatch(cartErrorAction(error)))
-//     }
-// }
-
 export const fetchCartProducts = () => {
     return async(dispatch) => {
         const cartProductIds = await getCartProducts()

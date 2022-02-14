@@ -23,6 +23,7 @@ import { fetchCartProducts } from '../action/cartAction';
 import { fetchUser, verifyAuth } from '../action/userAction';
 import { deepPurple } from '@mui/material/colors';
 import { authenticate } from '../core/apiCalls/user';
+import { fetchAllUsers } from '../action/adminAction';
 const pages = ['Mens', 'Womens', 'Electronics'];
 const adminMenu = ['Product Upload', 'Product Edit', 'Manage Users']
 const settings = [ 'MyAccount', 'Logout'];
@@ -37,6 +38,10 @@ export const NavBar = () => {
   const user = useSelector(state => state.userReducer.userDetails)
   const {isAuthenticated, userDetails} = useSelector(state => state.userReducer)
   const {cartProducts} = useSelector(state => state.cartReducer)
+
+  if(userDetails.userType === 'admin'){
+    dispatch(fetchAllUsers())
+  }
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
