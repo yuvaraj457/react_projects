@@ -11,4 +11,17 @@ const getAllUsers = async (req, h) => {
     }
 }
 
-module.exports = {getAllUsers}
+const editUser = async (req, h) => {
+    const {_id, userType} = req.payload
+    try{
+        await userDetailsModel.updateOne(
+            {_id},
+            {$set : {userType}}
+        )
+    return h.response('user updated').code(201)
+    }
+    catch(error){
+        return error
+    }
+}
+module.exports = {getAllUsers, editUser}

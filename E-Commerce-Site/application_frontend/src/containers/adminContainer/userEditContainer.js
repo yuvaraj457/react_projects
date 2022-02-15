@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 
 import { UserEdit } from '../../components/admin/userEdit'
 import { BasicTable } from '../../components/admin/userTable'
+import { editUser } from '../../core/apiCalls/admin'
 
 
 export const UserEditContainer = () => {
@@ -12,6 +13,7 @@ export const UserEditContainer = () => {
     const options = users.map(item => item.firstName.toLowerCase())
 
     const [value, setValue] = useState('')
+    const [selectValue, setSelectValue] =  useState('')
     const [filterData, setFilterData] = useState('')
     
     const inputHandler = (e) => {
@@ -24,7 +26,15 @@ export const UserEditContainer = () => {
         setFilterData(filterData)
     }
 
-    console.log(filterData)
+    const selectHandler = e => {
+        setSelectValue(e.target.value)
+    } 
+
+    const userTypeSubmitHandler = () => {
+            editUser(filterData[0]._id, selectValue)
+            .then((res) => console.log(res))
+    }
+
     return (
         <>
         <Box
@@ -45,7 +55,13 @@ export const UserEditContainer = () => {
                     />
                 </Grid>
                 <Grid item xs={12}>
-                    {filterData && filterData.map((item, index) => <BasicTable key={index} user={item}/>)}
+                    {filterData && filterData.map((item, index) => <BasicTable 
+                                                                        key={index} 
+                                                                        user={item} 
+                                                                        selectHandler={selectHandler}
+                                                                        selectValue={selectValue}
+                                                                        userTypeSubmitHandler={userTypeSubmitHandler}
+                                                                    />)}
                 </Grid>
             </Grid>
         </Box>

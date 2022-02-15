@@ -6,47 +6,50 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { Button, MenuItem, TextField } from '@mui/material';
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
 
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
+export const BasicTable = ({ user, selectHandler, selectValue, userTypeSubmitHandler}) => {
+    const userTypes = ['user', 'superuser']
 
-export const  BasicTable = ({user}) => {
-  return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        {/* <TableHead>
-          <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
-          </TableRow>
-        </TableHead> */}
-        <TableBody>
-          {Object.keys(user).map((field) => (
-              <>
-                <TableRow
-                key={field}
-                >
-                    <TableCell component="th" scope="row">
-                        {field}
-                    </TableCell>
-                    <TableCell align="center">{user[field]}</TableCell>
-                </TableRow>
-            </>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  );
+    return (
+        <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <TableBody>
+                    {Object.keys(user).map((field) => (
+                            <TableRow
+                                key={field}
+                            >
+                                <TableCell component="th" scope="row">
+                                    {field}
+                                </TableCell>
+                                <TableCell align="center">{user[field]}</TableCell>
+                            </TableRow>
+                    ))}
+                    <TableRow>
+                        <TableCell>
+                            <TextField
+                                id="outlined-select-currency"
+                                select
+                                label="Promote as"
+                                sx={{ width: 250 }}
+                                size='small'
+                                value={selectValue}
+                                onChange={selectHandler}   
+                            >
+                                {userTypes.map((option) => (
+                                    <MenuItem key={option} value={option}>
+                                        {option}
+                                    </MenuItem>
+                                ))}
+                            </TextField>
+                        </TableCell>
+                        <TableCell align="center">
+                                <Button variant="outlined" onClick={userTypeSubmitHandler}>promote</Button>
+                        </TableCell>
+                    </TableRow>
+                </TableBody>
+            </Table>
+        </TableContainer>
+    );
 }

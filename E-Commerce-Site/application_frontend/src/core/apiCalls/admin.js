@@ -36,3 +36,8 @@ export const getAllUsers = async () => {
     const {data} = await axiosInstance.get(url.getAllUsers)
     return data
 }
+
+export const editUser = async (_id, userType) => {
+    const {data} = await axiosInstance.post(url.editUser, {_id, userType})
+    return data
+}
