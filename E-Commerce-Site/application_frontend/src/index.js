@@ -3,38 +3,34 @@ import ReactDOM from 'react-dom';
 import i18n from "i18next";
 import { useTranslation, initReactI18next } from "react-i18next";
 import LanguageDetector from 'i18next-browser-languagedetector'
-
-// import App from './App';
+import HttpApi from 'i18next-http-backend';
+import App from './App';
 import reportWebVitals from './reportWebVitals';
+
 
 i18n
   .use(initReactI18next) 
   .use(LanguageDetector)
+  .use(HttpApi)
   .init({
-    resources: {
-      en: {
-        translation: {
-          "welcome": "Welcome to React and react-i18next"
-        }
-      },
-      tn : {
-        translation: {
-          "welcome": "Tamil"
-        }
-      }
-    },
     fallbackLng: "en",
     detection: {
-      order : ['htmlTag', 'cookie', 'localStorage', 'sessionStorage', 'path', 'subdomain'],
+      order : [ 'htmlTag', 'cookie',  'localStorage', 'sessionStorage', 'path', 'subdomain'],
       caches : ['cookie']
     },
-
+    backend: {
+      loadPath : '/assets/locales/{{lng}}/transulation.json'
+    },
+    react : {useSuspense : false}
   })
 
-const App = () => {
-  const {t} = useTranslation()
-  return t('welcome')
-}
+// const App = () => {
+//   const {t} = useTranslation()
+//   return <>
+//           <button onClick={() => i18n.changeLanguage('tn')}>click</button>
+//           {t('welcome')}
+//         </>
+// }
 
 ReactDOM.render(
     <App />

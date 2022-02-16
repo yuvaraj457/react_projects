@@ -8,6 +8,7 @@ import Grid from '@mui/material/Grid'
 import StarRatings from 'react-star-ratings'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import copy from 'copy-to-clipboard';
+import { useTranslation } from "react-i18next";
 
 
 import { apiTarget } from '../../config'
@@ -17,7 +18,7 @@ import { AlertDialogSlide } from '../../shared/alertDialog';
 
 
 export default function ProductCard({ product, addToCartHandler }) {
-
+  const {t} = useTranslation()
   const { isAuthenticated, userDetails } = useSelector(state => state.userReducer)
 
   const [open, setOpen] = React.useState(false);
@@ -106,15 +107,15 @@ export default function ProductCard({ product, addToCartHandler }) {
 
 
         <Typography gutterBottom variant="body1" >
-          Price : {product.productPrice}
+          {t('Price')} : {product.productPrice}
         </Typography>
         <Stack spacing={1} direction='row'>
 
           <Button size='small' variant="contained" color='cartButtonColor' onClick={() => isAuthenticated ? addToCartHandler(product._id) : handleClickOpen()}>
-            Cart
+            {t('Cart')}
           </Button>
           <Button size='small' variant="contained" color="buyButtonColor">
-            buy
+            {t('buy')}
           </Button>
 
           <AlertDialogSlide handleClose={handleClose} open={open} />

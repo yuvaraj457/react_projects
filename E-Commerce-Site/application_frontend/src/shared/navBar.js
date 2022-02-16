@@ -14,8 +14,12 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
+import TextField from '@mui/material/TextField';
 import { Badge } from '@mui/material';
+import Switch from '@mui/material/Switch';
 
+import { useTranslation } from "react-i18next";
+import i18n from "i18next";
 
 import logo from '../assets/images/logo.png'
 import { Link, useLocation } from 'react-router-dom';
@@ -31,10 +35,12 @@ const settings = [ 'MyAccount', 'Logout'];
 export const NavBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [lang, setLang] = React.useState('english');
   const location = useLocation()
   const dispatch = useDispatch()
-  
-  
+  const {t} = useTranslation()
+  const label = { inputProps: { 'aria-label': 'c' } };
+
   const user = useSelector(state => state.userReducer.userDetails)
   const {isAuthenticated, userDetails} = useSelector(state => state.userReducer)
   const {cartProducts} = useSelector(state => state.cartReducer)
@@ -42,6 +48,9 @@ export const NavBar = () => {
   if(userDetails.userType === 'admin'){
     dispatch(fetchAllUsers())
   }
+
+
+ 
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -71,6 +80,26 @@ export const NavBar = () => {
     })
   },[dispatch])
 
+  // React.useEffect(() => {
+  //   if(langChecked){
+  //     i18n.changeLanguage('tn')
+  //   }
+  //   else{
+  //     i18n.changeLanguage('en')
+  //   }
+  // },[])
+
+  const langHandler = (e) => {
+    if(lang === 'english'){
+      i18n.changeLanguage('tn')
+      setLang('tamil')
+    }
+    else{
+      i18n.changeLanguage('en')
+      setLang('english')
+    }
+
+  }
  
   return (
     <AppBar style={style} position="static" >
@@ -87,7 +116,6 @@ export const NavBar = () => {
               <img src={logo} className='brand-logo' alt='logo_pic' />
             </Link>
           </Box>
-
 
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -122,7 +150,7 @@ export const NavBar = () => {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                  <Typography textAlign="center">{t(page)}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -145,7 +173,7 @@ export const NavBar = () => {
                   onClick={handleCloseNavMenu}
                   sx={{ my: 2, color: 'white', display: 'block' }}
                 >
-                  {page}
+                  {t(page)}
                 </Button>
               </Link>
             ))}
@@ -162,7 +190,7 @@ export const NavBar = () => {
                         onClick={handleCloseNavMenu}
                         sx={{ my: 2, color: 'white', display: 'block' }}
                       >
-                        {menu}
+                        {t(menu)}
                       </Button>
                     </Link>
                   ))
@@ -197,11 +225,22 @@ export const NavBar = () => {
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
                 >
+                
                   {settings.map((setting) => (
                     <MenuItem key={setting} onClick={handleCloseNavMenu}>
-                      <Typography textAlign="center"><Link to={setting} style={{ textDecoration: 'none' }}>{setting}</Link></Typography>
+                      <Typography textAlign="center"><Link to={setting} style={{ textDecoration: 'none' }}>{t(setting)}</Link></Typography>
                     </MenuItem>
                   ))}
+                  <MenuItem>
+                  En
+                    <Switch 
+                      inputProps={{ 'aria-label': 'controlled' }} 
+                      color="secondary" 
+                      checked={lang === 'tamil'}
+                      onChange={() => langHandler()}
+                      />
+                    Tn
+                  </MenuItem>
                 </Menu>
               </Box>
             </>
@@ -209,7 +248,7 @@ export const NavBar = () => {
             <>{
             !(location.pathname === '/login' )&&
             <Link to='/login'>
-              <Button sx={{ my: 2, color: 'white', display: 'block' }}>Login</Button>
+              <Button sx={{ my: 2, color: 'white', display: 'block' }}>{t('Login')}</Button>
             </Link>}
             </>
           }
