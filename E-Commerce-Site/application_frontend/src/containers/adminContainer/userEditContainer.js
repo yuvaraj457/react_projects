@@ -6,16 +6,17 @@ import { useSelector } from 'react-redux'
 import { UserEdit } from '../../components/admin/userEdit'
 import { BasicTable } from '../../components/admin/userTable'
 import { editUser } from '../../core/apiCalls/admin'
-
-
+import { useTranslation } from "react-i18next";
 export const UserEditContainer = () => {
     const {users} = useSelector(state => state.adminReducer)
+    const {t} = useTranslation()
     const options = users.map(item => item.firstName.toLowerCase())
 
     const [value, setValue] = useState('')
     const [selectValue, setSelectValue] =  useState('')
     const [filterData, setFilterData] = useState('')
-    
+    const [message, setMessage] = useState('')
+
     const inputHandler = (e) => {
         setValue(e)
     }
@@ -32,7 +33,9 @@ export const UserEditContainer = () => {
 
     const userTypeSubmitHandler = () => {
             editUser(filterData[0]._id, selectValue)
-            .then((res) => console.log(res))
+            .then((res) => setMessage(res))
+            setFilterData([{...filterData[0], userType : selectValue}])
+            setTimeout(() => setMessage(''), 4000)
     }
 
     return (
@@ -52,6 +55,7 @@ export const UserEditContainer = () => {
                         options={options} 
                         submitHandler={submitHandler}
                         inputHandler={inputHandler}
+                        t = {t}
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -61,6 +65,8 @@ export const UserEditContainer = () => {
                                                                         selectHandler={selectHandler}
                                                                         selectValue={selectValue}
                                                                         userTypeSubmitHandler={userTypeSubmitHandler}
+                                                                        message={message}
+                                                                        t={t}
                                                                     />)}
                 </Grid>
             </Grid>

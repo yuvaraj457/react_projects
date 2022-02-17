@@ -43,7 +43,7 @@ function Row({ row, user }) {
                         {profile[key]}
                       </Grid>
                       <Grid item>
-                        {(key === 'phone' || key === 'activeAddress') && <Link to={`/edit/${key}`}>Edit</Link>}
+                        {(key === 'phone' || key === 'activeAddress') && <Link to={`/editProfile/${key}`}>Edit</Link>}
                       </Grid>
                     </Grid>
                   </TableCell>

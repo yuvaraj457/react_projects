@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {Routes, Route, Navigate} from 'react-router-dom'
+import {Routes, Route, Navigate, useLocation} from 'react-router-dom'
 import Home from '../components/homePage/home'
 import {ProductDetailedViewContainer} from '../containers/productsContainer/productDetailedViewContainer'
 
@@ -24,19 +24,23 @@ import CheckoutContainer from '../containers/userContainer/checkoutContainer'
 import DebitCard from '../components/checkoutPage/payments/debitCard'
 import { ProductEditContainer } from '../containers/adminContainer/productEditContainer'
 import { UserEditContainer } from '../containers/adminContainer/userEditContainer'
+import { checkuserpermission } from '../utlis/checkUserPermission'
 
 
-const PrivateRoutes = ({children, isAuthenticated}) => {
+const PrivateRoutes = ({children, isAuthenticated, userType, path}) => {
+    const allowAcess = checkuserpermission(userType, path)
     return (
-        isAuthenticated ? children : <Navigate to='/login'/>
+        isAuthenticated && allowAcess ? children : <Navigate to='/login'/>
     )
 }
 
 export default function AppRouter() {
     const [loading, setLoading] = useState(false)
-    
+    const location = useLocation()
     const dispatch = useDispatch()
-    const {isAuthenticated} = useSelector(state => state.userReducer)
+    const {isAuthenticated, userDetails} = useSelector(state => state.userReducer)
+
+    console.log(location.pathname, userDetails.userType)
 
     useEffect(() => {
         authenticate()
@@ -57,24 +61,21 @@ export default function AppRouter() {
                 <Route path='/login' element = {!isAuthenticated? <LoginContainer/> : <Navigate to='/'/> }/>
                 <Route path='/signup' element = {<SignupContainer/>} />
                 <Route path='/' element = {<Home/>} />
-                {/* <Route path='/mens/productDetails/:productId' element = {<ProductDetailedViewContainer/>}/>
-                <Route path='/womens/productDetails/:productId' element = {<ProductDetailedViewContainer/>}/>
-                <Route path='/electronics/productDetails/:productId' element = {<ProductDetailedViewContainer/>}/> */}
                 <Route path='/productDetails/:productId' element = {<ProductDetailedViewContainer/>}/>
-                <Route path='/Mens' element = {<MensProduct/>}/>
+                {/* <Route path='/Mens' element = {<MensProduct/>}/>
                 <Route path='/Womens' element = {<WomensProduct/>}/>
-                <Route path='/Electronics' element = {<ElectronicsProduct/>}/>
-                <Route path='productType/:field' element = {<ProductFilterViewContainer/>} />
-                <Route path='/cart' element = {<PrivateRoutes isAuthenticated={isAuthenticated}><CartDataContainer/></PrivateRoutes>}/>
-                <Route path='/MyAccount' element = {<UserProfileContainer/>}/>
-                <Route path='/edit/:field' element = {<EditProfileContainer/>}/>
+                <Route path='/Electronics' element = {<ElectronicsProduct/>}/> */}
+                <Route path='/productType/:field' element = {<ProductFilterViewContainer/>} />
+                <Route path='/cart' element = {<PrivateRoutes isAuthenticated={isAuthenticated} path={location.pathname} userType={userDetails.userType}><CartDataContainer/></PrivateRoutes>}/>
+                <Route path='/MyAccount' element = {<PrivateRoutes isAuthenticated={isAuthenticated} path={location.pathname} userType={userDetails.userType}><UserProfileContainer/></PrivateRoutes>}/>
+                <Route path='/editProfile/:field' element = {<PrivateRoutes isAuthenticated={isAuthenticated} path={location.pathname} userType={userDetails.userType}><EditProfileContainer/></PrivateRoutes>}/>
                 {/* <Route path='/admin/:Product%20Upload'/> */}
                 <Route path='/Logout' element = {<Logout/>}/>
-                <Route path='/Product%20Upload' element = {<ProductUploadContainer/>}/>
-                <Route path='/checkout' element = {<CheckoutContainer/>}/>
-                <Route path='/payment' element = {<DebitCard/>}/>
-                <Route path='/product%20Edit' element = {<ProductEditContainer/>}/>
-                <Route path='/Manage%20Users' element = {<UserEditContainer/>}/>
+                <Route path='/Product%20Upload' element = {<PrivateRoutes isAuthenticated={isAuthenticated} path={location.pathname} userType={userDetails.userType}><ProductUploadContainer/></PrivateRoutes>}/>
+                <Route path='/checkout' element = {<PrivateRoutes isAuthenticated={isAuthenticated} path={location.pathname} userType={userDetails.userType}><CheckoutContainer/></PrivateRoutes>}/>
+                <Route path='/payment' element = {<PrivateRoutes isAuthenticated={isAuthenticated} path={location.pathname} userType={userDetails.userType}><DebitCard/></PrivateRoutes>}/>
+                <Route path='/product%20Edit' element = {<PrivateRoutes isAuthenticated={isAuthenticated} path={location.pathname} userType={userDetails.userType}><ProductEditContainer/></PrivateRoutes>}/>
+                <Route path='/Manage%20Users' element = {<PrivateRoutes isAuthenticated={isAuthenticated} path={location.pathname} userType={userDetails.userType}><UserEditContainer/></PrivateRoutes>}/>
             </Routes>
 }
             </>

@@ -24,13 +24,6 @@ i18n
     react : {useSuspense : false}
   })
 
-// const App = () => {
-//   const {t} = useTranslation()
-//   return <>
-//           <button onClick={() => i18n.changeLanguage('tn')}>click</button>
-//           {t('welcome')}
-//         </>
-// }
 
 ReactDOM.render(
     <App />

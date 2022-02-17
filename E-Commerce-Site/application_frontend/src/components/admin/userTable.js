@@ -7,13 +7,16 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Button, MenuItem, TextField } from '@mui/material';
+import Alert from '@mui/material/Alert';
 
 
-export const BasicTable = ({ user, selectHandler, selectValue, userTypeSubmitHandler}) => {
+export const BasicTable = ({ user, selectHandler, selectValue, userTypeSubmitHandler, message, t}) => {
     const userTypes = ['user', 'superuser']
 
     return (
         <TableContainer component={Paper}>
+        {message &&
+            <Alert severity="success">{message}</Alert>}
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableBody>
                     {Object.keys(user).map((field) => (
@@ -31,7 +34,7 @@ export const BasicTable = ({ user, selectHandler, selectValue, userTypeSubmitHan
                             <TextField
                                 id="outlined-select-currency"
                                 select
-                                label="Promote as"
+                                label={t("Promote as")}
                                 sx={{ width: 250 }}
                                 size='small'
                                 value={selectValue}
@@ -39,13 +42,13 @@ export const BasicTable = ({ user, selectHandler, selectValue, userTypeSubmitHan
                             >
                                 {userTypes.map((option) => (
                                     <MenuItem key={option} value={option}>
-                                        {option}
+                                        {t(option)}
                                     </MenuItem>
                                 ))}
                             </TextField>
                         </TableCell>
                         <TableCell align="center">
-                                <Button variant="outlined" onClick={userTypeSubmitHandler}>promote</Button>
+                                <Button variant="outlined" onClick={userTypeSubmitHandler}>{t('promote')}</Button>
                         </TableCell>
                     </TableRow>
                 </TableBody>
