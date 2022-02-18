@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
+import { useTranslation } from "react-i18next";
+
 import { Box } from '@mui/system'
 import { Grid } from '@mui/material'
-import { useSelector } from 'react-redux'
 
-import { UserEdit } from '../../components/admin/userEdit'
-import { BasicTable } from '../../components/admin/userTable'
-import { editUser } from '../../core/apiCalls/admin'
-import { useTranslation } from "react-i18next";
+import { UserEdit } from '../../components/admin/user/userEdit'
+import { BasicTable } from '../../components/admin/user/userTable'
+import { deleteUser, editUser } from '../../core/apiCalls/admin'
+
 export const UserEditContainer = () => {
     const {users} = useSelector(state => state.adminReducer)
     const {t} = useTranslation()
@@ -32,10 +34,17 @@ export const UserEditContainer = () => {
     } 
 
     const userTypeSubmitHandler = () => {
-            editUser(filterData[0]._id, selectValue)
-            .then((res) => setMessage(res))
-            setFilterData([{...filterData[0], userType : selectValue}])
-            setTimeout(() => setMessage(''), 4000)
+        editUser(filterData[0]._id, selectValue)
+        .then((res) => setMessage(res))
+        setFilterData([{...filterData[0], userType : selectValue}])
+        setTimeout(() => setMessage(''), 4000)
+    }
+
+    const deleteUserHandler = () => {
+        deleteUser()
+        .then((res) => setMessage(res))
+        setFilterData([])
+        setTimeout(() => setMessage(''), 4000)
     }
 
     return (
@@ -59,15 +68,17 @@ export const UserEditContainer = () => {
                     />
                 </Grid>
                 <Grid item xs={12}>
-                    {filterData && filterData.map((item, index) => <BasicTable 
-                                                                        key={index} 
-                                                                        user={item} 
-                                                                        selectHandler={selectHandler}
-                                                                        selectValue={selectValue}
-                                                                        userTypeSubmitHandler={userTypeSubmitHandler}
-                                                                        message={message}
-                                                                        t={t}
-                                                                    />)}
+                    {filterData && 
+                    filterData.map((item, index) => <BasicTable 
+                                                        key={index} 
+                                                        user={item} 
+                                                        selectHandler={selectHandler}
+                                                        selectValue={selectValue}
+                                                        userTypeSubmitHandler={userTypeSubmitHandler}
+                                                        message={message}
+                                                        deleteUserHandler={deleteUserHandler}
+                                                        t={t}
+                                                    />)}
                 </Grid>
             </Grid>
         </Box>

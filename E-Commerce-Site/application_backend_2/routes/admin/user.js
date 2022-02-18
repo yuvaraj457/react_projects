@@ -24,4 +24,15 @@ const editUser = async (req, h) => {
         return error
     }
 }
+
+const deleteUser = async(req, h) => {
+    const {_id} = req.payload
+    try{
+        await userDetailsModel.deleteOne({_id})
+        return h.response('user deleted').code(202)
+    }
+    catch(error){
+        return error
+    }
+}
 module.exports = {getAllUsers, editUser}

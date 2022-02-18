@@ -41,3 +41,8 @@ export const editUser = async (_id, userType) => {
     const {data} = await axiosInstance.post(url.editUser, {_id, userType})
     return data
 }
+
+export const deleteUser = async (_id) => {
+    const {data} = await axiosInstance.post(url.deleteUser, {_id})
+    return data
+}

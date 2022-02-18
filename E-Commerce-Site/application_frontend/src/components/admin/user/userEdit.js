@@ -4,7 +4,6 @@ import { Autocomplete, Button, FormControl, TextField } from '@mui/material'
 
 export const UserEdit = ({options, submitHandler, inputHandler, t}) => {
     return (
-        
                     <FormControl component='form' onSubmit={(e) => submitHandler(e)}>
                         <Autocomplete
                             disablePortal

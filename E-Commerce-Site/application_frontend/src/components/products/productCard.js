@@ -14,7 +14,6 @@ import { useTranslation } from "react-i18next";
 import { apiTarget } from '../../config'
 import { useSelector } from 'react-redux';
 import { AlertDialogSlide } from '../../shared/alertDialog';
-// import { UseCopy } from '../../shared/copyToClipboard';
 
 
 export default function ProductCard({ product, addToCartHandler }) {

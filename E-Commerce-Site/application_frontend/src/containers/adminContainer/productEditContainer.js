@@ -1,8 +1,8 @@
 import { Alert, AlertTitle, Container, CssBaseline, Grid } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useState } from 'react';
-import { ProductEdit } from '../../components/admin/productEdit';
-import { ProductEditForm } from '../../components/admin/productEditForm';
+import { ProductEdit } from '../../components/admin/product/productEdit';
+import { ProductEditForm } from '../../components/admin/product/productEditForm';
 import { productDelete, productUpdate } from '../../core/apiCalls/admin';
 import { getProductDetails } from '../../core/apiCalls/products';
 

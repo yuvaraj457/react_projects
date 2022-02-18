@@ -13,5 +13,6 @@ export const url = {
         productUpdate : '/productUpdate',
         productDelete : '/productDelete',
         getAllUsers : '/getAllUsers',
-        editUser : '/editUser'
+        editUser : '/editUser',
+        deleteUser : '/deleteUser'
     }

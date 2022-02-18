@@ -30,7 +30,6 @@ const init = async () => {
 
     const validate = async (request, _id) => {
         const data = await userDetailsModel.findOne({ _id });
-        request.logger.info('In handler %s', request.path)
         if(!data){
             return {valid : false}
         }
@@ -65,6 +64,7 @@ const init = async () => {
     console.log('Server running on port 5000');
     
     // server.route(Routes)
+    request.logger.info('In handler %s', request.path)
 }
 
 init()

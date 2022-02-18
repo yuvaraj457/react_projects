@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { ProductUpload } from '../../components/admin/productUpload';
+
+import { ProductUpload } from '../../components/admin/product/productUpload';
 import { productUpdate, productUpload } from '../../core/apiCalls/admin';
 
 export const ProductUploadContainer = () => {
