@@ -33,14 +33,13 @@ export default function DeleteUserAlertDialog() {
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Let Google help apps determine location. This means sending anonymous
-            location data to Google, even when no apps are running.
+            Do you want to delete user?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Disagree</Button>
+          <Button onClick={handleClose}>yes</Button>
           <Button onClick={handleClose} autoFocus>
-            Agree
+            cancel
           </Button>
         </DialogActions>
       </Dialog>
