@@ -35,4 +35,4 @@ const deleteUser = async(req, h) => {
         return error
     }
 }
-module.exports = {getAllUsers, editUser}
+module.exports = {getAllUsers, editUser, deleteUser}

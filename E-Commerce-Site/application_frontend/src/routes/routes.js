@@ -35,7 +35,7 @@ export default function AppRouter() {
     const location = useLocation()
     const dispatch = useDispatch()
     const { isAuthenticated, userDetails } = useSelector(state => state.userReducer)
-    console.log(location.pathname, userDetails.userType)
+
     useEffect(() => {
         authenticate()
             .then(() => {
@@ -63,6 +63,7 @@ export default function AppRouter() {
                     <Route path='/Logout' element={<Logout />} />
                     <Route path='/Product%20Upload' element={<PrivateRoutes isAuthenticated={isAuthenticated} path={location.pathname} userType={userDetails.userType}><ProductUploadContainer /></PrivateRoutes>} />
                     <Route path='/checkout' element={<PrivateRoutes isAuthenticated={isAuthenticated} path={location.pathname} userType={userDetails.userType}><CheckoutContainer /></PrivateRoutes>} />
+                    <Route path='/checkout/:productId' element={<CheckoutContainer />} />
                     <Route path='/payment' element={<PrivateRoutes isAuthenticated={isAuthenticated} path={location.pathname} userType={userDetails.userType}><DebitCard /></PrivateRoutes>} />
                     <Route path='/product%20Edit' element={<PrivateRoutes isAuthenticated={isAuthenticated} path={location.pathname} userType={userDetails.userType}><ProductEditContainer /></PrivateRoutes>} />
                     <Route path='/Manage%20Users' element={<PrivateRoutes isAuthenticated={isAuthenticated} path={location.pathname} userType={userDetails.userType}><UserEditContainer /></PrivateRoutes>} />

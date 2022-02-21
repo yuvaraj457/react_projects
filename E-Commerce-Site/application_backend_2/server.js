@@ -1,10 +1,9 @@
 require('dotenv').config()
 
 const Hapi = require('@hapi/hapi')
-const jwt = require('jsonwebtoken')
+// const jwt = require('jsonwebtoken')
 const Path = require('path')
-
-const Routes = require('./routes')
+// const Routes = require('./routes')
 const { dbConfig } = require('./config')
 
 
@@ -64,7 +63,7 @@ const init = async () => {
     console.log('Server running on port 5000');
     
     // server.route(Routes)
-    request.logger.info('In handler %s', request.path)
+    // request.logger.info('In handler %s', request.path)
 }
 
 init()

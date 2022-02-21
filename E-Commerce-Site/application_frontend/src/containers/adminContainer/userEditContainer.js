@@ -6,8 +6,9 @@ import { Box } from '@mui/system'
 import { Grid } from '@mui/material'
 
 import { UserEdit } from '../../components/admin/user/userEdit'
-import { BasicTable } from '../../components/admin/user/userTable'
+import { UserTable } from '../../components/admin/user/userTable'
 import { deleteUser, editUser } from '../../core/apiCalls/admin'
+import DeleteUserAlertDialog from '../../shared/deleteUserAlertDialog';
 
 export const UserEditContainer = () => {
     const {users} = useSelector(state => state.adminReducer)
@@ -18,6 +19,7 @@ export const UserEditContainer = () => {
     const [selectValue, setSelectValue] =  useState('')
     const [filterData, setFilterData] = useState('')
     const [message, setMessage] = useState('')
+    const [openDialog, setOpenDialog] = useState(false)
 
     const inputHandler = (e) => {
         setValue(e)
@@ -40,8 +42,16 @@ export const UserEditContainer = () => {
         setTimeout(() => setMessage(''), 4000)
     }
 
+    const dialogOpenHandler = () => {
+        setOpenDialog(true)
+    }
+
+    const dialogCloseHandler = () => {
+        setOpenDialog(false)
+    }
+
     const deleteUserHandler = () => {
-        deleteUser()
+        deleteUser(filterData[0]._id)
         .then((res) => setMessage(res))
         setFilterData([])
         setTimeout(() => setMessage(''), 4000)
@@ -69,11 +79,12 @@ export const UserEditContainer = () => {
                 </Grid>
                 <Grid item xs={12}>
                     {filterData && 
-                    filterData.map((item, index) => <BasicTable 
+                    filterData.map((item, index) => <UserTable 
                                                         key={index} 
                                                         user={item} 
                                                         selectHandler={selectHandler}
                                                         selectValue={selectValue}
+                                                        dialogOpenHandler={dialogOpenHandler}
                                                         userTypeSubmitHandler={userTypeSubmitHandler}
                                                         message={message}
                                                         deleteUserHandler={deleteUserHandler}
@@ -81,6 +92,11 @@ export const UserEditContainer = () => {
                                                     />)}
                 </Grid>
             </Grid>
+            <DeleteUserAlertDialog 
+                openDialog={openDialog}  
+                dialogCloseHandler={dialogCloseHandler}
+                deleteUserHandler={deleteUserHandler}
+            />
         </Box>
         </>
     )

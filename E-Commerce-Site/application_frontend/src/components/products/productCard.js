@@ -16,7 +16,7 @@ import { useSelector } from 'react-redux';
 import { AlertDialogSlide } from '../../shared/alertDialog';
 
 
-export default function ProductCard({ product, addToCartHandler }) {
+export default function ProductCard({ product, addToCartHandler, checkoutHandler }) {
   const {t} = useTranslation()
   const { isAuthenticated, userDetails } = useSelector(state => state.userReducer)
 
@@ -31,7 +31,6 @@ export default function ProductCard({ product, addToCartHandler }) {
       copy(id.toString())
       setToolTipOpen(true)
       setTimeout(() => setToolTipOpen(false), 2000)
-    
   };
 
 
@@ -113,7 +112,7 @@ export default function ProductCard({ product, addToCartHandler }) {
           <Button size='small' variant="contained" color='cartButtonColor' onClick={() => isAuthenticated ? addToCartHandler(product._id) : handleClickOpen()}>
             {t('Cart')}
           </Button>
-          <Button size='small' variant="contained" color="buyButtonColor">
+          <Button size='small' variant="contained" color="buyButtonColor" onClick={() => isAuthenticated ? checkoutHandler(product._id) : handleClickOpen()}>
             {t('buy')}
           </Button>
 

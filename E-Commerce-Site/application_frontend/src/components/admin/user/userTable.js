@@ -10,7 +10,7 @@ import { Button, MenuItem, TextField } from '@mui/material';
 import Alert from '@mui/material/Alert';
 
 
-export const BasicTable = ({ user, selectHandler, selectValue, userTypeSubmitHandler, message, deleteUserHandler, t }) => {
+export const UserTable = ({ user, selectHandler, selectValue, userTypeSubmitHandler, message, deleteUserHandler, t, dialogOpenHandler }) => {
     const userTypes = ['user', 'superuser']
 
     return (
@@ -53,7 +53,7 @@ export const BasicTable = ({ user, selectHandler, selectValue, userTypeSubmitHan
                     </TableRow>
                     <TableRow>
                         <TableCell>
-                            <Button variant="outlined" color='error' onClick={deleteUserHandler}>Delete</Button>
+                            <Button variant="outlined" color='error' onClick={dialogOpenHandler}>Delete</Button>
                         </TableCell>
                     </TableRow>
                 </TableBody>

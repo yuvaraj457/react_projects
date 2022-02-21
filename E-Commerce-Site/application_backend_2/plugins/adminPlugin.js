@@ -1,4 +1,4 @@
-const { getAllUsers, editUser } = require("../routes/admin/user")
+const { getAllUsers, editUser, deleteUser } = require("../routes/admin/user")
 
 exports.plugin = {
     name : 'adminPlugin',
@@ -16,6 +16,11 @@ exports.plugin = {
                 method : 'POST',
                 path : '/editUser',
                 handler : editUser
+            },
+            {
+                method : 'POST',
+                path : '/deleteUser',
+                handler : deleteUser
             }
         ])
     }
