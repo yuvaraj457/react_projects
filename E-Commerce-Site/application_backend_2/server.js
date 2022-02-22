@@ -38,7 +38,7 @@ const init = async () => {
 
     await server.register(require('@hapi/cookie'))
     await server.register(require('@hapi/inert'))
-    await server.register(require('hapi-pino'))
+    // await server.register(require('hapi-pino'))
 
     await server.register([
         require('./plugins/productPlugin'),

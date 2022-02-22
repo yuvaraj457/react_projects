@@ -1,5 +1,8 @@
+const bcrypt = require('bcrypt')
+
 const userDetailsModel = require('../../models/userModel')
-const { addressFormSchema } = require('../../validationSchema')
+const { addressFormSchema, changePasswordSchema } = require('../../validationSchema')
+
 
 const getUser = async(req, h) => {
     const {sid} = req.state
@@ -98,8 +101,39 @@ const deleteAddress = async (req, h) => {
      }
 }
 
+const changePassword = async (req, h) => {
+    const {currentPassword, newPassword} = req.payload
+    const {sid} = req.state
+
+    const {value, error} = changePasswordSchema.validate(req.payload, {abortEarly: false})
+
+    if(error){
+        return h.response(error.details).code(422)
+    }
+
+    try{
+        const data = await userDetailsModel.findOne({_id : sid})
+
+        if(!data || !(await  bcrypt.compare(currentPassword, data.password))){
+            return h.response([{message : 'Invalid current password', path : ['invalidPassword']}]).code(401)
+        }
+
+        const hashedPassword =  await bcrypt.hash(newPassword, 10)
+
+        await userDetailsModel.updateOne(
+            {_id : sid},
+            {$set: {password : hashedPassword}}
+          )
+        return h.response('password changed successfully').code(200)
+    }
+    catch(error){
+        return error
+    }
+    
+}
+
 const logout = async (req, h) => {
     return h.response('Bye').unstate('sid')
 }
 
-module.exports = {getUser, editPhone, editAddress, activeAddress, logout, deleteAddress, authenticate}
+module.exports = {getUser, editPhone, editAddress, activeAddress, logout, deleteAddress, authenticate, changePassword}

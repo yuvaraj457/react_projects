@@ -42,6 +42,11 @@ export const deleteAddress = async (e) => {
     return data
 }
 
+export const changePassword = async (currentPassword, newPassword) => {
+    const {data} = await axiosInstance.post(url.changePassword, {currentPassword, newPassword})
+    return data
+}
+
 export const logout = async () => {
     await axiosInstance.get(url.logout)
 }

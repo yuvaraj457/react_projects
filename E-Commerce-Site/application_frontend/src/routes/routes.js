@@ -21,6 +21,7 @@ import DebitCard from '../components/checkoutPage/payments/debitCard'
 import { ProductEditContainer } from '../containers/adminContainer/productEditContainer'
 import { UserEditContainer } from '../containers/adminContainer/userEditContainer'
 import { checkuserpermission } from '../utlis/checkUserPermission'
+import ChangePasswordContainer from '../containers/userContainer/changePasswordContainer'
 
 
 const PrivateRoutes = ({ children, isAuthenticated, userType, path }) => {
@@ -67,6 +68,7 @@ export default function AppRouter() {
                     <Route path='/payment' element={<PrivateRoutes isAuthenticated={isAuthenticated} path={location.pathname} userType={userDetails.userType}><DebitCard /></PrivateRoutes>} />
                     <Route path='/product%20Edit' element={<PrivateRoutes isAuthenticated={isAuthenticated} path={location.pathname} userType={userDetails.userType}><ProductEditContainer /></PrivateRoutes>} />
                     <Route path='/Manage%20Users' element={<PrivateRoutes isAuthenticated={isAuthenticated} path={location.pathname} userType={userDetails.userType}><UserEditContainer /></PrivateRoutes>} />
+                    <Route path='/changePassword' element={<ChangePasswordContainer/>}/>
                 </Routes>
             }
         </>

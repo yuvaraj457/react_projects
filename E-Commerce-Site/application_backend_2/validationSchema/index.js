@@ -33,4 +33,9 @@ const productUploadSchema = Joi.object({
     productImage : Joi.string().required()
 })
 
-module.exports = {schema, loginSchema, addressFormSchema, productUploadSchema}
+const changePasswordSchema = Joi.object({
+    currentPassword : Joi.string().required(),
+    newPassword : Joi.string().invalid(Joi.ref('currentPassword')).required().messages({ 'any.invalid': 'current password and new password should not be same' })
+})
+
+module.exports = {schema, loginSchema, addressFormSchema, productUploadSchema, changePasswordSchema}

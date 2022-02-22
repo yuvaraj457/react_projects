@@ -57,10 +57,10 @@ export default function ProductCard({ product, addToCartHandler, checkoutHandler
             disableHoverListener
             disableTouchListener
             title="Copied"
-          >
+          >{isAuthenticated &&
             <Typography variant="idText"  onClick={() => handleTooltipOpen(product._id)}>
               Id : {product._id} <ContentCopyIcon fontSize='small' />
-            </Typography>
+            </Typography>}
           </Tooltip>
         </div>
       </ClickAwayListener>}
