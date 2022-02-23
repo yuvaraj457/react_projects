@@ -1,5 +1,8 @@
 const bcrypt = require('bcrypt')
+const nodemailer = require('nodemailer')
+const crypto = require('crypto')
 
+require('dotenv').config()
 const userDetailsModel = require('../../models/userModel')
 const { addressFormSchema, changePasswordSchema } = require('../../validationSchema')
 
@@ -132,8 +135,54 @@ const changePassword = async (req, h) => {
     
 }
 
+const forgotPassword = async(req, h) => {
+    const {email} = req.payload
+    try{
+        const data = await userDetailsModel.findOne({email})
+        if(!data){
+            return h.response([{message : 'you not registered to this email', path : ['invalidEmail']}]).code(404)
+        }
+        const token = crypto.randomBytes(20).toString('hex')
+        await userDetailsModel.updateOne(
+            {email},
+            {$set : {resetPasswordToken : token, resetPasswordExpires : Date.now() + 3600000}}
+        )
+
+        const transporter = nodemailer.createTransport({
+            service : 'gmail',
+            auth : {
+                user : process.env.USER,
+                pass : process.env.PASS
+            }
+        })
+
+        const mailOptions = {
+            from : 'yuvarajraj477@gmail.com',
+            to : 'yuvarajraj457@gmail.com',
+            subject : 'Link to change password',
+            text : token
+        }
+
+        console.log('sending email...')
+
+        transporter.sendMail(mailOptions, (err, res) => {
+            if(err){
+                return 'error'
+            }
+            else{
+                return h.response('recovery email sent').code(200)
+            }
+        })
+        return 'error'
+    }
+
+    catch(error){
+        return error
+    }
+}
+
 const logout = async (req, h) => {
     return h.response('Bye').unstate('sid')
 }
 
-module.exports = {getUser, editPhone, editAddress, activeAddress, logout, deleteAddress, authenticate, changePassword}
+module.exports = {getUser, editPhone, editAddress, activeAddress, logout, deleteAddress, authenticate, changePassword, forgotPassword}

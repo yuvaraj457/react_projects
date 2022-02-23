@@ -22,6 +22,7 @@ import { ProductEditContainer } from '../containers/adminContainer/productEditCo
 import { UserEditContainer } from '../containers/adminContainer/userEditContainer'
 import { checkuserpermission } from '../utlis/checkUserPermission'
 import ChangePasswordContainer from '../containers/userContainer/changePasswordContainer'
+import ForgetPasswordContainer from '../containers/userContainer/forgetPasswordContainer'
 
 
 const PrivateRoutes = ({ children, isAuthenticated, userType, path }) => {
@@ -69,6 +70,7 @@ export default function AppRouter() {
                     <Route path='/product%20Edit' element={<PrivateRoutes isAuthenticated={isAuthenticated} path={location.pathname} userType={userDetails.userType}><ProductEditContainer /></PrivateRoutes>} />
                     <Route path='/Manage%20Users' element={<PrivateRoutes isAuthenticated={isAuthenticated} path={location.pathname} userType={userDetails.userType}><UserEditContainer /></PrivateRoutes>} />
                     <Route path='/changePassword' element={<ChangePasswordContainer/>}/>
+                    <Route path='/forgotPassword' element={<ForgetPasswordContainer/>}/>
                 </Routes>
             }
         </>

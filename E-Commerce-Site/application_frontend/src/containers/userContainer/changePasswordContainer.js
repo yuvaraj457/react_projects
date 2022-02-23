@@ -32,7 +32,6 @@ export default function ChangePasswordContainer() {
             })
             .catch(error => {
                 const errorItems = error.response.data
-                console.log(errorItems)
                 const errorLst = {}
                 errorItems.map(item => errorLst[item.path[0]] = item.message)
                 if(errorLst.invalidPassword){

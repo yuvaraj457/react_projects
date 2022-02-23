@@ -15,5 +15,6 @@ export const url = {
         getAllUsers : '/getAllUsers',
         editUser : '/editUser',
         deleteUser : '/deleteUser',
-        changePassword : '/changePassword'
+        changePassword : '/changePassword',
+        forgotPassword : '/forgotPassword'
     }

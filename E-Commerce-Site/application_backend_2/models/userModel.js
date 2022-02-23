@@ -11,6 +11,8 @@ const userDetails = new Schema({
     address : [],
     activeAddress : {type : String, default:'-'},
     userType : {type : String, default:'user'},
+    resetPasswordToken : {type : String},
+    resetPasswordExpires : {type : Number}
 })
 
 const userDetailsModel = mongoose.model('userDetails', userDetails)

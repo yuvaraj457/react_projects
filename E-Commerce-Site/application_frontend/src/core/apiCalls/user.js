@@ -47,6 +47,11 @@ export const changePassword = async (currentPassword, newPassword) => {
     return data
 }
 
+export const forgotPassword = async (email) => {
+    const {data} = await axiosInstance.post(url.forgotPassword, {email})
+    return data
+}
+
 export const logout = async () => {
     await axiosInstance.get(url.logout)
 }
