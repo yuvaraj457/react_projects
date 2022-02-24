@@ -52,6 +52,11 @@ export const forgotPassword = async (email) => {
     return data
 }
 
+export const resetPassword = async (token) => {
+    const {data} = await axiosInstance.post(url.resetPassword, {token})
+    return data
+}
+
 export const logout = async () => {
     await axiosInstance.get(url.logout)
 }

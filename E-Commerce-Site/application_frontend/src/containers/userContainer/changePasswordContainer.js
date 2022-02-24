@@ -1,7 +1,7 @@
 import { Alert, Button, Container, Grid, Snackbar, TextField } from '@mui/material'
 import { Box } from '@mui/system'
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { ChangePasswordCard } from '../../components/userAccount/changePasswordCard'
 import { changePassword } from '../../core/apiCalls/user'
 
@@ -11,6 +11,7 @@ export default function ChangePasswordContainer() {
     const [errors, setErrors] = useState({})
     const [open, setOpen] = useState(false)
     const [message, setMessage] = useState('')
+   
 
     const navigate = useNavigate()
 
@@ -28,7 +29,7 @@ export default function ChangePasswordContainer() {
                 setMessage(res)
                 setOpen(true)
                 setErrors({})
-                setTimeout(() => navigate('/logout'), 4000)
+                setTimeout(() => navigate('/logout',{state : 'password Changed successfully, you can loginin now.'}), 4000)
             })
             .catch(error => {
                 const errorItems = error.response.data

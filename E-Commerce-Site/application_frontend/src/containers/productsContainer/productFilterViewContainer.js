@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+
+
 import { addCartProducts } from '../../action/cartAction';
 import { fetchProducts } from '../../action/productAction';
 import { ElectronicsProduct } from '../../components/products/electronicsProduct';
 import { MensProduct } from '../../components/products/mensProduct';
 import { WomensProduct } from '../../components/products/womensProduct';
+
 
 export default function ProductFilterViewContainer() {
     const {field} = useParams()

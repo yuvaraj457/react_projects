@@ -9,7 +9,7 @@ const { addressFormSchema, changePasswordSchema } = require('../../validationSch
 
 const getUser = async(req, h) => {
     const {sid} = req.state
-    const user = await userDetailsModel.findOne({_id : sid}).select(['-_id', '-password', '-__v'])
+    const user = await userDetailsModel.findOne({_id : sid}).select(['-_id', '-password', '-__v', '-resetPasswordToken', '-resetPasswordExpires'])
     return h.response(user).code(200)
 }
 
@@ -140,7 +140,8 @@ const forgotPassword = async(req, h) => {
     try{
         const data = await userDetailsModel.findOne({email})
         if(!data){
-            return h.response([{message : 'you not registered to this email', path : ['invalidEmail']}]).code(404)
+            // return h.response([{message : 'you not registered to this email', path : ['invalidEmail']}]).code(404)
+            return h.response('you not registered to this email').code(404)
         }
         const token = crypto.randomBytes(20).toString('hex')
         await userDetailsModel.updateOne(
@@ -173,7 +174,7 @@ const forgotPassword = async(req, h) => {
                 return h.response('recovery email sent').code(200)
             }
         })
-        return 'error'
+        return token
     }
 
     catch(error){
@@ -181,8 +182,22 @@ const forgotPassword = async(req, h) => {
     }
 }
 
+const resetPassword = async (req, h) => {
+    const {token} = req.payload
+    try{
+        const user = await userDetailsModel.findOne({resetPasswordToken : token, resetPasswordExpires : {$gt : Date.now() }})
+        if(!user){
+            return h.response('Invalid token').code(401)
+        }
+        return 'ok'
+    }
+    catch(error){
+
+    }
+}
+
 const logout = async (req, h) => {
     return h.response('Bye').unstate('sid')
 }
 
-module.exports = {getUser, editPhone, editAddress, activeAddress, logout, deleteAddress, authenticate, changePassword, forgotPassword}
+module.exports = {getUser, editPhone, editAddress, activeAddress, logout, deleteAddress, authenticate, changePassword, forgotPassword, resetPassword}

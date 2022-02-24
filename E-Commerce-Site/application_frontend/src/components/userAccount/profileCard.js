@@ -49,7 +49,6 @@ function Row({ row, user }) {
                   </TableCell>
                 </>
               }
-
             </TableRow>
           )}
         </TableBody>
@@ -84,11 +83,22 @@ function Row({ row, user }) {
       </TableBody>
       return data
     }
+
+    else if(option === 'Security'){
+      const data = <TableBody>
+        <TableRow>
+          <TableCell>
+            <Link to={`/security/changePassword`}>Change Password</Link>
+          </TableCell>
+        </TableRow>
+      </TableBody>
+      return data
+    }
   }
 
   const [open, setOpen] = React.useState(false);
   return (
-    <React.Fragment>
+    <>
       <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
         <TableCell>
           <IconButton
@@ -115,12 +125,12 @@ function Row({ row, user }) {
           </Collapse>
         </TableCell>
       </TableRow>
-    </React.Fragment>
+    </>
   );
 }
 
 const rows = [
-  'My Profile', 'My Cart'
+  'My Profile', 'My Cart', 'Security'
 ];
 
 export const ProfileCard = ({ user }) => {

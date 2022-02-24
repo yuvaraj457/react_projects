@@ -22,7 +22,8 @@ import { ProductEditContainer } from '../containers/adminContainer/productEditCo
 import { UserEditContainer } from '../containers/adminContainer/userEditContainer'
 import { checkuserpermission } from '../utlis/checkUserPermission'
 import ChangePasswordContainer from '../containers/userContainer/changePasswordContainer'
-import ForgetPasswordContainer from '../containers/userContainer/forgetPasswordContainer'
+import ForgotPasswordContainer from '../containers/userContainer/forgotPasswordContainer'
+import { ResetPasswordContainer } from '../containers/userContainer/resetPasswordContainer'
 
 
 const PrivateRoutes = ({ children, isAuthenticated, userType, path }) => {
@@ -69,8 +70,9 @@ export default function AppRouter() {
                     <Route path='/payment' element={<PrivateRoutes isAuthenticated={isAuthenticated} path={location.pathname} userType={userDetails.userType}><DebitCard /></PrivateRoutes>} />
                     <Route path='/product%20Edit' element={<PrivateRoutes isAuthenticated={isAuthenticated} path={location.pathname} userType={userDetails.userType}><ProductEditContainer /></PrivateRoutes>} />
                     <Route path='/Manage%20Users' element={<PrivateRoutes isAuthenticated={isAuthenticated} path={location.pathname} userType={userDetails.userType}><UserEditContainer /></PrivateRoutes>} />
-                    <Route path='/changePassword' element={<ChangePasswordContainer/>}/>
-                    <Route path='/forgotPassword' element={<ForgetPasswordContainer/>}/>
+                    <Route path='/security/changePassword' element={<ChangePasswordContainer/>}/>
+                    <Route path='/forgotPassword' element={<ForgotPasswordContainer/>}/>
+                    <Route path='/resetPassword/:token' element={<ResetPasswordContainer/>}/>
                 </Routes>
             }
         </>
