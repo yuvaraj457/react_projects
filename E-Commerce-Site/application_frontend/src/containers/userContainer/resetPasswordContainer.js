@@ -15,7 +15,7 @@ export const ResetPasswordContainer = () => {
         resetPassword(token)
         .then(res => setMessage({type : 'success', text : res}))
         .catch(error => setMessage({type : 'error', text : error.response.data}))
-    },[])
+    },[token])
 
     const passwordHandler = e => {
         setFormData(

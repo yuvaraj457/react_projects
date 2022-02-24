@@ -1,6 +1,6 @@
-import { Alert } from '@mui/material'
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+
+
 import ForgotPasswordCard from '../../components/userAccount/forgotPasswordCard'
 import { forgotPassword } from '../../core/apiCalls/user'
 
@@ -21,7 +21,7 @@ export default function ForgotPasswordContainer() {
 
     return (
         <>
-        <ForgetPasswordCard emailHandler={emailHandler} submitHandler={submitHandler} message={message}/>
+        <ForgotPasswordCard emailHandler={emailHandler} submitHandler={submitHandler} message={message}/>
         
         </>
     )
