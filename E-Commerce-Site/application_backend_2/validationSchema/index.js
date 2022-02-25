@@ -38,4 +38,9 @@ const changePasswordSchema = Joi.object({
     newPassword : Joi.string().invalid(Joi.ref('currentPassword')).required().messages({ 'any.invalid': 'current password and new password should not be same' })
 })
 
-module.exports = {schema, loginSchema, addressFormSchema, productUploadSchema, changePasswordSchema}
+const forgotPasswordSchema = Joi.object({
+    newPassword : Joi.string().required(),
+    retypedNewPassword : Joi.any().equal(Joi.ref('newPassword')).required().label('retyped password').messages({ 'any.only': 'Password Mismatch' })
+})
+
+module.exports = {schema, loginSchema, addressFormSchema, productUploadSchema, changePasswordSchema, forgotPasswordSchema}

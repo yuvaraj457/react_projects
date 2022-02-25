@@ -2,7 +2,7 @@ import { Button, Grid, TextField } from '@mui/material'
 import { Box } from '@mui/system'
 import React from 'react'
 
-export const ResetPasswordCard = ({passwordHandler}) => {
+export const ResetPasswordCard = ({passwordHandler, submitHandler}) => {
   return (
     <Box 
         sx={{
@@ -32,7 +32,7 @@ export const ResetPasswordCard = ({passwordHandler}) => {
                 />
             </Grid>
             <Grid item>
-                <Button variant="contained">Reset</Button>
+                <Button variant="contained" onClick={submitHandler}>Reset</Button>
             </Grid>
 
         </Grid>

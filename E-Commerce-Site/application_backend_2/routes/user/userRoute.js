@@ -4,7 +4,7 @@ const crypto = require('crypto')
 
 require('dotenv').config()
 const userDetailsModel = require('../../models/userModel')
-const { addressFormSchema, changePasswordSchema } = require('../../validationSchema')
+const { addressFormSchema, changePasswordSchema, forgotPasswordSchema } = require('../../validationSchema')
 
 
 const getUser = async(req, h) => {
@@ -150,10 +150,15 @@ const forgotPassword = async(req, h) => {
         )
 
         const transporter = nodemailer.createTransport({
+            host : 'smtp.gmail.com',
             service : 'gmail',
+            port : 465,
             auth : {
-                user : process.env.USER,
-                pass : process.env.PASS
+                user : 'yuvarajraj477@gmail.com',
+                pass : 'testmail123@'
+            },
+            tls : {
+                rejectUnauthorized : false
             }
         })
 
@@ -161,20 +166,23 @@ const forgotPassword = async(req, h) => {
             from : 'yuvarajraj477@gmail.com',
             to : 'yuvarajraj457@gmail.com',
             subject : 'Link to change password',
-            text : token
+            text : 'You requested for password reset for your  creatives account.\n'
+            +'please click below link in order to reset your password.\n\n'
+            +`http://localhost:3000/resetPassword/${token}`
         }
 
         console.log('sending email...')
 
         transporter.sendMail(mailOptions, (err, res) => {
             if(err){
-                return 'error'
+                console.log(err)
+                return err
             }
             else{
-                return h.response('recovery email sent').code(200)
+                console.log('mail sent')
             }
         })
-        return token
+        return h.response({id : data._id, message : 'recovery email sent'}).code(200)
     }
 
     catch(error){
@@ -189,7 +197,29 @@ const resetPassword = async (req, h) => {
         if(!user){
             return h.response('Invalid token').code(401)
         }
-        return 'ok'
+        return 'valid token'
+    }
+    catch(error){
+    }
+}
+
+const resetPasswordViaEmailToken = async (req, h) => {
+    const {_id, newPassword, retypedNewPassword} = req.payload
+    
+    const {value, error} = forgotPasswordSchema.validate(req.payload, {abortEarly: false})
+
+    if(error){
+        return h.response(error.details).code(422)
+    }
+
+    const hashedPassword =  await bcrypt.hash(newPassword, 10)
+
+    try{
+        await userDetailsModel.updateOne(
+            {_id},
+            {$set : {password : hashedPassword }}
+        )
+        return h.response('password reset successfull, you can login now')
     }
     catch(error){
 
