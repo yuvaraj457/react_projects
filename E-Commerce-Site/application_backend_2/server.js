@@ -38,13 +38,18 @@ const init = async () => {
 
     await server.register(require('@hapi/cookie'))
     await server.register(require('@hapi/inert'))
-    // await server.register(require('hapi-pino'))
+    await server.register(require('hapi-pino'))
 
     await server.register([
         require('./plugins/productPlugin'),
         require('./plugins/userPlugin'), 
         require('./plugins/adminPlugin')
     ])
+
+    server.ext('onRequest', function(request, h){
+        console.log(request.logger.info('In handler %s', request.path));
+        return h.continue;
+    })
 
     server.auth.strategy('session', 'cookie', {
         cookie: {

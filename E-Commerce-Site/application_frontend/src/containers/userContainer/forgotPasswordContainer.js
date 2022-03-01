@@ -15,14 +15,13 @@ export default function ForgotPasswordContainer() {
 
     const submitHandler = () => {
         forgotPassword(email)
-        .then(res => setMessage({type : 'success', text : res}))
-        .catch(error => setMessage({type : 'error', text : error.response.data}))
+        .then(res => setMessage({type : 'success', text : res.message}))
+        .catch(error => setMessage({type : 'error', text : error.response.data.message}))
     }
 
     return (
         <>
-        <ForgotPasswordCard emailHandler={emailHandler} submitHandler={submitHandler} message={message}/>
-        
+            <ForgotPasswordCard emailHandler={emailHandler} submitHandler={submitHandler} message={message}/>
         </>
     )
 }

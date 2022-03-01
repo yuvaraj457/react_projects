@@ -12,6 +12,7 @@ import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 import MuiPhoneNumber from "material-ui-phone-number";
 import { Link } from 'react-router-dom';
+import { AlertTitle } from '@mui/material';
 
 
 export const SignUp = ({onChange, handleSubmit, errors}) => {
@@ -109,7 +110,7 @@ export const SignUp = ({onChange, handleSubmit, errors}) => {
                   helperText= {errors.password && errors.password !== 'Password is strong' ? errors.password : ''}
                 />
                 {
-                  errors.isStrongPassword && <Alert severity="success">{errors.password} </Alert>
+                  errors.isStrongPassword && <Alert severity="success">{errors.password}</Alert>
                 }
               </Grid>
               <Grid item xs={12}>
@@ -125,6 +126,9 @@ export const SignUp = ({onChange, handleSubmit, errors}) => {
                   helperText= {!errors.confirmPassword ? '' : errors.confirmPassword}
                 />
               </Grid>
+              <Grid>
+                <Alert severity='success'></Alert>
+                </Grid> 
             </Grid>
             <Button
               type="submit"

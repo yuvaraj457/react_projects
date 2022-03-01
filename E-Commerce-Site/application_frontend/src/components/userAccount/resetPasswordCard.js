@@ -2,7 +2,7 @@ import { Button, Grid, TextField } from '@mui/material'
 import { Box } from '@mui/system'
 import React from 'react'
 
-export const ResetPasswordCard = ({passwordHandler, submitHandler}) => {
+export const ResetPasswordCard = ({passwordHandler, submitHandler, error}) => {
   return (
     <Box 
         sx={{
@@ -19,6 +19,8 @@ export const ResetPasswordCard = ({passwordHandler, submitHandler}) => {
                     name="newPassword" 
                     size="small"
                     onChange={e => passwordHandler(e)}
+                    error = {error.newPassword ? true : false}
+                    helperText = {error.newPassword ? error.newPassword : ''}
                 />
             </Grid>
             <Grid item>
@@ -29,6 +31,8 @@ export const ResetPasswordCard = ({passwordHandler, submitHandler}) => {
                     name="retypedNewPassword" 
                     size="small"
                     onChange={e => passwordHandler(e)}
+                    error = {error.retypedNewPassword ? true : false}
+                    helperText = {error.retypedNewPassword ? error.retypedNewPassword : ''}
                 />
             </Grid>
             <Grid item>

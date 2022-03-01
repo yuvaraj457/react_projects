@@ -1,9 +1,10 @@
+import { Alert } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 
 
 import {ResetPasswordCard} from '../../components/userAccount/resetPasswordCard'
-import { resetPassword } from '../../core/apiCalls/user';
+import { resetPassword, resetPasswordViaEmailToken } from '../../core/apiCalls/user';
 
 export const ResetPasswordContainer = () => {
     const [formData, setFormData] = useState({})
@@ -15,7 +16,7 @@ export const ResetPasswordContainer = () => {
     useEffect(() => {
         resetPassword(token)
         .then(res => {
-            setMessage({type : 'success', text : res.message})
+            setMessage({type : 'success', text : res})
             setUser(res.id)
         })
         .catch(error => setMessage({type : 'error', text : error.response.data}))
@@ -29,7 +30,7 @@ export const ResetPasswordContainer = () => {
 
     const submitHandler = () => {
         resetPasswordViaEmailToken(user, formData.newPassword, formData.retypedNewPassword)
-        .then(res => setMessage({type : 'reseted', text : res}))
+        .then(res => setMessage({type : 'resetted', text : res}))
         .catch(error => {
             const errorItems = error.response.data
             const errorLst = {}
@@ -40,8 +41,8 @@ export const ResetPasswordContainer = () => {
 
     return (
         Object.keys(message).length > 0 && message.type === 'success'?
-        <ResetPasswordCard passwordHandler={passwordHandler} submitHandler={submitHandler}/>
+        <ResetPasswordCard passwordHandler={passwordHandler} submitHandler={submitHandler} error={error}/>
         :
-        Object.keys(message).length > 0 && <h2>{message.text}</h2>
+        Object.keys(message).length > 0 && message.type === 'resetted' ? <Alert severity='success'>{message.text}</Alert> : Object.keys(message).length > 0 && <h2>{message.text}</h2>
     )
 }

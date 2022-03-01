@@ -182,6 +182,7 @@ const forgotPassword = async(req, h) => {
                 console.log('mail sent')
             }
         })
+         
         return h.response({id : data._id, message : 'recovery email sent'}).code(200)
     }
 
@@ -200,12 +201,13 @@ const resetPassword = async (req, h) => {
         return 'valid token'
     }
     catch(error){
+        return error
     }
 }
 
 const resetPasswordViaEmailToken = async (req, h) => {
-    const {_id, newPassword, retypedNewPassword} = req.payload
-    
+    const {_id, newPassword} = req.payload
+
     const {value, error} = forgotPasswordSchema.validate(req.payload, {abortEarly: false})
 
     if(error){
@@ -222,7 +224,7 @@ const resetPasswordViaEmailToken = async (req, h) => {
         return h.response('password reset successfull, you can login now')
     }
     catch(error){
-
+        return error
     }
 }
 
@@ -230,4 +232,4 @@ const logout = async (req, h) => {
     return h.response('Bye').unstate('sid')
 }
 
-module.exports = {getUser, editPhone, editAddress, activeAddress, logout, deleteAddress, authenticate, changePassword, forgotPassword, resetPassword}
+module.exports = {getUser, editPhone, editAddress, activeAddress, logout, deleteAddress, authenticate, changePassword, forgotPassword, resetPassword, resetPasswordViaEmailToken}
