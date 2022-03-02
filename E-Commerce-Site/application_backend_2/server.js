@@ -46,10 +46,10 @@ const init = async () => {
         require('./plugins/adminPlugin')
     ])
 
-    server.ext('onRequest', function(request, h){
-        console.log(request.logger.info('In handler %s', request.path));
-        return h.continue;
-    })
+    // server.ext('onRequest', function(request, h){
+    //     console.log(request.logger.info('In handler %s', request.path));
+    //     return h.continue;
+    // })
 
     server.auth.strategy('session', 'cookie', {
         cookie: {

@@ -24,6 +24,7 @@ import { checkuserpermission } from '../utlis/checkUserPermission'
 import ChangePasswordContainer from '../containers/userContainer/changePasswordContainer'
 import ForgotPasswordContainer from '../containers/userContainer/forgotPasswordContainer'
 import { ResetPasswordContainer } from '../containers/userContainer/resetPasswordContainer'
+import { EmailVerificationContainer } from '../containers/userContainer/emailVerificationContainer'
 
 
 const PrivateRoutes = ({ children, isAuthenticated, userType, path }) => {
@@ -73,6 +74,7 @@ export default function AppRouter() {
                     <Route path='/security/changePassword' element={<ChangePasswordContainer/>}/>
                     <Route path='/forgotPassword' element={<ForgotPasswordContainer/>}/>
                     <Route path='/resetPassword/:token' element={<ResetPasswordContainer/>}/>
+                    <Route path='/emailVerification/:token' element={<EmailVerificationContainer/>} />
                 </Routes>
             }
         </>

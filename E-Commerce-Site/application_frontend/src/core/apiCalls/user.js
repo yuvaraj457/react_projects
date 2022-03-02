@@ -1,6 +1,22 @@
 import {axiosInstance} from ".."
 import {url} from "../../config"
 
+
+export const emailVerification = async (email) => {
+    const {data} = await axiosInstance.post(url.emailVerification, {email})
+    return data
+}
+
+export const verifyUserViaEmail = async (token) => {
+    const {data} = await axiosInstance.post(url.verifyUserViaEmail, {token})
+    return data
+}
+
+export const getUserByToken = async (token) => {
+    const {data} = await axiosInstance.post(url.getUserByToken, {token})
+    return data
+}
+
 export const signup = async (formData) => {
     const data = await axiosInstance.post(url.signup, formData)
     return data
@@ -11,13 +27,13 @@ export const login = async (formData) => {
     return data
 }
 
-export const authenticate =  async() => {
-    
+export const authenticate =  async () => {
     const {data} = await axiosInstance.get(url.authenticate)
     return data
- 
 }
-export const getUser = async () => {
+
+
+export const getUser = async (token) => {
     const {data} = await axiosInstance.get(url.getUser)
     return data
 }

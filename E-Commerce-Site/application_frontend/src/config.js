@@ -18,5 +18,8 @@ export const url = {
         changePassword : '/changePassword',
         forgotPassword : '/forgotPassword',
         resetPassword : '/resetPassword',
-        resetPasswordViaEmailToken : '/resetPasswordViaEmailToken'
+        resetPasswordViaEmailToken : '/resetPasswordViaEmailToken',
+        emailVerification : '/emailVerification',
+        verifyUserViaEmail : '/verifyUserViaEmail',
+        getUserByToken : '/getUserByToken'
     }

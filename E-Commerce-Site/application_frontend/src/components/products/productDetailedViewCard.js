@@ -1,17 +1,25 @@
 import * as React from 'react';
+
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { apiTarget } from '../../config';
-
 import { Badge, Button, Grid, Stack } from '@mui/material';
+import Paper from '@mui/material/Paper';
+
 import StarRatings from 'react-star-ratings';
 
+import { apiTarget } from '../../config';
+
+
+
+
 export default function ProductDetailedViewCard({ product, addToCartHandler }) {
+
+    const offerStyle = {width: '100px', height: '100px', textAlign: 'center'}
     return (
         <Card sx={{ display: 'flex' }}>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} >
                 <Grid item container xs={4}>
                     <CardMedia
                         component="img"
@@ -20,7 +28,7 @@ export default function ProductDetailedViewCard({ product, addToCartHandler }) {
                         alt="green iguana"
                     />
                 </Grid>
-                <Grid item container xs={8} justifyContent={'center'}>
+                <Grid item container xs={8} alignItems='center' flexDirection='column'>
                     <Grid item>
                         <CardContent>
                             <Badge badgeContent={'60%'} color='badgeColor' sx={{ marginRight: '8px' }} anchorOrigin={{
@@ -53,6 +61,17 @@ export default function ProductDetailedViewCard({ product, addToCartHandler }) {
                                 </Button>
                             </Stack>
                         </CardContent>
+                    </Grid>
+                    <Grid item container justifyContent='center' spacing={2}>
+                        <Grid item>
+                             <Paper elevation={3} sx={offerStyle}> Bank offer upto Rs 54/- on HDFC bank credit card </Paper>
+                        </Grid>
+                        <Grid item>
+                             <Paper elevation={3} sx={offerStyle}> Bank offer upto Rs 100/- on ICICI bank credit card</Paper>
+                        </Grid>
+                        <Grid item>
+                             <Paper elevation={3} sx={offerStyle}> Bank offer upto Rs 80/- on Axis bank credit card</Paper>
+                        </Grid>
                     </Grid>
                 </Grid>
             </Grid>

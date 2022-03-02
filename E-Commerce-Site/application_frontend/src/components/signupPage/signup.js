@@ -15,7 +15,7 @@ import { Link } from 'react-router-dom';
 import { AlertTitle } from '@mui/material';
 
 
-export const SignUp = ({onChange, handleSubmit, errors}) => {
+export const SignUp = ({onChange, handleSubmit, errors, emailVerifyHandler, message}) => {
   return (
       <Container component="main" maxWidth="xs" >
         <CssBaseline />
@@ -63,7 +63,7 @@ export const SignUp = ({onChange, handleSubmit, errors}) => {
                   helperText= {!errors.lastName ? '' : errors.lastName}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={10}>
                 <TextField
                   required
                   fullWidth
@@ -76,6 +76,17 @@ export const SignUp = ({onChange, handleSubmit, errors}) => {
                   helperText= {!errors.email ? '' : errors.email}
                 />
               </Grid>
+              <Grid item xs={12} sm={2}>
+                <Button onClick={emailVerifyHandler}>verify</Button>
+              </Grid>
+              
+              {
+              message &&
+              <Grid item xs={12}>
+                <Alert severity='success'>{message}</Alert>
+              </Grid>
+              }
+
               <Grid item xs={12}>
                 <MuiPhoneNumber
                       required
@@ -126,9 +137,6 @@ export const SignUp = ({onChange, handleSubmit, errors}) => {
                   helperText= {!errors.confirmPassword ? '' : errors.confirmPassword}
                 />
               </Grid>
-              <Grid>
-                <Alert severity='success'></Alert>
-                </Grid> 
             </Grid>
             <Button
               type="submit"

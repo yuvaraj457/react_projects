@@ -13,6 +13,7 @@ const getUser = async(req, h) => {
     return h.response(user).code(200)
 }
 
+
 const authenticate = async (req, h) => {
     return h.response('Authenticated').code(200)
 }
