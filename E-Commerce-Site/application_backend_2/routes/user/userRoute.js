@@ -1,16 +1,40 @@
+require('dotenv').config()
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 const nodemailer = require('nodemailer')
 const crypto = require('crypto')
 
 require('dotenv').config()
 const userDetailsModel = require('../../models/userModel')
 const { addressFormSchema, changePasswordSchema, forgotPasswordSchema } = require('../../validationSchema')
+const tokenModel = require('../../models/tokenModel')
 
 
 const getUser = async(req, h) => {
     const {sid} = req.state
     const user = await userDetailsModel.findOne({_id : sid}).select(['-_id', '-password', '-__v', '-resetPasswordToken', '-resetPasswordExpires'])
     return h.response(user).code(200)
+}
+
+const refreshToken = async (req, h) => {
+    const refreshToken = req.state
+
+    if(!refreshToken){
+        return h.response('token missing')
+    }
+
+    const {token} = await tokenModel.findOne({token : refreshToken['refresh-token']})
+
+
+    const user = jwt.verify(token, process.env.TOKEN_SECRET);
+
+
+    if(!user){
+        return h.response('token expired')
+    }
+
+
+    return user._id
 }
 
 
@@ -233,4 +257,4 @@ const logout = async (req, h) => {
     return h.response('Bye').unstate('sid')
 }
 
-module.exports = {getUser, editPhone, editAddress, activeAddress, logout, deleteAddress, authenticate, changePassword, forgotPassword, resetPassword, resetPasswordViaEmailToken}
+module.exports = {getUser, editPhone, editAddress, activeAddress, logout, deleteAddress, authenticate, changePassword, forgotPassword, resetPassword, resetPasswordViaEmailToken, refreshToken}

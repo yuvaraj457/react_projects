@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 const Boom = require('@hapi/boom')
 
 const userDetailsModel = require('../../models/userModel');
+const tokenModel = require('../../models/tokenModel')
 const { loginSchema } = require('../../validationSchema');
 
 const login = async (req, h) => {
@@ -19,8 +20,13 @@ const login = async (req, h) => {
             return h.response([{message : 'Invalid email or password', path : ['authFail']}]).code(401)
         }
 
-        // const authToken = jwt.sign({_id:data._id}, process.env.TOKEN_SECRET)
+        const refreshToken = jwt.sign({_id:data._id}, process.env.TOKEN_SECRET, {expiresIn: "1d"})
+
+        await new tokenModel({token : refreshToken}).save()
+
         req.cookieAuth.set(data._id)
+
+        h.state('refresh-token' , refreshToken)
 
         return 'Login Successfully'
 }

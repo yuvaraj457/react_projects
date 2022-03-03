@@ -1,7 +1,7 @@
 const { addToCart, productQuantityUpdate, deleteCartProduct } = require("../routes/user/cart")
 const { login } = require("../routes/user/loginRoute")
 const { signup, emailVerification, verifyUserViaEmail, getUserByToken } = require("../routes/user/signupRoute")
-const { authenticate, editPhone, activeAddress, deleteAddress, logout, editAddress, getUser, changePassword, forgotPassword, resetPassword, resetPasswordViaEmailToken } = require("../routes/user/userRoute")
+const { authenticate, editPhone, activeAddress, deleteAddress, logout, editAddress, getUser, changePassword, forgotPassword, resetPassword, resetPasswordViaEmailToken, refreshToken } = require("../routes/user/userRoute")
 
 exports.plugin = {
     name : 'userPlugin',
@@ -11,6 +11,14 @@ exports.plugin = {
                 method : 'GET',
                 path : '/authenticate',
                 handler : authenticate
+            },
+            {
+                method : 'GET',
+                path : '/auth/refreshToken',
+                handler : refreshToken,
+                options: {
+                    auth: false
+                }
             },
             {
                 method : 'GET',
