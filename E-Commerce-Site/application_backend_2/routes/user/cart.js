@@ -17,8 +17,10 @@ const addToCart = async (req, h) => {
 }
 
 const getCartProducts = async (req, h) => {
-    const {sid} = req.state
-    const data = await userDetailsModel.find({_id : sid}).select('cartProducts -_id')
+    // const {sid} = req.state
+    const {_id} = req.auth.credentials
+    console.log(req)
+    const data = await userDetailsModel.find({_id }).select('cartProducts -_id')
     return data[0].cartProducts
 }
 

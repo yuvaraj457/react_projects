@@ -67,7 +67,10 @@ exports.plugin = {
             {
                 method : 'GET',
                 path : '/getCartProducts',
-                handler : getCartProducts
+                handler : getCartProducts,
+                config: {
+                    auth: 'token'
+                }
             },
         ])
         
