@@ -1,5 +1,5 @@
 import { getUser } from "../core/apiCalls/user"
-import { checkAuth, loginStatus } from "./actionType"
+import { accessToken, checkAuth, loginStatus } from "./actionType"
 
 const loginAction = (data) => {
     return {
@@ -12,6 +12,13 @@ export const verifyAuth = (value) => {
     return {
         type : checkAuth,
         status : value
+    }
+}
+
+export const setAccessToken = (value) => {
+    return {
+        type : accessToken,
+        token : value
     }
 }
 

@@ -56,7 +56,8 @@ export default function AppRouter() {
             {
                 loading &&
                 <Routes>
-                    <Route path='/login' element={!isAuthenticated ? <LoginContainer /> : <Navigate to='/' />} />
+                    {/* <Route path='/login' element={!isAuthenticated ? <LoginContainer /> : <Navigate to='/' />} /> */}
+                    <Route path='/login' element={<LoginContainer />} />
                     <Route path='/signup' element={<SignupContainer />} />
                     <Route path='/' element={<Home />} />
                     <Route path='/productDetails/:productId' element={<ProductDetailedViewContainer />} />

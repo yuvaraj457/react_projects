@@ -2,11 +2,12 @@ const userDetailsModel = require("../../models/userModel")
 
 const addToCart = async (req, h) => {
     const {productId} = req.payload
-    const {sid} = req.state
+    // const {sid} = req.state
+    const {_id} = req.auth.credentials
     
     try{
         await userDetailsModel.updateMany(
-            {_id : sid, 'cartProducts.productId':{$ne : productId}},
+            {_id, 'cartProducts.productId':{$ne : productId}},
             {$push : {cartProducts : {productId, quantity : 1 }}}
             )
         return h.response('Added to cart successfully').code(201)
@@ -19,7 +20,7 @@ const addToCart = async (req, h) => {
 const getCartProducts = async (req, h) => {
     // const {sid} = req.state
     const {_id} = req.auth.credentials
-    console.log(req)
+   
     const data = await userDetailsModel.find({_id }).select('cartProducts -_id')
     return data[0].cartProducts
 }

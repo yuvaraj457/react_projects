@@ -5,6 +5,7 @@ const Hapi = require('@hapi/hapi')
 const Path = require('path')
 // const Routes = require('./routes')
 const { dbConfig } = require('./config')
+const jwt = require('hapi-auth-jwt2');
 
 
 const userDetailsModel = require('./models/userModel')
@@ -24,6 +25,35 @@ const init = async () => {
 
     await server.register(require('@hapi/cookie'))
     await server.register(require('@hapi/inert'))
+
+    await server.register(jwt)
+
+    const validate = async (decodedToken, req, h) => {
+            console.log(decodedToken)
+            
+                const data = await userDetailsModel.findOne({_id : decodedToken._id})
+                if(!data){
+                    return {isValid : false}
+                }
+                return {isValid: true}
+            }
+    
+        server.auth.strategy('jwt', 'jwt', {
+          key: process.env.ACCESS_TOKEN_SECRET ,
+          validate,
+          verifyOptions: {algorithms: [ 'HS256' ]}
+        });
+
+        server.auth.default('jwt');
+
+
+    await server.register([
+        require('./plugins/productPlugin'),
+        require('./plugins/userPlugin'), 
+        require('./plugins/adminPlugin')
+    ])
+
+
 
     // await server.register(require('hapi-pino'))
 
@@ -51,28 +81,27 @@ const init = async () => {
 
     // server.auth.default('session')
 
-    await server.register(require('hapi-auth-cookie-jwt'))
 
-    const validate = (decodedToken, cb) => {
-        console.log(decodedToken)
-        
-        return cb(null, true, decodedToken)
-        
-    }
-    server.auth.strategy('token', 'jwt-cookie', {
-        key: process.env.ACCESS_TOKEN_SECRET,
-        validateFunc: validate
-    })
+
+    // await server.register(require('hapi-auth-cookie-jwt'))
+
+    // const validate = async (decodedToken, cb) => {
+    //     console.log(decodedToken)
+    //     const data = await userDetailsModel.findOne({_id : decodedToken._id})
+    //     if(!data){
+    //         return cb(null, false, decodedToken)
+    //     }
+    //     return cb(null, true, decodedToken) 
+    // }
+
+    // server.auth.strategy('token', 'jwt-cookie', {
+    //     key: process.env.ACCESS_TOKEN_SECRET,
+    //     validateFunc: validate
+    // })
 
     // server.auth.default('token')
 
-    await server.register([
-        require('./plugins/productPlugin'),
-        require('./plugins/userPlugin'), 
-        require('./plugins/adminPlugin')
-    ])
-
-
+    
     dbConfig()
 
     await server.start();

@@ -4,41 +4,43 @@ const jwt = require('jsonwebtoken')
 const nodemailer = require('nodemailer')
 const crypto = require('crypto')
 
-require('dotenv').config()
 const userDetailsModel = require('../../models/userModel')
 const { addressFormSchema, changePasswordSchema, forgotPasswordSchema } = require('../../validationSchema')
 const tokenModel = require('../../models/tokenModel')
 
 
 const getUser = async(req, h) => {
-    const {sid} = req.state
-    const user = await userDetailsModel.findOne({_id : sid}).select(['-_id', '-password', '-__v', '-resetPasswordToken', '-resetPasswordExpires'])
+    // const {sid} = req.state
+    const {_id} = req.auth.credentials
+    const user = await userDetailsModel.findOne({_id }).select(['-_id', '-password', '-__v', '-resetPasswordToken', '-resetPasswordExpires'])
     return h.response(user).code(200)
+    console.log(req)
+    return 'ok'
 }
 
 const refreshToken = async (req, h) => {
     const refreshToken = req.state
-
+   
     if(!refreshToken){
         return h.response('token missing')
     }
 
-    const {token} = await tokenModel.findOne({token : refreshToken['refresh-token']})
-
-
-    const user = jwt.verify(token, process.env.TOKEN_SECRET);
-
+    const {token} = await tokenModel.findOne({token : refreshToken['refresh_token']})
+    const user = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET)
 
     if(!user){
         return h.response('token expired')
     }
 
+    const accessToken = jwt.sign({_id:user._id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "10m"})
 
-    return user._id
+    // return accessToken
+    return h.response('token reloaded').state('access_token', accessToken, {ttl : 40* 1000})
 }
 
 
 const authenticate = async (req, h) => {
+    console.log(req)
     return h.response('Authenticated').code(200)
 }
 
@@ -254,7 +256,7 @@ const resetPasswordViaEmailToken = async (req, h) => {
 }
 
 const logout = async (req, h) => {
-    return h.response('Bye').unstate('sid')
+    return h.response('Bye').unstate('access_token')
 }
 
 module.exports = {getUser, editPhone, editAddress, activeAddress, logout, deleteAddress, authenticate, changePassword, forgotPassword, resetPassword, resetPasswordViaEmailToken, refreshToken}

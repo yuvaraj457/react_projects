@@ -1,31 +1,44 @@
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 import {apiTarget}  from '../config';
-import Cookies from 'js-cookie';
+import  tokenManger  from '../shared/authService';
+
 
 export const axiosInstance = axios.create({
     baseURL: apiTarget,
     withCredentials: true,
 });
 
+axiosInstance.interceptors.request.use(
+    (config) => {
+      const accessToken = tokenManger.getAccessToken() || null
+      console.log(accessToken)
+      if (accessToken) {
+        config.headers["Authorization"] = accessToken;
+      }
+
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+
 axiosInstance.interceptors.response.use(
     (response) => {
       return response;
     },
-    (error) => {
+    async (error) => {
         const originalRequest = error.config
         if (error.response.status === 401 && !originalRequest._retry)
         {
             originalRequest._retry = true
-            axiosInstance.get('/auth/refreshToken')
-            .then((res) => 
-            {
-                if (res.status === 200) {
-                console.log("Access token refreshed!");
-                return axios(originalRequest);
-            }
-        })
+            const {data} = await axiosInstance.get('/auth/refreshToken')
+            // Cookies.set('access_token', data, {httpOnly : true})
+            console.log(data)
+            // return axios(originalRequest)
         }
-    }
+        }
 )
 
 

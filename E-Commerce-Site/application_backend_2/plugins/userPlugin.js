@@ -10,7 +10,8 @@ exports.plugin = {
             {
                 method : 'GET',
                 path : '/authenticate',
-                handler : authenticate
+                handler : authenticate,
+               
             },
             {
                 method : 'GET',

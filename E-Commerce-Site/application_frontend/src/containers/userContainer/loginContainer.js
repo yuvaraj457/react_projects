@@ -3,9 +3,10 @@ import React, { useState } from 'react'
 import Login from '../../components/loginPage/login'
 import { login } from '../../core/apiCalls/user'
 
-import {fetchUser, verifyAuth} from '../../action/userAction'
+import {fetchUser, setAccessToken, verifyAuth} from '../../action/userAction'
 import {  useNavigate } from 'react-router-dom'
 import { fetchCartProducts } from '../../action/cartAction'
+import  tokenManger  from '../../shared/authService'
 
 
 export const LoginContainer = () => {
@@ -13,7 +14,7 @@ export const LoginContainer = () => {
     const [formData, setFormData] = useState({})
     const [errors, setErrors] = useState({})
     const dispatch = useDispatch()
-
+    console.log(tokenManger.getAccessToken())
     const onChange = e => {
             setFormData({
                 ...formData,
@@ -27,6 +28,7 @@ export const LoginContainer = () => {
         login(formData)
         .then((res) => {
             dispatch(verifyAuth(true))
+            tokenManger.setAccessToken(res.accessToken)
             dispatch(fetchUser())
             dispatch(fetchCartProducts())
             navigate('/')
