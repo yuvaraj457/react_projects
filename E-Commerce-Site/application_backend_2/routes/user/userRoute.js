@@ -14,33 +14,31 @@ const getUser = async(req, h) => {
     const {_id} = req.auth.credentials
     const user = await userDetailsModel.findOne({_id }).select(['-_id', '-password', '-__v', '-resetPasswordToken', '-resetPasswordExpires'])
     return h.response(user).code(200)
-    console.log(req)
-    return 'ok'
 }
 
 const refreshToken = async (req, h) => {
     const refreshToken = req.state
    
     if(!refreshToken){
-        return h.response('token missing')
+        return h.response('token missing').code(403)
     }
 
     const {token} = await tokenModel.findOne({token : refreshToken['refresh_token']})
     const user = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET)
 
     if(!user){
-        return h.response('token expired')
+        return h.response('token expired').code(403)    
     }
 
-    const accessToken = jwt.sign({_id:user._id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "10m"})
+    const accessToken = jwt.sign({_id:user._id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn:"1m"})
 
     // return accessToken
-    return h.response('token reloaded').state('access_token', accessToken, {ttl : 40* 1000})
+    // return h.response('token reloaded').state('access_token', accessToken, {ttl : 40* 1000})
+    return h.response({accessToken})
 }
 
 
 const authenticate = async (req, h) => {
-    console.log(req)
     return h.response('Authenticated').code(200)
 }
 
@@ -256,7 +254,7 @@ const resetPasswordViaEmailToken = async (req, h) => {
 }
 
 const logout = async (req, h) => {
-    return h.response('Bye').unstate('access_token')
+    return h.response('Bye').unstate('refresh_token')
 }
 
 module.exports = {getUser, editPhone, editAddress, activeAddress, logout, deleteAddress, authenticate, changePassword, forgotPassword, resetPassword, resetPasswordViaEmailToken, refreshToken}

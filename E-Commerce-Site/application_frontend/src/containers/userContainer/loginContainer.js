@@ -6,7 +6,8 @@ import { login } from '../../core/apiCalls/user'
 import {fetchUser, setAccessToken, verifyAuth} from '../../action/userAction'
 import {  useNavigate } from 'react-router-dom'
 import { fetchCartProducts } from '../../action/cartAction'
-import  tokenManger  from '../../shared/authService'
+import  tokenManger  from '../../services/authService'
+import { GoogleOauthLogin, GoogleOauthLogout } from '../../services/oauthService'
 
 
 export const LoginContainer = () => {
@@ -42,7 +43,11 @@ export const LoginContainer = () => {
       }
 
         return (
+            <>
             <Login onChange = {onChange} handleSubmit={handleSubmit} errors={errors}/>
+            <GoogleOauthLogin/>
+            <GoogleOauthLogout/>
+            </>
         )
 }
 

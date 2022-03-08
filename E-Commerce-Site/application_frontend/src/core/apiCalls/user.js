@@ -79,6 +79,12 @@ export const resetPasswordViaEmailToken = async (_id, newPassword, retypedNewPas
     return data
 }
 
+
+export const refreshToken = async () => {
+    const {data} = await axiosInstance.get(url.refreshToken)
+    return data
+}
+
 export const logout = async () => {
     await axiosInstance.get(url.logout)
 }

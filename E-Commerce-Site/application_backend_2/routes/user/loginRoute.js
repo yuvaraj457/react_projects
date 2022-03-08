@@ -21,7 +21,7 @@ const login = async (req, h) => {
         }
 
         const refreshToken = jwt.sign({_id:data._id}, process.env.REFRESH_TOKEN_SECRET, {expiresIn: "1d"})
-        const accessToken = jwt.sign({_id:data._id}, process.env.ACCESS_TOKEN_SECRET)
+        const accessToken = jwt.sign({_id:data._id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn : '1m'})
 
         await new tokenModel({token : refreshToken}).save()
 
@@ -29,7 +29,6 @@ const login = async (req, h) => {
 
         h.state('refresh_token' , refreshToken)
         // h.state('access_token', accessToken, {ttl : 40* 1000})
-
 
         return h.response({accessToken})
 }

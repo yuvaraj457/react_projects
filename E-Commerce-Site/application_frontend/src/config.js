@@ -21,5 +21,7 @@ export const url = {
         resetPasswordViaEmailToken : '/resetPasswordViaEmailToken',
         emailVerification : '/emailVerification',
         verifyUserViaEmail : '/verifyUserViaEmail',
-        getUserByToken : '/getUserByToken'
+        getUserByToken : '/getUserByToken',
+        refreshToken : '/auth/refreshToken'
     }
+export const clientId = ''

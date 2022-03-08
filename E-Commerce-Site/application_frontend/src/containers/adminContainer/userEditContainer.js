@@ -13,7 +13,10 @@ import DeleteUserAlertDialog from '../../shared/deleteUserAlertDialog';
 export const UserEditContainer = () => {
     const {users} = useSelector(state => state.adminReducer)
     const {t} = useTranslation()
-    const options = users.map(item => item.firstName.toLowerCase())
+    let options = ['']
+ 
+    options = users.map(item => item.firstName.toLowerCase())
+    
 
     const [value, setValue] = useState('')
     const [selectValue, setSelectValue] =  useState('')
