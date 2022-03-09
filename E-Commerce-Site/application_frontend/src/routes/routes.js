@@ -46,7 +46,7 @@ export default function AppRouter() {
             .then(() => {
                 dispatch(verifyAuth(true))
             })
-        setTimeout(() => setLoading(true), 1000)
+        setTimeout(() => setLoading(true), 2000)
 
     }, [dispatch])
 

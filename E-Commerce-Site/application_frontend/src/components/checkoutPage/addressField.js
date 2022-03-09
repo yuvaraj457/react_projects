@@ -19,7 +19,7 @@ export const AddressField = ({address, renderUser}) => {
                         <Typography variant="subtitle1" gutterBottom component="div">
                             { address }
                         </Typography>
-                        <Link to='/edit/activeAddress'>
+                        <Link to='/editProfile/activeAddress'>
                             Edit
                         </Link>
                         </>

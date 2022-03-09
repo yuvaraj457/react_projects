@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { verifyAuth } from '../../action/userAction';
 import { logout } from '../../core/apiCalls/user';
-import  tokenManger  from '../../services/authService';
+import  tokenManager  from '../../services/authService';
 
 export const Logout = () => {
     const navigate = useNavigate()
@@ -14,7 +14,7 @@ export const Logout = () => {
     useEffect(() => {
         logout()
         .then(() => {
-            tokenManger.deleteAccessToken()
+            tokenManager.deleteAccessToken()
             dispatch(verifyAuth(false))
             setTimeout(() => navigate('/login'), 2000)
         })

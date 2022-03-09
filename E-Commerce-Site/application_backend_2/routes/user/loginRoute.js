@@ -20,15 +20,14 @@ const login = async (req, h) => {
             return h.response([{message : 'Invalid email or password', path : ['authFail']}]).code(401)
         }
 
-        const refreshToken = jwt.sign({_id:data._id}, process.env.REFRESH_TOKEN_SECRET, {expiresIn: "1d"})
-        const accessToken = jwt.sign({_id:data._id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn : '1m'})
+        const refreshToken = jwt.sign({_id:data._id}, process.env.REFRESH_TOKEN_SECRET)
+        const accessToken = jwt.sign({_id:data._id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn : '10m'})
 
         await new tokenModel({token : refreshToken}).save()
 
         // req.cookieAuth.set(data._id)
 
         h.state('refresh_token' , refreshToken)
-        // h.state('access_token', accessToken, {ttl : 40* 1000})
 
         return h.response({accessToken})
 }

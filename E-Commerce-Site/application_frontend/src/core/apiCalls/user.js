@@ -85,6 +85,11 @@ export const refreshToken = async () => {
     return data
 }
 
+export const googleSignup = async (token) => {
+    const {data} = await axiosInstance.post(url.googleSignup, {token})
+    return data
+}
+
 export const logout = async () => {
     await axiosInstance.get(url.logout)
 }

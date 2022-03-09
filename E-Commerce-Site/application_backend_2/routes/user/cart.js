@@ -21,16 +21,17 @@ const getCartProducts = async (req, h) => {
     // const {sid} = req.state
     const {_id} = req.auth.credentials
    
-    const data = await userDetailsModel.find({_id }).select('cartProducts -_id')
+    const data = await userDetailsModel.find({_id}).select('cartProducts -_id')
     return data[0].cartProducts
 }
 
 const productQuantityUpdate = async(req, h) => {
     const {productId, quantity} = req.payload
-    const {sid} = req.state
+    // const {sid} = req.state
+    const {_id} = req.auth.credentials
     try{
         await userDetailsModel.updateMany(
-            {_id : sid, 'cartProducts.productId': productId},
+            {_id , 'cartProducts.productId': productId},
             {
                 $set : {'cartProducts.$.quantity' : quantity}}
             )
@@ -43,10 +44,11 @@ const productQuantityUpdate = async(req, h) => {
 
 const deleteCartProduct = async (req, h) => {
     const {productId} = req.payload
-    const {sid} = req.state
+    // const {sid} = req.state
+    const {_id} = req.auth.credentials
     try{
         await userDetailsModel.updateMany(
-            {_id : sid},
+            {_id},
             {$pull : {cartProducts : {productId}}}
             )
         return h.response('Deleted Successfully').code(200)

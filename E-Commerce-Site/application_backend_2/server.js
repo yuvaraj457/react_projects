@@ -29,7 +29,6 @@ const init = async () => {
     await server.register(jwt)
 
     const validate = async (decodedToken, req, h) => {
-            console.log(req)
             
                 const data = await userDetailsModel.findOne({_id : decodedToken._id})
                 if(!data){

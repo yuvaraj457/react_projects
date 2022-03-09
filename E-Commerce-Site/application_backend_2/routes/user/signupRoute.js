@@ -1,11 +1,17 @@
+require('dotenv').config()
+
 const Boom  = require('@hapi/boom')
 const bcrypt = require('bcrypt')
-const Joi = require('joi')
+const jwt = require('jsonwebtoken')
 const crypto = require('crypto')
 const nodemailer = require('nodemailer')
+const { OAuth2Client } = require('google-auth-library')
 
 const userDetailsModel = require('../../models/userModel')
 const { schema } = require('../../validationSchema')
+const tokenModel = require('../../models/tokenModel')
+
+const client = new OAuth2Client(process.env.CLIENT_ID)
 
 const getUserByToken =async (req, h) => {
     const {token} = req.payload
@@ -130,4 +136,48 @@ const signup = async(req, h) => {
         }   
 }
 
-module.exports = {signup, emailVerification, verifyUserViaEmail, getUserByToken}
+const googleSignup = async (req, h) => {
+    const {token} = req.payload
+
+    try{
+        const ticket = await client.verifyIdToken({
+            idToken : token,
+            audience : process.env.CLIENT_ID
+        })
+        const { given_name, family_name, email_verified, email} = ticket.getPayload()
+        
+        const user = await userDetailsModel.findOne({email})
+
+        if(user){
+            const refreshToken = jwt.sign({_id:user._id}, process.env.REFRESH_TOKEN_SECRET)
+            const accessToken = jwt.sign({_id:user._id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn : '10m'})
+            
+            await new tokenModel({token : refreshToken}).save()
+
+            return h.response({accessToken}).state('refresh_token' , refreshToken)
+        }
+        
+        else{
+            const data = await userDetailsModel({
+                firstName : given_name,
+                lastName : family_name,
+                email,
+                emailVerified : email_verified
+            })
+            data.save()
+            
+            const refreshToken = jwt.sign({_id:data._id}, process.env.REFRESH_TOKEN_SECRET)
+            const accessToken = jwt.sign({_id:data._id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn : '10m'})
+            
+        
+            await new tokenModel({token : refreshToken}).save()
+            h.state('refresh_token' , refreshToken)
+            return h.response({accessToken})
+        }
+    }
+    catch(error){
+        return error
+    }
+}
+
+module.exports = {signup, emailVerification, verifyUserViaEmail, getUserByToken, googleSignup}

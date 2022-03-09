@@ -14,6 +14,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Alert } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { GoogleOauthLogin } from '../../services/oauthService';
 
 const theme = createTheme();
 
@@ -25,7 +26,8 @@ export default function Login({onChange, handleSubmit, errors}) {
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 4,
+            marginBottom : 6,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -68,18 +70,18 @@ export default function Login({onChange, handleSubmit, errors}) {
               errors.authFail && <Alert severity="error">{errors.authFail}</Alert>
             }
             
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
             <Button
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 3}}
             >
               Sign In
             </Button>
+            <Grid container flexDirection={'column'} alignItems={'center'}>
+              <h4>OR</h4>
+              <Grid item><GoogleOauthLogin /></Grid>
+            </Grid>
             <Grid container>
               <Grid item xs>
                 <Link to=''>

@@ -14,8 +14,7 @@ function App() {
 
   useEffect(() => {
     refreshToken()
-    .then((data) =>{ 
-      console.log(data)
+    .then((data) =>{
       tokenManger.setAccessToken(data.accessToken)
       setTokenLoaded(true)
     })

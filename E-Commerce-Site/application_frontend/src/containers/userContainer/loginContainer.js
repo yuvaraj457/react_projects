@@ -45,8 +45,6 @@ export const LoginContainer = () => {
         return (
             <>
             <Login onChange = {onChange} handleSubmit={handleSubmit} errors={errors}/>
-            <GoogleOauthLogin/>
-            <GoogleOauthLogout/>
             </>
         )
 }

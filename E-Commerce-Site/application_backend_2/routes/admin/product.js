@@ -82,7 +82,7 @@ const productUpdate = async (req, h) => {
 
 const productDelete = async(req, h) => {
     const {_id} = req.payload
-    console.log(_id)
+
     try{
         const data = await productDetailsModel.deleteOne({_id})
         return h.response('Deleted successfully').code(202)

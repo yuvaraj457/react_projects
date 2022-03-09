@@ -18,6 +18,7 @@ const getUser = async(req, h) => {
 
 const refreshToken = async (req, h) => {
     const refreshToken = req.state
+    console.log(refreshToken)
    
     if(!refreshToken){
         return h.response('token missing').code(403)
@@ -30,10 +31,8 @@ const refreshToken = async (req, h) => {
         return h.response('token expired').code(403)    
     }
 
-    const accessToken = jwt.sign({_id:user._id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn:"1m"})
+    const accessToken = jwt.sign({_id:user._id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn:"10m"})
 
-    // return accessToken
-    // return h.response('token reloaded').state('access_token', accessToken, {ttl : 40* 1000})
     return h.response({accessToken})
 }
 
@@ -44,7 +43,8 @@ const authenticate = async (req, h) => {
 
 const editPhone = async(req, h) => {
     const {phone} = req.payload
-    const {sid} = req.state
+    // const {sid} = req.state
+    const {_id} = req.auth.credentials
     try{
        await userDetailsModel.updateMany(
             {_id : sid},
@@ -61,7 +61,8 @@ const editPhone = async(req, h) => {
 
 const editAddress = async(req, h) => {
     const address = req.payload
-    const {sid} = req.state
+    // const {sid} = req.state
+    const {_id} = req.auth.credentials
 
     const {value, error} = addressFormSchema.validate(req.payload, {abortEarly: false})
             if(error){
@@ -70,7 +71,7 @@ const editAddress = async(req, h) => {
 
     try{
         await userDetailsModel.updateMany(
-            {_id : sid},
+            {_id},
             {
                 $addToSet : {address}
             }
@@ -85,10 +86,11 @@ const editAddress = async(req, h) => {
 
 const activeAddress = async (req, h) => {
     const {activeAddress} = req.payload
-    const {sid} = req.state
+    // const {sid} = req.state
+    const {_id} = req.auth.credentials
     try{
        await userDetailsModel.updateMany(
-            {_id : sid},
+            {_id},
             {
                 $set : {activeAddress}
             }
@@ -102,11 +104,12 @@ const activeAddress = async (req, h) => {
 
 const deleteAddress = async (req, h) => {
     const {address} = req.payload
-    const {sid} = req.state
+    // const {sid} = req.state
+    const {_id} = req.auth.credentials
 
     try{
         await userDetailsModel.updateMany(
-             {_id : sid},
+             {_id},
              {
                 $pull : {address}
              }
@@ -115,7 +118,7 @@ const deleteAddress = async (req, h) => {
         const user = await userDetailsModel.findOne({_id:sid})
          if(!(user.address.length > 0)){
             await userDetailsModel.updateMany(
-                {_id : sid},
+                {_id},
                 {
                    $set : {activeAddress : '-'}
                 }
@@ -131,7 +134,8 @@ const deleteAddress = async (req, h) => {
 
 const changePassword = async (req, h) => {
     const {currentPassword, newPassword} = req.payload
-    const {sid} = req.state
+    // const {sid} = req.state
+    const {_id} = req.auth.credentials
 
     const {value, error} = changePasswordSchema.validate(req.payload, {abortEarly: false})
 
@@ -140,7 +144,7 @@ const changePassword = async (req, h) => {
     }
 
     try{
-        const data = await userDetailsModel.findOne({_id : sid})
+        const data = await userDetailsModel.findOne({_id})
 
         if(!data || !(await  bcrypt.compare(currentPassword, data.password))){
             return h.response([{message : 'Invalid current password', path : ['invalidPassword']}]).code(401)
@@ -149,7 +153,7 @@ const changePassword = async (req, h) => {
         const hashedPassword =  await bcrypt.hash(newPassword, 10)
 
         await userDetailsModel.updateOne(
-            {_id : sid},
+            {_id},
             {$set: {password : hashedPassword}}
           )
         return h.response('password changed successfully').code(200)
@@ -254,7 +258,8 @@ const resetPasswordViaEmailToken = async (req, h) => {
 }
 
 const logout = async (req, h) => {
-    return h.response('Bye').unstate('refresh_token')
+    h.unstate('refresh_token')
+    return h.response('Bye')
 }
 
 module.exports = {getUser, editPhone, editAddress, activeAddress, logout, deleteAddress, authenticate, changePassword, forgotPassword, resetPassword, resetPasswordViaEmailToken, refreshToken}

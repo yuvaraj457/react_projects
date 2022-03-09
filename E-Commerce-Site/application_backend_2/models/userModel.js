@@ -5,7 +5,7 @@ const userDetails = new Schema({
     firstName : {type : String},
     lastName : {type : String},
     email : {type : String},
-    password : {type : String},
+    password : {type : String, default:null},
     phone : {type : String},
     cartProducts : [],
     address : [],

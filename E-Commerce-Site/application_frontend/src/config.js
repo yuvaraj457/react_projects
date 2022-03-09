@@ -22,6 +22,7 @@ export const url = {
         emailVerification : '/emailVerification',
         verifyUserViaEmail : '/verifyUserViaEmail',
         getUserByToken : '/getUserByToken',
-        refreshToken : '/auth/refreshToken'
+        refreshToken : '/auth/refreshToken',
+        googleSignup : '/auth/googleSignup'
     }
 export const clientId = ''

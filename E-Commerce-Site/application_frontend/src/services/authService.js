@@ -1,10 +1,10 @@
 import {refreshToken} from '../core/apiCalls/user'
 
-const tokenManger = () => {
+const tokenManager = () => {
     let inMemoryJWT = null
 
     const reloadAccessToken = () => {
-        const delay = 1000 * 60 * 60
+        const delay = 1000 * 60 * 8
         setTimeout(() => {
             refreshToken()
             .then(data => setAccessToken(data.accessToken))
@@ -13,6 +13,7 @@ const tokenManger = () => {
 
     const setAccessToken = (token) => {
         inMemoryJWT = token
+        reloadAccessToken()
         return true
     }
 
@@ -20,7 +21,6 @@ const tokenManger = () => {
 
     const deleteAccessToken = () => {
         inMemoryJWT = null
-        reloadAccessToken()
         return true
     }
 
@@ -31,4 +31,4 @@ const tokenManger = () => {
     }
 }
 
-export default tokenManger()
+export default tokenManager()
