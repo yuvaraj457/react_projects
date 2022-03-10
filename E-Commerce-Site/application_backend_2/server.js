@@ -81,25 +81,6 @@ const init = async () => {
     // server.auth.default('session')
 
 
-
-    // await server.register(require('hapi-auth-cookie-jwt'))
-
-    // const validate = async (decodedToken, cb) => {
-    //     console.log(decodedToken)
-    //     const data = await userDetailsModel.findOne({_id : decodedToken._id})
-    //     if(!data){
-    //         return cb(null, false, decodedToken)
-    //     }
-    //     return cb(null, true, decodedToken) 
-    // }
-
-    // server.auth.strategy('token', 'jwt-cookie', {
-    //     key: process.env.ACCESS_TOKEN_SECRET,
-    //     validateFunc: validate
-    // })
-
-    // server.auth.default('token')
-
     
     dbConfig()
 
