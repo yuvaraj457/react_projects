@@ -154,7 +154,7 @@ const googleSignup = async (req, h) => {
             
             await new tokenModel({token : refreshToken}).save()
 
-            return h.response({accessToken}).state('refresh_token' , refreshToken)
+            return h.response({accessToken}).state('refresh_token' , refreshToken, {domain : 'localhost', path:'/'})
         }
         
         else{
@@ -162,7 +162,8 @@ const googleSignup = async (req, h) => {
                 firstName : given_name,
                 lastName : family_name,
                 email,
-                emailVerified : email_verified
+                emailVerified : email_verified,
+                googleUser : true
             })
             data.save()
             
@@ -171,7 +172,7 @@ const googleSignup = async (req, h) => {
             
         
             await new tokenModel({token : refreshToken}).save()
-            h.state('refresh_token' , refreshToken)
+            h.state('refresh_token' , refreshToken, {isHttpOnly: true})
             return h.response({accessToken})
         }
     }

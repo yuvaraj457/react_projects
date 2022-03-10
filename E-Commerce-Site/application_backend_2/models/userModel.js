@@ -6,7 +6,7 @@ const userDetails = new Schema({
     lastName : {type : String},
     email : {type : String},
     password : {type : String, default:null},
-    phone : {type : String},
+    phone : {type : String, default:'-'},
     cartProducts : [],
     address : [],
     activeAddress : {type : String, default:'-'},
@@ -15,7 +15,8 @@ const userDetails = new Schema({
     emailVerificationToken : {type : String},
     emailVerificationExpires : {type : Number},
     resetPasswordToken : {type : String},
-    resetPasswordExpires : {type : Number}
+    resetPasswordExpires : {type : Number},
+    googleUser : {type : Boolean, default:false}
 })
 
 const userDetailsModel = mongoose.model('userDetails', userDetails)

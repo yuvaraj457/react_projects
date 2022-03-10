@@ -47,7 +47,7 @@ const editPhone = async(req, h) => {
     const {_id} = req.auth.credentials
     try{
        await userDetailsModel.updateMany(
-            {_id : sid},
+            {_id},
             {
                 $set : {'phone' : phone}
             }

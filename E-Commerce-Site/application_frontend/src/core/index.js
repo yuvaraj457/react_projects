@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+
 import {apiTarget}  from '../config';
 import  tokenManager  from '../services/authService';
 import { refreshToken } from './apiCalls/user';
@@ -13,7 +13,6 @@ export const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
     (config) => {
       const accessToken = tokenManager.getAccessToken() || null
-      console.log(accessToken)
       if (accessToken) {
         config.headers["Authorization"] = accessToken;
       }

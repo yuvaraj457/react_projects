@@ -10,8 +10,6 @@ import { Button } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { Link } from 'react-router-dom';
 
-
-
 function ccyFormat(num) {
   return `${num.toFixed(2)}`;
 }

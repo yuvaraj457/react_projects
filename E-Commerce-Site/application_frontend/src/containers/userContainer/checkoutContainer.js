@@ -7,6 +7,7 @@ import { fetchUser } from '../../action/userAction';
 import { AddressField } from '../../components/checkoutPage/addressField';
 import CartProducts from '../../components/checkoutPage/cartProducts';
 import PaymentField from '../../components/checkoutPage/paymentField';
+import { PhoneNumberField } from '../../components/checkoutPage/phoneNumberField';
 import { getProductDetails } from '../../core/apiCalls/products';
 
 export default function CheckoutContainer() {
@@ -14,7 +15,7 @@ export default function CheckoutContainer() {
     console.log(productId)
     const { cartProductDetails } = useSelector(state => state.cartReducer)
     const { cartProducts } = useSelector(state => state.cartReducer)
-    const {activeAddress} = useSelector(state => state.userReducer.userDetails)
+    const {activeAddress, phone} = useSelector(state => state.userReducer.userDetails)
     const [product, setProduct] = useState([])
     const dispatch = useDispatch()
 
@@ -28,6 +29,7 @@ export default function CheckoutContainer() {
     const renderUser = () => {
         dispatch(fetchUser())
     }
+
 
     if(!productId)
     {   
@@ -50,7 +52,7 @@ export default function CheckoutContainer() {
                             product.quantity = quantity
                             return <CartProducts key={index} product={product} />
                         })}
-                
+                        <PhoneNumberField phone={phone}/>
                         <AddressField address={activeAddress} renderUser={renderUser}/>
                         <PaymentField/>
                     </Box>

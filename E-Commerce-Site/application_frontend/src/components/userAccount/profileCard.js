@@ -21,7 +21,8 @@ function Row({ row, user }) {
   if (row === 'My Profile') {
     profile = user
     delete profile['cartProducts']
-    // delete profile['userType']
+    delete profile['emailVerified']
+    delete profile['googleUser']
   }
 
   const { cartProductDetails } = useSelector(state => state.cartReducer)
@@ -139,7 +140,7 @@ export const ProfileCard = ({ user }) => {
       <Table aria-label="collapsible table">
         <TableBody>
           {rows.map((row) => (
-            <Row key={row} row={row} user={user} />
+            !(user.googleUser && row === 'Security') && <Row key={row} row={row} user={user} />
           ))}
         </TableBody>
       </Table>

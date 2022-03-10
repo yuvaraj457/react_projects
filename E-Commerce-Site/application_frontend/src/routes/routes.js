@@ -28,7 +28,6 @@ import { EmailVerificationContainer } from '../containers/userContainer/emailVer
 
 
 const PrivateRoutes = ({ children, isAuthenticated, userType, path }) => {
-    console.log(userType, path)
     const allowAcess = checkuserpermission(userType, path)
     return (
         isAuthenticated && allowAcess ? children : <Navigate to='/login'/>
@@ -58,7 +57,6 @@ export default function AppRouter() {
                 loading &&
                 <Routes>
                     <Route path='/login' element={!isAuthenticated ? <LoginContainer /> : <Navigate to='/' />} />
-                    {/* <Route path='/login' element={<LoginContainer />} /> */}
                     <Route path='/signup' element={<SignupContainer />} />
                     <Route path='/' element={<Home />} />
                     <Route path='/productDetails/:productId' element={<ProductDetailedViewContainer />} />

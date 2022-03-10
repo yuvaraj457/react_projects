@@ -5,9 +5,10 @@ import { Button, ButtonBase, ButtonGroup, Grid, Typography } from '@mui/material
 import DeleteIcon from '@mui/icons-material/Delete';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import { Box } from '@mui/system';
 
 import { apiTarget } from '../../config';
-import { Box } from '@mui/system';
+
 
 
 export const Cart = ({product, deleteCartProductHandler, productQuantityHandler, productIncrementHandler, productDecrementHandler}) => {
@@ -19,8 +20,6 @@ export const Cart = ({product, deleteCartProductHandler, productQuantityHandler,
     maxHeight: '100%',
   });
 
-
-//  const {quantity} =  productIds.filter(item => item.productId === product._id)[0]
 const quantity = productQuantityHandler(product._id)
  
   return (

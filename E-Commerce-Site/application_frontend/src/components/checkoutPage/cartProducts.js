@@ -11,7 +11,6 @@ export default function CartProducts({product}) {
         maxHeight: '100%',
     });
     
-    console.log(product)
     return (   
                 <Paper sx={{ p: 1, mt: 1, mr: 1}} style={{borderBottom : '2px solid #9c27b0', borderLeft : '8px solid #9c27b0'}}>
                     <Grid container spacing={2}>
