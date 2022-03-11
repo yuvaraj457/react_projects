@@ -1,9 +1,7 @@
 require('dotenv').config()
 
 const Hapi = require('@hapi/hapi')
-// const jwt = require('jsonwebtoken')
 const Path = require('path')
-// const Routes = require('./routes')
 const { dbConfig } = require('./config')
 const jwt = require('hapi-auth-jwt2');
 
@@ -87,8 +85,6 @@ const init = async () => {
     await server.start();
     console.log('Server running on port 5000');
     
-    // server.route(Routes)
-    // request.logger.info('In handler %s', request.path)
 }
 
 init()
