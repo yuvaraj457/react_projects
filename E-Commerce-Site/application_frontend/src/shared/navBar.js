@@ -1,5 +1,9 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux'
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
+import { useTranslation } from "react-i18next";
+import i18n from "i18next";
+
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -13,23 +17,21 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import TwitterIcon from '@mui/icons-material/Twitter';
+import SearchIcon from '@mui/icons-material/Search';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
-import { Badge } from '@mui/material';
+import { Badge, InputAdornment, TextField } from '@mui/material';
 import Switch from '@mui/material/Switch';
-
-import { useTranslation } from "react-i18next";
-import i18n from "i18next";
+import { deepPurple } from '@mui/material/colors';
 
 import logo from '../assets/images/logo.png'
-import { Link, useLocation } from 'react-router-dom';
 import { fetchCartProducts } from '../action/cartAction';
 import { fetchUser, verifyAuth } from '../action/userAction';
-import { deepPurple } from '@mui/material/colors';
 import { authenticate } from '../core/apiCalls/user';
 import { fetchAllUsers } from '../action/adminAction';
+
 const pages = ['Mens', 'Womens', 'Electronics'];
 const adminMenu = ['Product Upload', 'Product Edit', 'Manage Users']
-const settings = [ 'MyAccount', 'Logout'];
+const settings = ['MyAccount', 'Logout'];
 
 export const NavBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -37,19 +39,17 @@ export const NavBar = () => {
   const [lang, setLang] = React.useState('english');
   const location = useLocation()
   const dispatch = useDispatch()
-  const {t} = useTranslation()
+  const { t } = useTranslation()
+  let [searchParams, setSearchParams] = useSearchParams();
   const label = { inputProps: { 'aria-label': 'c' } };
 
   const user = useSelector(state => state.userReducer.userDetails)
-  const {isAuthenticated, userDetails} = useSelector(state => state.userReducer)
-  const {cartProducts} = useSelector(state => state.cartReducer)
+  const { isAuthenticated, userDetails } = useSelector(state => state.userReducer)
+  const { cartProducts } = useSelector(state => state.cartReducer)
 
-  if(userDetails.userType === 'admin'){
+  if (userDetails.userType === 'admin') {
     dispatch(fetchAllUsers())
   }
-
-
- 
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -72,12 +72,12 @@ export const NavBar = () => {
 
   React.useEffect(() => {
     authenticate()
-    .then(() => {
-      dispatch(verifyAuth(true))
-      dispatch(fetchCartProducts())
-      dispatch(fetchUser())
-    })
-  },[dispatch])
+      .then(() => {
+        dispatch(verifyAuth(true))
+        dispatch(fetchCartProducts())
+        dispatch(fetchUser())
+      })
+  }, [dispatch])
 
   // React.useEffect(() => {
   //   if(langChecked){
@@ -89,17 +89,17 @@ export const NavBar = () => {
   // },[])
 
   const langHandler = (e) => {
-    if(lang === 'english'){
+    if (lang === 'english') {
       i18n.changeLanguage('tn')
       setLang('tamil')
     }
-    else{
+    else {
       i18n.changeLanguage('en')
       setLang('english')
     }
 
   }
- 
+
   return (
     <AppBar style={style} position="static" >
       <Container maxWidth="xl">
@@ -176,80 +176,101 @@ export const NavBar = () => {
                 </Button>
               </Link>
             ))}
+            
+            <TextField
+              id="input-with-icon-textfield"
+              focused
+              sx = {{input : {color : 'white'}, marginTop:2, marginLeft:2}}
+              onChange={(event) => {
+                let search = event.target.value;
+                if (search) {
+                  setSearchParams({ search });
+                } else {
+                  setSearchParams({});
+                }
+              }}
+              
+              variant="standard"
+            />
+            <Link to={`/filteredProducts/${location.search}`}>
+              <Button  size="small" startIcon={<SearchIcon />}>
+                search
+              </Button>
+            </Link>
           </Box>
           {
-              isAuthenticated ?
-            <>
-            {
-              userDetails.userType === 'admin' && 
-              <Box sx={{ marginRight:'10px', display: { xs: 'none', md: 'flex' } }}>
-                  {adminMenu.map((menu) => (
-                    <Link to={`/${menu}`} key={menu}>
-                      <Button
-                        onClick={handleCloseNavMenu}
-                        sx={{ my: 2, color: 'white', display: 'block' }}
-                      >
-                        {t(menu)}
-                      </Button>
-                    </Link>
-                  ))
-                  }
-              </Box>
-              }
-              <Badge color="secondary" badgeContent={cartProducts?cartProducts.length:0}>
-                <Link to='/cart' style={{ color: '#FFF' }}>
-                  <ShoppingBagIcon />
-                </Link>
-              </Badge>
+            isAuthenticated ?
+              <>
+                {
+                  userDetails.userType === 'admin' &&
+                  <Box sx={{ marginRight: '10px', display: { xs: 'none', md: 'flex' } }}>
+                    {adminMenu.map((menu) => (
+                      <Link to={`/${menu}`} key={menu}>
+                        <Button
+                          onClick={handleCloseNavMenu}
+                          sx={{ my: 2, color: 'white', display: 'block' }}
+                        >
+                          {t(menu)}
+                        </Button>
+                      </Link>
+                    ))
+                    }
+                  </Box>
+                }
+                <Badge color="secondary" badgeContent={cartProducts ? cartProducts.length : 0}>
+                  <Link to='/cart' style={{ color: '#FFF' }}>
+                    <ShoppingBagIcon />
+                  </Link>
+                </Badge>
 
-              <Box sx={{ flexGrow: 0, ml: 4 }}>
-                <Tooltip title="Open settings">
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar sx={{ bgcolor: deepPurple[500] }}>{user.firstName && user.firstName[0].toUpperCase()}</Avatar>
-                  </IconButton>
-                </Tooltip>
-                <Menu
-                  sx={{ mt: '45px' }}
-                  id="menu-appbar"
-                  anchorEl={anchorElUser}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  open={Boolean(anchorElUser)}
-                  onClose={handleCloseUserMenu}
-                >
-                
-                  {settings.map((setting) => (
-                    <MenuItem key={setting} onClick={handleCloseNavMenu}>
-                      <Typography textAlign="center"><Link to={setting} style={{ textDecoration: 'none' }}>{t(setting)}</Link></Typography>
-                    </MenuItem>
-                  ))}
-                  <MenuItem>
-                  En
-                    <Switch 
-                      inputProps={{ 'aria-label': 'controlled' }} 
-                      color="secondary" 
-                      checked={lang === 'tamil'}
-                      onChange={() => langHandler()}
+                <Box sx={{ flexGrow: 0, ml: 4 }}>
+                  <Tooltip title="Open settings">
+                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                      <Avatar sx={{ bgcolor: deepPurple[500] }}>{user.firstName && user.firstName[0].toUpperCase()}</Avatar>
+                    </IconButton>
+                  </Tooltip>
+                  <Menu
+                    sx={{ mt: '45px' }}
+                    id="menu-appbar"
+                    anchorEl={anchorElUser}
+                    anchorOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    open={Boolean(anchorElUser)}
+                    onClose={handleCloseUserMenu}
+                  >
+
+                    {settings.map((setting) => (
+                      <MenuItem key={setting} onClick={handleCloseNavMenu}>
+                        <Typography textAlign="center"><Link to={setting} style={{ textDecoration: 'none' }}>{t(setting)}</Link></Typography>
+                      </MenuItem>
+                    ))}
+                    <MenuItem>
+                      En
+                      <Switch
+                        inputProps={{ 'aria-label': 'controlled' }}
+                        color="secondary"
+                        checked={lang === 'tamil'}
+                        onChange={() => langHandler()}
                       />
-                    Tn
-                  </MenuItem>
-                </Menu>
-              </Box>
-            </>
-            :
-            <>{
-            !(location.pathname === '/login' )&&
-            <Link to='/login'>
-              <Button sx={{ my: 2, color: 'white', display: 'block' }}>{t('Login')}</Button>
-            </Link>}
-            </>
+                      Tn
+                    </MenuItem>
+                  </Menu>
+                </Box>
+              </>
+              :
+              <>{
+                !(location.pathname === '/login') &&
+                <Link to='/login'>
+                  <Button sx={{ my: 2, color: 'white', display: 'block' }}>{t('Login')}</Button>
+                </Link>}
+              </>
           }
         </Toolbar>
       </Container>

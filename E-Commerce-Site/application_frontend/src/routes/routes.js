@@ -25,7 +25,8 @@ import ChangePasswordContainer from '../containers/userContainer/changePasswordC
 import ForgotPasswordContainer from '../containers/userContainer/forgotPasswordContainer'
 import { ResetPasswordContainer } from '../containers/userContainer/resetPasswordContainer'
 import { EmailVerificationContainer } from '../containers/userContainer/emailVerificationContainer'
-import { Chatbot } from '../components/chatBot/chatBot'
+import Dictaphone from '../components/speechRecognition/speech'
+import { ProductsDataContainer } from '../containers/productsContainer/productsDataContainer'
 
 
 const PrivateRoutes = ({ children, isAuthenticated, userType, path }) => {
@@ -76,7 +77,8 @@ export default function AppRouter() {
                     <Route path='/forgotPassword' element={<ForgotPasswordContainer/>}/>
                     <Route path='/resetPassword/:token' element={<ResetPasswordContainer/>}/>
                     <Route path='/emailVerification/:token' element={<EmailVerificationContainer/>} />
-                    <Route path='/chatbot' element={<Chatbot/>}/>
+                    <Route path='/speech' element={<Dictaphone/>}/>
+                    <Route path='/filteredProducts/*' element={<ProductsDataContainer/>}/>
                 </Routes>
             }
         </>

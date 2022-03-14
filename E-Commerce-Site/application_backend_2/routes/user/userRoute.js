@@ -18,8 +18,7 @@ const getUser = async(req, h) => {
 
 const refreshToken = async (req, h) => {
     const refreshToken = req.state
-    console.log(refreshToken)
-   
+    
     if(!refreshToken){
         return h.response('token missing').code(403)
     }
