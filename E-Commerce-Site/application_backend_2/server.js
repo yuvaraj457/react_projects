@@ -2,10 +2,10 @@ require('dotenv').config()
 
 const Hapi = require('@hapi/hapi')
 const Path = require('path')
+const jwt = require('hapi-auth-jwt2')
+
+
 const { dbConfig } = require('./config')
-const jwt = require('hapi-auth-jwt2');
-
-
 const userDetailsModel = require('./models/userModel')
 
 const init = async () => {

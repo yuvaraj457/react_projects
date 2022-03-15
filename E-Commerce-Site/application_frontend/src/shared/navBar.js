@@ -23,11 +23,14 @@ import { Badge, InputAdornment, TextField } from '@mui/material';
 import Switch from '@mui/material/Switch';
 import { deepPurple } from '@mui/material/colors';
 
+
+
 import logo from '../assets/images/logo.png'
 import { fetchCartProducts } from '../action/cartAction';
 import { fetchUser, verifyAuth } from '../action/userAction';
 import { authenticate } from '../core/apiCalls/user';
 import { fetchAllUsers } from '../action/adminAction';
+import Dictaphone from '../components/speechRecognition/speech';
 
 const pages = ['Mens', 'Womens', 'Electronics'];
 const adminMenu = ['Product Upload', 'Product Edit', 'Manage Users']
@@ -149,7 +152,7 @@ export const NavBar = () => {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{t(page)}</Typography>
+                  <Typography textAlign="center"><Link to={`/productType/${page}`} key={page}>{t(page)}</Link></Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -176,27 +179,31 @@ export const NavBar = () => {
                 </Button>
               </Link>
             ))}
+            {!(location.pathname === '/login') &&
             
-            <TextField
-              id="input-with-icon-textfield"
-              focused
-              sx = {{input : {color : 'white'}, marginTop:2, marginLeft:2}}
-              onChange={(event) => {
-                let search = event.target.value;
-                if (search) {
-                  setSearchParams({ search });
-                } else {
-                  setSearchParams({});
-                }
-              }}
-              
-              variant="standard"
-            />
-            <Link to={`/filteredProducts/${location.search}`}>
-              <Button  size="small" startIcon={<SearchIcon />}>
-                search
-              </Button>
-            </Link>
+            <Box sx = {{input : {color : 'white'}, marginTop:2, marginLeft:2}}>
+              <Dictaphone/>
+              <TextField
+                id="input-with-icon-textfield"
+                focused
+                sx = {{input : {color : 'white'}}}
+                onChange={(event) => {
+                  let search = event.target.value;
+                  if (search) {
+                    setSearchParams({ search });
+                  } else {
+                    setSearchParams({});
+                  }
+                }}
+                
+                variant="standard"
+              />
+              <Link to={`/filteredProducts/${location.search}`}>
+                <Button  size="small" sx={{color:'white'}} startIcon={<SearchIcon sx={{color:'white'}}/>} >
+                  search
+                </Button>
+              </Link>
+            </Box>}
           </Box>
           {
             isAuthenticated ?
