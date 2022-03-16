@@ -181,7 +181,7 @@ export const NavBar = () => {
             ))}
             {!(location.pathname === '/login') &&
             
-            <Box sx = {{input : {color : 'white'}, marginTop:2, marginLeft:2}}>
+            <Box sx = {{input : {color : 'white'}, marginTop:2, marginLeft:1}}>
               <Dictaphone/>
               <TextField
                 id="input-with-icon-textfield"

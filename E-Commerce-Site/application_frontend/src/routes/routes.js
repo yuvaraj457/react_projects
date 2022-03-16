@@ -27,6 +27,7 @@ import { ResetPasswordContainer } from '../containers/userContainer/resetPasswor
 import { EmailVerificationContainer } from '../containers/userContainer/emailVerificationContainer'
 import Dictaphone from '../components/speechRecognition/speech'
 import { ProductsDataContainer } from '../containers/productsContainer/productsDataContainer'
+import ImageTest from '../components/image3D/car'
 
 
 const PrivateRoutes = ({ children, isAuthenticated, userType, path }) => {
@@ -79,6 +80,7 @@ export default function AppRouter() {
                     <Route path='/emailVerification/:token' element={<EmailVerificationContainer/>} />
                     <Route path='/speech' element={<Dictaphone/>}/>
                     <Route path='/filteredProducts/*' element={<ProductsDataContainer/>}/>
+                    <Route path='/3dImage' element={<ImageTest/>}/>
                 </Routes>
             }
         </>
