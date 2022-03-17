@@ -10,7 +10,7 @@ export default function ImageTest() {
       <ThreeSixty
         amount={8}
         imagePath={basePath}
-        // fileName="civic-{index}.jpg"
+        // fileName="civicsss-{index}.jpg"
         fileName="civic-{index}.jpg"
         spinReverse
       />
