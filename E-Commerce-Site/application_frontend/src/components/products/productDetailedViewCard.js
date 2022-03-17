@@ -1,3 +1,6 @@
+
+import ThreeSixty from "react-360-view";
+
 import * as React from 'react';
 
 import Card from '@mui/material/Card';
@@ -10,9 +13,9 @@ import Paper from '@mui/material/Paper';
 import StarRatings from 'react-star-ratings';
 
 import { apiTarget } from '../../config';
+import ImageTest from "../image3D/car";
+import { Box } from "@mui/system";
 
-import ThreeSixty from "react-360-view";
-const basePath = "./assets/images/shirts/";
 
 
 
@@ -20,28 +23,39 @@ const basePath = "./assets/images/shirts/";
 
 export default function ProductDetailedViewCard({ product, addToCartHandler }) {
 
-
     const offerStyle = { width: '100px', height: '100px', textAlign: 'center' }
     return (
         <>
-        <div>
+        {/* <div>
             <ThreeSixty
                 amount={2}
-                imagePath={basePath}
+                imagePath={'./assets/images/shirts/'}
                 fileName="shirt-{index}.jpg"
                 spinReverse
             />
-        </div>
+        </div> */}
             
             <Card sx={{ display: 'flex' }}>
                 <Grid container spacing={2} >
-                    <Grid item container xs={4}>
-                        {/* <CardMedia
-                        component="img"
-                        sx={{ width: 400 }}
-                        image={`${apiTarget}/static/images/${product.productImage}`}
-                        alt="green iguana"
-                    /> */}
+                    <Grid item container xs={4} >
+                        <Box sx={{ width: 300, height : 300 }}>
+                            <CardMedia
+                            component="img"
+                            image={`${apiTarget}/static/images/${product.productImage}`}
+                            alt="green iguana"
+                            />
+                        </Box>
+                        {
+                        product.productThreeDView &&
+
+                        <Box sx={{ width: 300, height : 300 }}>
+                            <ThreeSixty
+                                amount={2}
+                                imagePath={`${apiTarget}/static/3dImages/${product.productThreeDView}`}
+                                fileName={`${product.productThreeDView}-{index}.jpg`}
+                                spinReverse
+                            />
+                        </Box>}
 
                     </Grid>
                     <Grid item container xs={8} alignItems='center' flexDirection='column'>

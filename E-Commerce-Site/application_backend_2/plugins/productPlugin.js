@@ -57,6 +57,17 @@ exports.plugin = {
                 
             },
             {
+                method: 'GET',
+                path: '/static/3dImages/{productThreeDView}/{file}',
+                handler: function (request, h) {
+                    return h.file(request.params.productThreeDView+'/'+request.params.file);
+                },
+                options : {
+                    auth : false
+                }
+                
+            },
+            {
                 method : 'GET',
                 path : '/productDetails',
                 handler : productDetails,

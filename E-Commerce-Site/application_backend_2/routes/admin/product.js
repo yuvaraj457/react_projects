@@ -11,7 +11,7 @@ const fileHandler = file => {
 }
 
 const productUpload = async(req, h) => {
-    const { productName, productMRP, productStar, productPrice, productDiscount, productQuantity,  productType, productImage } = req.payload
+    const { productName, productMRP, productThreeDView, productStar, productPrice, productDiscount, productQuantity,  productType, productImage } = req.payload
     const productData = req.payload
     
     if(productImage){
@@ -39,6 +39,7 @@ const productUpload = async(req, h) => {
             productStar,
             productQuantity,
             productType,
+            productThreeDView : 'abc',
             productImage : productData.productImage
         })
         data.save()
@@ -50,10 +51,11 @@ const productUpload = async(req, h) => {
 }
 
 const productUpdate = async (req, h) => {
-    const {_id, productName, productMRP, productPrice, productDiscount, productStar, productQuantity, productType, productImage } = req.payload
+    const {_id, productName, productThreeDView, productMRP, productPrice, productDiscount, productStar, productQuantity, productType, productImage } = req.payload
     const data = req.payload
     delete data['_id']
     delete data['__v']
+    console.log(req)
     try{
         const {value, error} = productUploadSchema.validate(data, {abortEarly: false})
 
@@ -63,6 +65,7 @@ const productUpdate = async (req, h) => {
 
         const update = {
             productName,
+            productThreeDView ,
             productMRP : Number(productMRP),
             productPrice : Number(productPrice),
             productStar : Number(productStar),
@@ -94,6 +97,7 @@ const productDelete = async(req, h) => {
 
 
 const productDetails = async(req, h) => {
+    console.log(req)
     const {productId} = req.query
     const data = await productDetailsModel.findOne({ _id: productId })
     return data

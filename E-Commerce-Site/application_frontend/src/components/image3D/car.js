@@ -11,7 +11,7 @@ export default function ImageTest() {
         amount={8}
         imagePath={basePath}
         // fileName="civic-{index}.jpg"
-        fileName="shirt-{index}.jpg"
+        fileName="civic-{index}.jpg"
         spinReverse
       />
     </div>

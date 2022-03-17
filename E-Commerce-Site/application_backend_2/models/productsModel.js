@@ -9,6 +9,7 @@ const productDetails = new Schema({
     productQuantity : {type : Number, require : true},
     productStar : {type : Number, require : true},
     productImage : {type : String, require : true},
+    productThreeDView : {type : String, default : null},
     productType : {type : String, require : true},
 })
 

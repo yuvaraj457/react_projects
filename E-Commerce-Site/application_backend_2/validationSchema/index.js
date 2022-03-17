@@ -30,7 +30,8 @@ const productUploadSchema = Joi.object({
     productQuantity : Joi.number().required(),
     productStar : Joi.number().required(),
     productType : Joi.string().required(),
-    productImage : Joi.string().required()
+    productImage : Joi.string().required(),
+    productThreeDView : Joi.string().required()
 })
 
 const changePasswordSchema = Joi.object({

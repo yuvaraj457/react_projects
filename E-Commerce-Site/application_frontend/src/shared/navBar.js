@@ -199,9 +199,10 @@ export const NavBar = () => {
                 variant="standard"
               />
               <Link to={`/filteredProducts/${location.search}`}>
-                <Button  size="small" sx={{color:'white'}} startIcon={<SearchIcon sx={{color:'white'}}/>} >
+                <SearchIcon sx={{color:'white'}}/>
+                {/* <Button  size="small" sx={{color:'white'}} startIcon={<SearchIcon sx={{color:'white'}}/>} >
                   search
-                </Button>
+                </Button> */}
               </Link>
             </Box>}
           </Box>
