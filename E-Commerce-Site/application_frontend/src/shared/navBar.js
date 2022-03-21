@@ -19,7 +19,7 @@ import MenuItem from '@mui/material/MenuItem';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
-import { Badge, InputAdornment, TextField } from '@mui/material';
+import { Badge, TextField } from '@mui/material';
 import Switch from '@mui/material/Switch';
 import { deepPurple } from '@mui/material/colors';
 
@@ -200,9 +200,6 @@ export const NavBar = () => {
               />
               <Link to={`/filteredProducts/${location.search}`}>
                 <SearchIcon sx={{color:'white'}}/>
-                {/* <Button  size="small" sx={{color:'white'}} startIcon={<SearchIcon sx={{color:'white'}}/>} >
-                  search
-                </Button> */}
               </Link>
             </Box>}
           </Box>
