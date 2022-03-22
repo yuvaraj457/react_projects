@@ -1,0 +1,251 @@
+C:\Users\yuvaraj.durai>cd C:\Program Files\MongoDB\Server\5.0\bin
+
+C:\Program Files\MongoDB\Server\5.0\bin>mongo
+MongoDB shell version v5.0.6
+connecting to: mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("2d00d0ac-6ccd-4453-8eb8-b48d71af542a") }
+MongoDB server version: 5.0.6
+================
+Warning: the "mongo" shell has been superseded by "mongosh",
+which delivers improved usability and compatibility.The "mongo" shell has been deprecated and will be removed in
+an upcoming release.
+For installation instructions, see
+https://docs.mongodb.com/mongodb-shell/install/
+================
+Welcome to the MongoDB shell.
+For interactive help, type "help".
+For more comprehensive documentation, see
+        https://docs.mongodb.com/
+Questions? Try the MongoDB Developer Community Forums
+        https://community.mongodb.com
+---
+The server generated these startup warnings when booting:
+        2022-03-22T13:38:32.215+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+---
+---
+        Enable MongoDB's free cloud-based monitoring service, which will then receive and display
+        metrics about your deployment (disk utilization, CPU, operation statistics, etc).
+
+        The monitoring data will be available on a MongoDB website with a unique URL accessible to you
+        and anyone you share the URL with. MongoDB may use this information to make product
+        improvements and to suggest MongoDB products and deployment options to you.
+
+        To enable free monitoring, run the following command: db.enableFreeMonitoring()
+        To permanently disable this reminder, run the following command: db.disableFreeMonitoring()
+---
+> show dbs
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+> use myStudents
+switched to db myStudents
+> db.students.insert({name:'Yuvaraj', age : 22, tech:['python', 'react'})
+...
+... ^C
+
+> db.students.insert({name:'Yuvaraj', age : 22, tech:['python', 'react']})
+WriteResult({ "nInserted" : 1 })
+> show dbs
+admin       0.000GB
+config      0.000GB
+local       0.000GB
+myStudents  0.000GB
+> db.students.find()
+{ "_id" : ObjectId("62398d24bb72d9a3d7ff8cb0"), "name" : "Yuvaraj", "age" : 22, "tech" : [ "python", "react" ] }
+> db.students.insert({name:'raj', age : 22, tech:['python', 'hapi']})
+WriteResult({ "nInserted" : 1 })
+> db.students.insert({name:'xyz', age : 30, tech:['python', 'django']})
+WriteResult({ "nInserted" : 1 })
+> db.students.insert({name:'abc', age : 47, tech:['mysql', 'php']})
+WriteResult({ "nInserted" : 1 })
+> db.students.find()
+{ "_id" : ObjectId("62398d24bb72d9a3d7ff8cb0"), "name" : "Yuvaraj", "age" : 22, "tech" : [ "python", "react" ] }
+{ "_id" : ObjectId("62398d81bb72d9a3d7ff8cb1"), "name" : "raj", "age" : 22, "tech" : [ "python", "hapi" ] }
+{ "_id" : ObjectId("62398dbdbb72d9a3d7ff8cb2"), "name" : "xyz", "age" : 30, "tech" : [ "python", "django" ] }
+{ "_id" : ObjectId("62398e28bb72d9a3d7ff8cb3"), "name" : "abc", "age" : 47, "tech" : [ "mysql", "php" ] }
+> db.students.aggregate([{$match: {age:22}}])
+{ "_id" : ObjectId("62398d24bb72d9a3d7ff8cb0"), "name" : "Yuvaraj", "age" : 22, "tech" : [ "python", "react" ] }
+{ "_id" : ObjectId("62398d81bb72d9a3d7ff8cb1"), "name" : "raj", "age" : 22, "tech" : [ "python", "hapi" ] }
+> db.students.aggregate([{$match: {$max : '$age'}}])
+uncaught exception: Error: command failed: {
+        "ok" : 0,
+        "errmsg" : "unknown top level operator: $max. If you have a field name that starts with a '$' symbol, consider using $getField or $setField.",
+        "code" : 2,
+        "codeName" : "BadValue"
+} with original command request: {
+        "aggregate" : "students",
+        "pipeline" : [
+                {
+                        "$match" : {
+                                "$max" : "$age"
+                        }
+                }
+        ],
+        "cursor" : {
+
+        },
+        "lsid" : {
+                "id" : UUID("2d00d0ac-6ccd-4453-8eb8-b48d71af542a")
+        }
+} on connection: connection to 127.0.0.1:27017 : aggregate failed :
+_getErrorWithCode@src/mongo/shell/utils.js:25:13
+doassert@src/mongo/shell/assert.js:18:14
+_assertCommandWorked@src/mongo/shell/assert.js:737:17
+assert.commandWorked@src/mongo/shell/assert.js:829:16
+DB.prototype._runAggregate@src/mongo/shell/db.js:281:5
+DBCollection.prototype.aggregate@src/mongo/shell/collection.js:1058:12
+@(shell):1:1
+> db.students.updateOne({_id : '62398d24bb72d9a3d7ff8cb0'},{$set:{class : 'a'}})
+{ "acknowledged" : true, "matchedCount" : 0, "modifiedCount" : 0 }
+> db.students.find()
+{ "_id" : ObjectId("62398d24bb72d9a3d7ff8cb0"), "name" : "Yuvaraj", "age" : 22, "tech" : [ "python", "react" ] }
+{ "_id" : ObjectId("62398d81bb72d9a3d7ff8cb1"), "name" : "raj", "age" : 22, "tech" : [ "python", "hapi" ] }
+{ "_id" : ObjectId("62398dbdbb72d9a3d7ff8cb2"), "name" : "xyz", "age" : 30, "tech" : [ "python", "django" ] }
+{ "_id" : ObjectId("62398e28bb72d9a3d7ff8cb3"), "name" : "abc", "age" : 47, "tech" : [ "mysql", "php" ] }
+> db.students.updateOne({_id : '62398d24bb72d9a3d7ff8cb0'},{class : 'a'})
+uncaught exception: Error: the update operation document must contain atomic operators :
+DBCollection.prototype.updateOne@src/mongo/shell/crud_api.js:565:19
+@(shell):1:1
+> db.students.save({ "_id" : ObjectId("62398d24bb72d9a3d7ff8cb0"), "name" : "Yuvaraj", class : 'a', "age" : 22, "tech" : [ "python", "react" ] })
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.students.find()
+{ "_id" : ObjectId("62398d24bb72d9a3d7ff8cb0"), "name" : "Yuvaraj", "class" : "a", "age" : 22, "tech" : [ "python", "react" ] }
+{ "_id" : ObjectId("62398d81bb72d9a3d7ff8cb1"), "name" : "raj", "age" : 22, "tech" : [ "python", "hapi" ] }
+{ "_id" : ObjectId("62398dbdbb72d9a3d7ff8cb2"), "name" : "xyz", "age" : 30, "tech" : [ "python", "django" ] }
+{ "_id" : ObjectId("62398e28bb72d9a3d7ff8cb3"), "name" : "abc", "age" : 47, "tech" : [ "mysql", "php" ] }
+> db.students.save({name:'xyz', age : 30, class: 'a', tech:['python', 'django']})
+WriteResult({ "nInserted" : 1 })
+> db.students.save({name:'raj', class : 'b', age : 22, tech:['python', 'hapi']})
+WriteResult({ "nInserted" : 1 })
+> db.students.save({name:'abc', class : 'b', age : 47, tech:['mysql', 'php']})
+WriteResult({ "nInserted" : 1 })
+> db.students.find()
+{ "_id" : ObjectId("62398d24bb72d9a3d7ff8cb0"), "name" : "Yuvaraj", "class" : "a", "age" : 22, "tech" : [ "python", "react" ] }
+{ "_id" : ObjectId("62398d81bb72d9a3d7ff8cb1"), "name" : "raj", "age" : 22, "tech" : [ "python", "hapi" ] }
+{ "_id" : ObjectId("62398dbdbb72d9a3d7ff8cb2"), "name" : "xyz", "age" : 30, "tech" : [ "python", "django" ] }
+{ "_id" : ObjectId("62398e28bb72d9a3d7ff8cb3"), "name" : "abc", "age" : 47, "tech" : [ "mysql", "php" ] }
+{ "_id" : ObjectId("6239c6b0bb72d9a3d7ff8cb4"), "name" : "xyz", "age" : 30, "class" : "a", "tech" : [ "python", "django" ] }
+{ "_id" : ObjectId("6239c6d8bb72d9a3d7ff8cb5"), "name" : "raj", "class" : "b", "age" : 22, "tech" : [ "python", "hapi" ] }
+{ "_id" : ObjectId("6239c70ebb72d9a3d7ff8cb6"), "name" : "abc", "class" : "b", "age" : 47, "tech" : [ "mysql", "php" ] }
+> db.students.deleteOne({_id : '62398d81bb72d9a3d7ff8cb1'})
+{ "acknowledged" : true, "deletedCount" : 0 }
+> db.students.find()
+{ "_id" : ObjectId("62398d24bb72d9a3d7ff8cb0"), "name" : "Yuvaraj", "class" : "a", "age" : 22, "tech" : [ "python", "react" ] }
+{ "_id" : ObjectId("62398d81bb72d9a3d7ff8cb1"), "name" : "raj", "age" : 22, "tech" : [ "python", "hapi" ] }
+{ "_id" : ObjectId("62398dbdbb72d9a3d7ff8cb2"), "name" : "xyz", "age" : 30, "tech" : [ "python", "django" ] }
+{ "_id" : ObjectId("62398e28bb72d9a3d7ff8cb3"), "name" : "abc", "age" : 47, "tech" : [ "mysql", "php" ] }
+{ "_id" : ObjectId("6239c6b0bb72d9a3d7ff8cb4"), "name" : "xyz", "age" : 30, "class" : "a", "tech" : [ "python", "django" ] }
+{ "_id" : ObjectId("6239c6d8bb72d9a3d7ff8cb5"), "name" : "raj", "class" : "b", "age" : 22, "tech" : [ "python", "hapi" ] }
+{ "_id" : ObjectId("6239c70ebb72d9a3d7ff8cb6"), "name" : "abc", "class" : "b", "age" : 47, "tech" : [ "mysql", "php" ] }
+> db.students.delete({_id : '62398d81bb72d9a3d7ff8cb1'})
+uncaught exception: TypeError: db.students.delete is not a function :
+@(shell):1:1
+> db.students.deleteOne({_id : '62398d81bb72d9a3d7ff8cb1'})
+{ "acknowledged" : true, "deletedCount" : 0 }
+> db.students.find()
+{ "_id" : ObjectId("62398d24bb72d9a3d7ff8cb0"), "name" : "Yuvaraj", "class" : "a", "age" : 22, "tech" : [ "python", "react" ] }
+{ "_id" : ObjectId("62398d81bb72d9a3d7ff8cb1"), "name" : "raj", "age" : 22, "tech" : [ "python", "hapi" ] }
+{ "_id" : ObjectId("62398dbdbb72d9a3d7ff8cb2"), "name" : "xyz", "age" : 30, "tech" : [ "python", "django" ] }
+{ "_id" : ObjectId("62398e28bb72d9a3d7ff8cb3"), "name" : "abc", "age" : 47, "tech" : [ "mysql", "php" ] }
+{ "_id" : ObjectId("6239c6b0bb72d9a3d7ff8cb4"), "name" : "xyz", "age" : 30, "class" : "a", "tech" : [ "python", "django" ] }
+{ "_id" : ObjectId("6239c6d8bb72d9a3d7ff8cb5"), "name" : "raj", "class" : "b", "age" : 22, "tech" : [ "python", "hapi" ] }
+{ "_id" : ObjectId("6239c70ebb72d9a3d7ff8cb6"), "name" : "abc", "class" : "b", "age" : 47, "tech" : [ "mysql", "php" ] }
+> db.students.deleteOne({_id : '62398d81bb72d9a3d7ff8cb1'})
+{ "acknowledged" : true, "deletedCount" : 0 }
+> db.students.find()
+{ "_id" : ObjectId("62398d24bb72d9a3d7ff8cb0"), "name" : "Yuvaraj", "class" : "a", "age" : 22, "tech" : [ "python", "react" ] }
+{ "_id" : ObjectId("62398d81bb72d9a3d7ff8cb1"), "name" : "raj", "age" : 22, "tech" : [ "python", "hapi" ] }
+{ "_id" : ObjectId("62398dbdbb72d9a3d7ff8cb2"), "name" : "xyz", "age" : 30, "tech" : [ "python", "django" ] }
+{ "_id" : ObjectId("62398e28bb72d9a3d7ff8cb3"), "name" : "abc", "age" : 47, "tech" : [ "mysql", "php" ] }
+{ "_id" : ObjectId("6239c6b0bb72d9a3d7ff8cb4"), "name" : "xyz", "age" : 30, "class" : "a", "tech" : [ "python", "django" ] }
+{ "_id" : ObjectId("6239c6d8bb72d9a3d7ff8cb5"), "name" : "raj", "class" : "b", "age" : 22, "tech" : [ "python", "hapi" ] }
+{ "_id" : ObjectId("6239c70ebb72d9a3d7ff8cb6"), "name" : "abc", "class" : "b", "age" : 47, "tech" : [ "mysql", "php" ] }
+> db.students.remove({_id : '62398d81bb72d9a3d7ff8cb1'})
+WriteResult({ "nRemoved" : 0 })
+> db.students.find()
+{ "_id" : ObjectId("62398d24bb72d9a3d7ff8cb0"), "name" : "Yuvaraj", "class" : "a", "age" : 22, "tech" : [ "python", "react" ] }
+{ "_id" : ObjectId("62398d81bb72d9a3d7ff8cb1"), "name" : "raj", "age" : 22, "tech" : [ "python", "hapi" ] }
+{ "_id" : ObjectId("62398dbdbb72d9a3d7ff8cb2"), "name" : "xyz", "age" : 30, "tech" : [ "python", "django" ] }
+{ "_id" : ObjectId("62398e28bb72d9a3d7ff8cb3"), "name" : "abc", "age" : 47, "tech" : [ "mysql", "php" ] }
+{ "_id" : ObjectId("6239c6b0bb72d9a3d7ff8cb4"), "name" : "xyz", "age" : 30, "class" : "a", "tech" : [ "python", "django" ] }
+{ "_id" : ObjectId("6239c6d8bb72d9a3d7ff8cb5"), "name" : "raj", "class" : "b", "age" : 22, "tech" : [ "python", "hapi" ] }
+{ "_id" : ObjectId("6239c70ebb72d9a3d7ff8cb6"), "name" : "abc", "class" : "b", "age" : 47, "tech" : [ "mysql", "php" ] }
+> db.students.deleteOne({_id : "62398d81bb72d9a3d7ff8cb1"})
+{ "acknowledged" : true, "deletedCount" : 0 }
+> db.students.deleteOne({_id : ObjectId("62398d81bb72d9a3d7ff8cb1")})
+{ "acknowledged" : true, "deletedCount" : 1 }
+> db.students.deleteOne({_id : ObjectId("62398d81bb72d9a3d7ff8cb2")})
+{ "acknowledged" : true, "deletedCount" : 0 }
+> db.students.deleteOne({_id : ObjectId("62398d81bb72d9a3d7ff8cb3")})
+{ "acknowledged" : true, "deletedCount" : 0 }
+> db.students.deleteOne({_id : ObjectId("62398dbdbb72d9a3d7ff8cb2")}
+...
+...
+>
+> db.students.deleteOne({_id : ObjectId("62398dbdbb72d9a3d7ff8cb2")})
+{ "acknowledged" : true, "deletedCount" : 1 }
+> db.students.deleteOne({_id : ObjectId("62398e28bb72d9a3d7ff8cb3")})
+{ "acknowledged" : true, "deletedCount" : 1 }
+> db.students.find()
+{ "_id" : ObjectId("62398d24bb72d9a3d7ff8cb0"), "name" : "Yuvaraj", "class" : "a", "age" : 22, "tech" : [ "python", "react" ] }
+{ "_id" : ObjectId("6239c6b0bb72d9a3d7ff8cb4"), "name" : "xyz", "age" : 30, "class" : "a", "tech" : [ "python", "django" ] }
+{ "_id" : ObjectId("6239c6d8bb72d9a3d7ff8cb5"), "name" : "raj", "class" : "b", "age" : 22, "tech" : [ "python", "hapi" ] }
+{ "_id" : ObjectId("6239c70ebb72d9a3d7ff8cb6"), "name" : "abc", "class" : "b", "age" : 47, "tech" : [ "mysql", "php" ] }
+> db.students.aggregate([{$group : {_id : '$class', total_students : {$sum:1}, max_age : {$max : '$age'} }])
+...
+... ^C
+
+> db.students.aggregate([{ $group : {_id : '$class', total_students : {$sum:1}, max_age : {$max : '$age'}} }])
+{ "_id" : "a", "total_students" : 2, "max_age" : 30 }
+{ "_id" : "b", "total_students" : 2, "max_age" : 47 }
+> db.students.aggregate({$match : {age : {$max : '$age'}}})
+uncaught exception: Error: command failed: {
+        "ok" : 0,
+        "errmsg" : "unknown operator: $max",
+        "code" : 2,
+        "codeName" : "BadValue"
+} with original command request: {
+        "aggregate" : "students",
+        "pipeline" : [
+                {
+                        "$match" : {
+                                "age" : {
+                                        "$max" : "$age"
+                                }
+                        }
+                }
+        ],
+        "cursor" : {
+
+        },
+        "lsid" : {
+                "id" : UUID("2d00d0ac-6ccd-4453-8eb8-b48d71af542a")
+        }
+} on connection: connection to 127.0.0.1:27017 : aggregate failed :
+_getErrorWithCode@src/mongo/shell/utils.js:25:13
+doassert@src/mongo/shell/assert.js:18:14
+_assertCommandWorked@src/mongo/shell/assert.js:737:17
+assert.commandWorked@src/mongo/shell/assert.js:829:16
+DB.prototype._runAggregate@src/mongo/shell/db.js:281:5
+DBCollection.prototype.aggregate@src/mongo/shell/collection.js:1058:12
+@(shell):1:1
+> db.students.aggregate({$match : {age : {$gt : 25}}})
+{ "_id" : ObjectId("6239c6b0bb72d9a3d7ff8cb4"), "name" : "xyz", "age" : 30, "class" : "a", "tech" : [ "python", "django" ] }
+{ "_id" : ObjectId("6239c70ebb72d9a3d7ff8cb6"), "name" : "abc", "class" : "b", "age" : 47, "tech" : [ "mysql", "php" ] }
+> db.students.aggregate({$sort : {age : 1}})
+{ "_id" : ObjectId("62398d24bb72d9a3d7ff8cb0"), "name" : "Yuvaraj", "class" : "a", "age" : 22, "tech" : [ "python", "react" ] }
+{ "_id" : ObjectId("6239c6d8bb72d9a3d7ff8cb5"), "name" : "raj", "class" : "b", "age" : 22, "tech" : [ "python", "hapi" ] }
+{ "_id" : ObjectId("6239c6b0bb72d9a3d7ff8cb4"), "name" : "xyz", "age" : 30, "class" : "a", "tech" : [ "python", "django" ] }
+{ "_id" : ObjectId("6239c70ebb72d9a3d7ff8cb6"), "name" : "abc", "class" : "b", "age" : 47, "tech" : [ "mysql", "php" ] }
+> db.students.aggregate([{$match : {class : 'b'}}, {$sort : {age : -1}}, {$limit : 1}])
+{ "_id" : ObjectId("6239c70ebb72d9a3d7ff8cb6"), "name" : "abc", "class" : "b", "age" : 47, "tech" : [ "mysql", "php" ] }
+> db.students.aggregate([{$unwind : '$tech'}])
+{ "_id" : ObjectId("62398d24bb72d9a3d7ff8cb0"), "name" : "Yuvaraj", "class" : "a", "age" : 22, "tech" : "python" }
+{ "_id" : ObjectId("62398d24bb72d9a3d7ff8cb0"), "name" : "Yuvaraj", "class" : "a", "age" : 22, "tech" : "react" }
+{ "_id" : ObjectId("6239c6b0bb72d9a3d7ff8cb4"), "name" : "xyz", "age" : 30, "class" : "a", "tech" : "python" }
+{ "_id" : ObjectId("6239c6b0bb72d9a3d7ff8cb4"), "name" : "xyz", "age" : 30, "class" : "a", "tech" : "django" }
+{ "_id" : ObjectId("6239c6d8bb72d9a3d7ff8cb5"), "name" : "raj", "class" : "b", "age" : 22, "tech" : "python" }
+{ "_id" : ObjectId("6239c6d8bb72d9a3d7ff8cb5"), "name" : "raj", "class" : "b", "age" : 22, "tech" : "hapi" }
+{ "_id" : ObjectId("6239c70ebb72d9a3d7ff8cb6"), "name" : "abc", "class" : "b", "age" : 47, "tech" : "mysql" }
+{ "_id" : ObjectId("6239c70ebb72d9a3d7ff8cb6"), "name" : "abc", "class" : "b", "age" : 47, "tech" : "php" }
+>

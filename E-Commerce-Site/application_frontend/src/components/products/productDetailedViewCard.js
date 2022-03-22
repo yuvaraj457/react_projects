@@ -1,6 +1,5 @@
 
 import ThreeSixty from "react-360-view";
-
 import * as React from 'react';
 
 import Card from '@mui/material/Card';
