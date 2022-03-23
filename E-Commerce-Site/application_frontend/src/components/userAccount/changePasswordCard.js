@@ -1,7 +1,8 @@
-import { Box, Button, Grid, TextField } from '@mui/material'
 import React from 'react'
 
-export const  ChangePasswordCard = ({currentPasswordHandler, newPasswordHandler, submitHandler, errors}) => {
+import { Box, Button, Grid, TextField } from '@mui/material'
+
+export const ChangePasswordCard = ({ currentPasswordHandler, newPasswordHandler, submitHandler, errors }) => {
     return (
         <Box
             sx={{
@@ -19,8 +20,8 @@ export const  ChangePasswordCard = ({currentPasswordHandler, newPasswordHandler,
                         label="current password"
                         variant="outlined"
                         onChange={e => currentPasswordHandler(e)}
-                        error = {!errors.currentPassword ? false : true}
-                        helperText= {!errors.currentPassword ? '' : errors.currentPassword}
+                        error={!errors.currentPassword ? false : true}
+                        helperText={!errors.currentPassword ? '' : errors.currentPassword}
                         size='small'
                     />
                 </Grid>
@@ -30,8 +31,8 @@ export const  ChangePasswordCard = ({currentPasswordHandler, newPasswordHandler,
                         label="new password"
                         variant="outlined"
                         onChange={e => newPasswordHandler(e)}
-                        error = {!errors.newPassword ? false : true}
-                        helperText= {!errors.newPassword ? '' : errors.newPassword}
+                        error={!errors.newPassword ? false : true}
+                        helperText={!errors.newPassword ? '' : errors.newPassword}
                         size='small'
                     />
                 </Grid>

@@ -1,9 +1,10 @@
+import React from 'react'
+
 import { Button, Grid } from '@mui/material'
 import { Box } from '@mui/system'
 import MuiPhoneNumber from 'material-ui-phone-number'
-import React from 'react'
 
-export const EditProfileCard = ({onChangePhone, handleSubmitPhone}) => {
+export const EditProfileCard = ({ onChangePhone, handleSubmitPhone }) => {
     return (
         <Box component="form" onSubmit={e => handleSubmitPhone(e)} noValidate sx={{ mt: 3 }}>
             <Grid container flexDirection={'column'} justifyContent={'center'} alignItems={'center'}>
