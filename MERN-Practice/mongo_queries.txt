@@ -1,0 +1,386 @@
+---
+> show dbs
+admin       0.000GB
+config      0.000GB
+local       0.000GB
+myStudents  0.000GB
+> use myStudents
+switched to db myStudents
+> db.students.find()
+{ "_id" : ObjectId("62398d24bb72d9a3d7ff8cb0"), "name" : "Yuvaraj", "class" : "a", "age" : 22, "tech" : [ "python", "react" ] }
+{ "_id" : ObjectId("6239c6b0bb72d9a3d7ff8cb4"), "name" : "xyz", "age" : 30, "class" : "a", "tech" : [ "python", "django" ] }
+{ "_id" : ObjectId("6239c6d8bb72d9a3d7ff8cb5"), "name" : "raj", "class" : "b", "age" : 22, "tech" : [ "python", "hapi" ] }
+{ "_id" : ObjectId("6239c70ebb72d9a3d7ff8cb6"), "name" : "abc", "class" : "b", "age" : 47, "tech" : [ "mysql", "php" ] }
+> db.students.find().pretty()
+{
+        "_id" : ObjectId("62398d24bb72d9a3d7ff8cb0"),
+        "name" : "Yuvaraj",
+        "class" : "a",
+        "age" : 22,
+        "tech" : [
+                "python",
+                "react"
+        ]
+}
+{
+        "_id" : ObjectId("6239c6b0bb72d9a3d7ff8cb4"),
+        "name" : "xyz",
+        "age" : 30,
+        "class" : "a",
+        "tech" : [
+                "python",
+                "django"
+        ]
+}
+{
+        "_id" : ObjectId("6239c6d8bb72d9a3d7ff8cb5"),
+        "name" : "raj",
+        "class" : "b",
+        "age" : 22,
+        "tech" : [
+                "python",
+                "hapi"
+        ]
+}
+{
+        "_id" : ObjectId("6239c70ebb72d9a3d7ff8cb6"),
+        "name" : "abc",
+        "class" : "b",
+        "age" : 47,
+        "tech" : [
+                "mysql",
+                "php"
+        ]
+}
+> db.students.find({age : {$gte : 25 }}).pretty()
+{
+        "_id" : ObjectId("6239c6b0bb72d9a3d7ff8cb4"),
+        "name" : "xyz",
+        "age" : 30,
+        "class" : "a",
+        "tech" : [
+                "python",
+                "django"
+        ]
+}
+{
+        "_id" : ObjectId("6239c70ebb72d9a3d7ff8cb6"),
+        "name" : "abc",
+        "class" : "b",
+        "age" : 47,
+        "tech" : [
+                "mysql",
+                "php"
+        ]
+}
+> db.students.find({class : {$exists : 'true'}})
+{ "_id" : ObjectId("62398d24bb72d9a3d7ff8cb0"), "name" : "Yuvaraj", "class" : "a", "age" : 22, "tech" : [ "python", "react" ] }
+{ "_id" : ObjectId("6239c6b0bb72d9a3d7ff8cb4"), "name" : "xyz", "age" : 30, "class" : "a", "tech" : [ "python", "django" ] }
+{ "_id" : ObjectId("6239c6d8bb72d9a3d7ff8cb5"), "name" : "raj", "class" : "b", "age" : 22, "tech" : [ "python", "hapi" ] }
+{ "_id" : ObjectId("6239c70ebb72d9a3d7ff8cb6"), "name" : "abc", "class" : "b", "age" : 47, "tech" : [ "mysql", "php" ] }
+> db.students.find({class : {$exists : 'true'}}).pretty()
+{
+        "_id" : ObjectId("62398d24bb72d9a3d7ff8cb0"),
+        "name" : "Yuvaraj",
+        "class" : "a",
+        "age" : 22,
+        "tech" : [
+                "python",
+                "react"
+        ]
+}
+{
+        "_id" : ObjectId("6239c6b0bb72d9a3d7ff8cb4"),
+        "name" : "xyz",
+        "age" : 30,
+        "class" : "a",
+        "tech" : [
+                "python",
+                "django"
+        ]
+}
+{
+        "_id" : ObjectId("6239c6d8bb72d9a3d7ff8cb5"),
+        "name" : "raj",
+        "class" : "b",
+        "age" : 22,
+        "tech" : [
+                "python",
+                "hapi"
+        ]
+}
+{
+        "_id" : ObjectId("6239c70ebb72d9a3d7ff8cb6"),
+        "name" : "abc",
+        "class" : "b",
+        "age" : 47,
+        "tech" : [
+                "mysql",
+                "php"
+        ]
+}
+> db.students.find({&and : [{name : 'Yuvaraj'}, {age : 22}]})
+uncaught exception: SyntaxError: expected property name, got '&' :
+@(shell):1:18
+> db.students.find({$and : [{name : 'Yuvaraj'}, {age : 22}]}).pretty()
+{
+        "_id" : ObjectId("62398d24bb72d9a3d7ff8cb0"),
+        "name" : "Yuvaraj",
+        "class" : "a",
+        "age" : 22,
+        "tech" : [
+                "python",
+                "react"
+        ]
+}
+> db.students.find({$and : [{name : 'Yuvaraj'}, {age : 22}]}, {tech : 0}).pretty()
+{
+        "_id" : ObjectId("62398d24bb72d9a3d7ff8cb0"),
+        "name" : "Yuvaraj",
+        "class" : "a",
+        "age" : 22
+}
+> db.students.find({class : 'a'}).pretty()
+{
+        "_id" : ObjectId("62398d24bb72d9a3d7ff8cb0"),
+        "name" : "Yuvaraj",
+        "class" : "a",
+        "age" : 22,
+        "tech" : [
+                "python",
+                "react"
+        ]
+}
+{
+        "_id" : ObjectId("6239c6b0bb72d9a3d7ff8cb4"),
+        "name" : "xyz",
+        "age" : 30,
+        "class" : "a",
+        "tech" : [
+                "python",
+                "django"
+        ]
+}
+> db.students.find({class : 'a'}).limit(1).pretty()
+{
+        "_id" : ObjectId("62398d24bb72d9a3d7ff8cb0"),
+        "name" : "Yuvaraj",
+        "class" : "a",
+        "age" : 22,
+        "tech" : [
+                "python",
+                "react"
+        ]
+}
+> db.students.find({class : 'b'}).sort(age : -1).pretty()
+uncaught exception: SyntaxError: missing ) after argument list :
+@(shell):1:41
+> db.students.find({class : 'b'}).sort({age : -1}).pretty()
+{
+        "_id" : ObjectId("6239c70ebb72d9a3d7ff8cb6"),
+        "name" : "abc",
+        "class" : "b",
+        "age" : 47,
+        "tech" : [
+                "mysql",
+                "php"
+        ]
+}
+{
+        "_id" : ObjectId("6239c6d8bb72d9a3d7ff8cb5"),
+        "name" : "raj",
+        "class" : "b",
+        "age" : 22,
+        "tech" : [
+                "python",
+                "hapi"
+        ]
+}
+> db.students.find({name : {$ne : 'abc'}})
+{ "_id" : ObjectId("62398d24bb72d9a3d7ff8cb0"), "name" : "Yuvaraj", "class" : "a", "age" : 22, "tech" : [ "python", "react" ] }
+{ "_id" : ObjectId("6239c6b0bb72d9a3d7ff8cb4"), "name" : "xyz", "age" : 30, "class" : "a", "tech" : [ "python", "django" ] }
+{ "_id" : ObjectId("6239c6d8bb72d9a3d7ff8cb5"), "name" : "raj", "class" : "b", "age" : 22, "tech" : [ "python", "hapi" ] }
+> db.students.find({name : {$in : ['Yuvaraj', 'raj']}})
+{ "_id" : ObjectId("62398d24bb72d9a3d7ff8cb0"), "name" : "Yuvaraj", "class" : "a", "age" : 22, "tech" : [ "python", "react" ] }
+{ "_id" : ObjectId("6239c6d8bb72d9a3d7ff8cb5"), "name" : "raj", "class" : "b", "age" : 22, "tech" : [ "python", "hapi" ] }
+> db.students.find({$or : [{name : 'Yuvaraj'}, {name : 'lmn'}]}).pretty()
+{
+        "_id" : ObjectId("62398d24bb72d9a3d7ff8cb0"),
+        "name" : "Yuvaraj",
+        "class" : "a",
+        "age" : 22,
+        "tech" : [
+                "python",
+                "react"
+        ]
+}
+> db.students.find({tech : 'react'}).pretty()
+{
+        "_id" : ObjectId("62398d24bb72d9a3d7ff8cb0"),
+        "name" : "Yuvaraj",
+        "class" : "a",
+        "age" : 22,
+        "tech" : [
+                "python",
+                "react"
+        ]
+}
+> db.students.find({tech : ['python', 'hapi']}).pretty()
+{
+        "_id" : ObjectId("6239c6d8bb72d9a3d7ff8cb5"),
+        "name" : "raj",
+        "class" : "b",
+        "age" : 22,
+        "tech" : [
+                "python",
+                "hapi"
+        ]
+}
+> db.students.find({tech : ['hapi', 'python']}).pretty()
+> db.students.find({tech : {$all : ['hapi', 'python']}}).pretty()
+{
+        "_id" : ObjectId("6239c6d8bb72d9a3d7ff8cb5"),
+        "name" : "raj",
+        "class" : "b",
+        "age" : 22,
+        "tech" : [
+                "python",
+                "hapi"
+        ]
+}
+> db.students.update({_id : ObjectId("62398d24bb72d9a3d7ff8cb0")}, {"contact" : { phone : 1234567890 , mail : 'yuva@gmail.com'}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.students.find().pretty()
+{
+        "_id" : ObjectId("62398d24bb72d9a3d7ff8cb0"),
+        "contact" : {
+                "phone" : 1234567890,
+                "mail" : "yuva@gmail.com"
+        }
+}
+{
+        "_id" : ObjectId("6239c6b0bb72d9a3d7ff8cb4"),
+        "name" : "xyz",
+        "age" : 30,
+        "class" : "a",
+        "tech" : [
+                "python",
+                "django"
+        ]
+}
+> db.students.update({_id : ObjectId("62398d24bb72d9a3d7ff8cb0")}, {$set : {"class" : "a", "age" : 22, "tech" : [ "python", "react" ]}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.students.find().pretty()
+{
+        "_id" : ObjectId("62398d24bb72d9a3d7ff8cb0"),
+        "contact" : {
+                "phone" : 1234567890,
+                "mail" : "yuva@gmail.com"
+        },
+        "age" : 22,
+        "class" : "a",
+        "tech" : [
+                "python",
+                "react"
+        ]
+}
+{
+        "_id" : ObjectId("6239c6b0bb72d9a3d7ff8cb4"),
+        "name" : "xyz",
+        "age" : 30,
+        "class" : "a",
+        "tech" : [
+                "python",
+                "django"
+        ]
+}
+{
+        "_id" : ObjectId("6239c6d8bb72d9a3d7ff8cb5"),
+        "name" : "raj",
+        "class" : "b",
+        "age" : 22,
+        "tech" : [
+                "python",
+                "hapi"
+        ]
+}
+{
+        "_id" : ObjectId("6239c70ebb72d9a3d7ff8cb6"),
+        "name" : "abc",
+        "class" : "b",
+        "age" : 47,
+        "tech" : [
+                "mysql",
+                "php"
+        ]
+}
+> db.students.find({'contact.mail' : 'yuva@gmail.com'})
+{ "_id" : ObjectId("62398d24bb72d9a3d7ff8cb0"), "contact" : { "phone" : 1234567890, "mail" : "yuva@gmail.com" }, "age" : 22, "class" : "a", "tech" : [ "python", "react" ] }
+> db.students.find({}, {name : 1}).pretty()
+{ "_id" : ObjectId("62398d24bb72d9a3d7ff8cb0") }
+{ "_id" : ObjectId("6239c6b0bb72d9a3d7ff8cb4"), "name" : "xyz" }
+{ "_id" : ObjectId("6239c6d8bb72d9a3d7ff8cb5"), "name" : "raj" }
+{ "_id" : ObjectId("6239c70ebb72d9a3d7ff8cb6"), "name" : "abc" }
+> db.students.find({}, {age : 0}).pretty()
+{
+        "_id" : ObjectId("62398d24bb72d9a3d7ff8cb0"),
+        "contact" : {
+                "phone" : 1234567890,
+                "mail" : "yuva@gmail.com"
+        },
+        "class" : "a",
+        "tech" : [
+                "python",
+                "react"
+        ]
+}
+{
+        "_id" : ObjectId("6239c6b0bb72d9a3d7ff8cb4"),
+        "name" : "xyz",
+        "class" : "a",
+        "tech" : [
+                "python",
+                "django"
+        ]
+}
+{
+        "_id" : ObjectId("6239c6d8bb72d9a3d7ff8cb5"),
+        "name" : "raj",
+        "class" : "b",
+        "tech" : [
+                "python",
+                "hapi"
+        ]
+}
+{
+        "_id" : ObjectId("6239c70ebb72d9a3d7ff8cb6"),
+        "name" : "abc",
+        "class" : "b",
+        "tech" : [
+                "mysql",
+                "php"
+        ]
+}
+> db.students.find({}, {_id : 0, name : 1}).pretty()
+{ }
+{ "name" : "xyz" }
+{ "name" : "raj" }
+{ "name" : "abc" }
+> db.students.find({}, {_id : 0, name : 1, contact : { mail : 1}}).pretty()
+{ "contact" : { "mail" : "yuva@gmail.com" } }
+{ "name" : "xyz" }
+{ "name" : "raj" }
+{ "name" : "abc" }
+> db.students.update({_id : ObjectId("62398d24bb72d9a3d7ff8cb0")}, {$set : {name : 'Yuvaraj'}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.students.find({}, {_id : 0, name : 1, contact : { mail : 1}}).pretty()
+{ "contact" : { "mail" : "yuva@gmail.com" }, "name" : "Yuvaraj" }
+{ "name" : "xyz" }
+{ "name" : "raj" }
+{ "name" : "abc" }
+> db.students.find().count().pretty()
+uncaught exception: TypeError: db.students.find(...).count(...).pretty is not a function :
+@(shell):1:1
+> db.students.find().count()
+4
+>
