@@ -1,17 +1,3 @@
-// import React from 'react'
-// import {Chatbot} from 'react-chatbot-kit'
-
-// import ActionProvider from './actionProvider'
-// import config from './config'
-// import MessageParser from './messageParser'
-
-// export const ChatBot = () => {
-//   return (
-//     <div className="App">
-//         <Chatbot config={config} actionProvider={ActionProvider} messageParser={MessageParser}/>
-//     </div>
-//   )
-// }
 
 import ChatBot from 'react-simple-chatbot';
 
@@ -56,16 +42,6 @@ export const Chatbot = () => {
           id : '6',
           message : 'you can contact through mail: \n yuvaraj@mail.com \n phone: 12347899'
         }
-        // {
-        //   id : 'userSupport',
-        //   message : 'ok good',
-        //   end: true
-        // },
-        // {
-        //   id : 'contactUs',
-        //   message : 'ok good',
-        //   end: true
-        // }
       ]}
     />
   )

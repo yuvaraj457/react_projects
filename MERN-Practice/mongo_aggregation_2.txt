@@ -1,0 +1,827 @@
+> use population
+switched to db population
+> db.cities.insertMany([{"name": "Seoul", "country": "South Korea", "continent": "Asia", "population": 25.674 }, {"name": "Mumbai", "country": "India", "continent": "Asia", "population": 19.980 },{"name": "Lagos", "country": "Nigeria", "continent": "Africa", "population": 13.463 }, {"name": "Beijing", "country": "China", "continent": "Asia", "population": 19.618 }])
+{
+        "acknowledged" : true,
+        "insertedIds" : [
+                ObjectId("623c02770450cd8a171d2f4f"),
+                ObjectId("623c02770450cd8a171d2f50"),
+                ObjectId("623c02770450cd8a171d2f51"),
+                ObjectId("623c02770450cd8a171d2f52")
+        ]
+}
+> db.cities.find().pretty()
+{
+        "_id" : ObjectId("623c02770450cd8a171d2f4f"),
+        "name" : "Seoul",
+        "country" : "South Korea",
+        "continent" : "Asia",
+        "population" : 25.674
+}
+{
+        "_id" : ObjectId("623c02770450cd8a171d2f50"),
+        "name" : "Mumbai",
+        "country" : "India",
+        "continent" : "Asia",
+        "population" : 19.98
+}
+{
+        "_id" : ObjectId("623c02770450cd8a171d2f51"),
+        "name" : "Lagos",
+        "country" : "Nigeria",
+        "continent" : "Africa",
+        "population" : 13.463
+}
+{
+        "_id" : ObjectId("623c02770450cd8a171d2f52"),
+        "name" : "Beijing",
+        "country" : "China",
+        "continent" : "Asia",
+        "population" : 19.618
+}
+> db.cities.insertMany([{"name": "Osaka", "country": "Japan", "continent": "Asia", "population": 19.281 }, {"name": "Cairo", "country": "Egypt", "continent": "Africa", "population": 20.076 }, {"name": "Karachi", "country": "Pakistan", "continent": "Asia", "population": 15.400 }, {"name": "Karachi", "country": "Pakistan", "continent": "Asia", "population": 15.400 }])
+{
+        "acknowledged" : true,
+        "insertedIds" : [
+                ObjectId("623c03130450cd8a171d2f53"),
+                ObjectId("623c03130450cd8a171d2f54"),
+                ObjectId("623c03130450cd8a171d2f55"),
+                ObjectId("623c03130450cd8a171d2f56")
+        ]
+}
+> db.cities.find().pretty()
+{
+        "_id" : ObjectId("623c02770450cd8a171d2f4f"),
+        "name" : "Seoul",
+        "country" : "South Korea",
+        "continent" : "Asia",
+        "population" : 25.674
+}
+{
+        "_id" : ObjectId("623c02770450cd8a171d2f50"),
+        "name" : "Mumbai",
+        "country" : "India",
+        "continent" : "Asia",
+        "population" : 19.98
+}
+{
+        "_id" : ObjectId("623c02770450cd8a171d2f51"),
+        "name" : "Lagos",
+        "country" : "Nigeria",
+        "continent" : "Africa",
+        "population" : 13.463
+}
+{
+        "_id" : ObjectId("623c02770450cd8a171d2f52"),
+        "name" : "Beijing",
+        "country" : "China",
+        "continent" : "Asia",
+        "population" : 19.618
+}
+{
+        "_id" : ObjectId("623c03130450cd8a171d2f53"),
+        "name" : "Osaka",
+        "country" : "Japan",
+        "continent" : "Asia",
+        "population" : 19.281
+}
+{
+        "_id" : ObjectId("623c03130450cd8a171d2f54"),
+        "name" : "Cairo",
+        "country" : "Egypt",
+        "continent" : "Africa",
+        "population" : 20.076
+}
+{
+        "_id" : ObjectId("623c03130450cd8a171d2f55"),
+        "name" : "Karachi",
+        "country" : "Pakistan",
+        "continent" : "Asia",
+        "population" : 15.4
+}
+{
+        "_id" : ObjectId("623c03130450cd8a171d2f56"),
+        "name" : "Karachi",
+        "country" : "Pakistan",
+        "continent" : "Asia",
+        "population" : 15.4
+}
+> db.cities.aggregate([{$match : {continent : 'Asia'}}])
+{ "_id" : ObjectId("623c02770450cd8a171d2f4f"), "name" : "Seoul", "country" : "South Korea", "continent" : "Asia", "population" : 25.674 }
+{ "_id" : ObjectId("623c02770450cd8a171d2f50"), "name" : "Mumbai", "country" : "India", "continent" : "Asia", "population" : 19.98 }
+{ "_id" : ObjectId("623c02770450cd8a171d2f52"), "name" : "Beijing", "country" : "China", "continent" : "Asia", "population" : 19.618 }
+{ "_id" : ObjectId("623c03130450cd8a171d2f53"), "name" : "Osaka", "country" : "Japan", "continent" : "Asia", "population" : 19.281 }
+{ "_id" : ObjectId("623c03130450cd8a171d2f55"), "name" : "Karachi", "country" : "Pakistan", "continent" : "Asia", "population" : 15.4 }
+{ "_id" : ObjectId("623c03130450cd8a171d2f56"), "name" : "Karachi", "country" : "Pakistan", "continent" : "Asia", "population" : 15.4 }
+> db.cities.aggregate([{$match : {continent : {$in : ['Asia', 'Pakistan']}}}]).pretty()
+{
+        "_id" : ObjectId("623c02770450cd8a171d2f4f"),
+        "name" : "Seoul",
+        "country" : "South Korea",
+        "continent" : "Asia",
+        "population" : 25.674
+}
+{
+        "_id" : ObjectId("623c02770450cd8a171d2f50"),
+        "name" : "Mumbai",
+        "country" : "India",
+        "continent" : "Asia",
+        "population" : 19.98
+}
+{
+        "_id" : ObjectId("623c02770450cd8a171d2f52"),
+        "name" : "Beijing",
+        "country" : "China",
+        "continent" : "Asia",
+        "population" : 19.618
+}
+{
+        "_id" : ObjectId("623c03130450cd8a171d2f53"),
+        "name" : "Osaka",
+        "country" : "Japan",
+        "continent" : "Asia",
+        "population" : 19.281
+}
+{
+        "_id" : ObjectId("623c03130450cd8a171d2f55"),
+        "name" : "Karachi",
+        "country" : "Pakistan",
+        "continent" : "Asia",
+        "population" : 15.4
+}
+{
+        "_id" : ObjectId("623c03130450cd8a171d2f56"),
+        "name" : "Karachi",
+        "country" : "Pakistan",
+        "continent" : "Asia",
+        "population" : 15.4
+}
+> db.cities.aggregate([{$sort : {population : -1}}]).pretty()
+{
+        "_id" : ObjectId("623c02770450cd8a171d2f4f"),
+        "name" : "Seoul",
+        "country" : "South Korea",
+        "continent" : "Asia",
+        "population" : 25.674
+}
+{
+        "_id" : ObjectId("623c03130450cd8a171d2f54"),
+        "name" : "Cairo",
+        "country" : "Egypt",
+        "continent" : "Africa",
+        "population" : 20.076
+}
+{
+        "_id" : ObjectId("623c02770450cd8a171d2f50"),
+        "name" : "Mumbai",
+        "country" : "India",
+        "continent" : "Asia",
+        "population" : 19.98
+}
+{
+        "_id" : ObjectId("623c02770450cd8a171d2f52"),
+        "name" : "Beijing",
+        "country" : "China",
+        "continent" : "Asia",
+        "population" : 19.618
+}
+{
+        "_id" : ObjectId("623c03130450cd8a171d2f53"),
+        "name" : "Osaka",
+        "country" : "Japan",
+        "continent" : "Asia",
+        "population" : 19.281
+}
+{
+        "_id" : ObjectId("623c03130450cd8a171d2f55"),
+        "name" : "Karachi",
+        "country" : "Pakistan",
+        "continent" : "Asia",
+        "population" : 15.4
+}
+{
+        "_id" : ObjectId("623c03130450cd8a171d2f56"),
+        "name" : "Karachi",
+        "country" : "Pakistan",
+        "continent" : "Asia",
+        "population" : 15.4
+}
+{
+        "_id" : ObjectId("623c02770450cd8a171d2f51"),
+        "name" : "Lagos",
+        "country" : "Nigeria",
+        "continent" : "Africa",
+        "population" : 13.463
+}
+> db.cities.aggregate([{$match : {"continent" : "Asia"}}, {$sort : {population : -1}}])
+{ "_id" : ObjectId("623c02770450cd8a171d2f4f"), "name" : "Seoul", "country" : "South Korea", "continent" : "Asia", "population" : 25.674 }
+{ "_id" : ObjectId("623c02770450cd8a171d2f50"), "name" : "Mumbai", "country" : "India", "continent" : "Asia", "population" : 19.98 }
+{ "_id" : ObjectId("623c02770450cd8a171d2f52"), "name" : "Beijing", "country" : "China", "continent" : "Asia", "population" : 19.618 }
+{ "_id" : ObjectId("623c03130450cd8a171d2f53"), "name" : "Osaka", "country" : "Japan", "continent" : "Asia", "population" : 19.281 }
+{ "_id" : ObjectId("623c03130450cd8a171d2f55"), "name" : "Karachi", "country" : "Pakistan", "continent" : "Asia", "population" : 15.4 }
+{ "_id" : ObjectId("623c03130450cd8a171d2f56"), "name" : "Karachi", "country" : "Pakistan", "continent" : "Asia", "population" : 15.4 }
+> db.cities.aggregate([{$group : {_id : {country : '$country'} }}]).pretty()
+{ "_id" : { "country" : "South Korea" } }
+{ "_id" : { "country" : "China" } }
+{ "_id" : { "country" : "Egypt" } }
+{ "_id" : { "country" : "Pakistan" } }
+{ "_id" : { "country" : "India" } }
+{ "_id" : { "country" : "Nigeria" } }
+{ "_id" : { "country" : "Japan" } }
+> db.cities.aggregate([{$group : {_id : {country : '$country'} }, max_population : {$max : '$population'}}]).pretty()
+uncaught exception: Error: command failed: {
+        "ok" : 0,
+        "errmsg" : "A pipeline stage specification object must contain exactly one field.",
+        "code" : 40323,
+        "codeName" : "Location40323"
+} with original command request: {
+        "aggregate" : "cities",
+        "pipeline" : [
+                {
+                        "$group" : {
+                                "_id" : {
+                                        "country" : "$country"
+                                }
+                        },
+                        "max_population" : {
+                                "$max" : "$population"
+                        }
+                }
+        ],
+        "cursor" : {
+
+        },
+        "lsid" : {
+                "id" : UUID("27568f79-e5de-4e18-a64f-274cf9bfd840")
+        }
+} on connection: connection to 127.0.0.1:27017 : aggregate failed :
+_getErrorWithCode@src/mongo/shell/utils.js:25:13
+doassert@src/mongo/shell/assert.js:18:14
+_assertCommandWorked@src/mongo/shell/assert.js:737:17
+assert.commandWorked@src/mongo/shell/assert.js:829:16
+DB.prototype._runAggregate@src/mongo/shell/db.js:281:5
+DBCollection.prototype.aggregate@src/mongo/shell/collection.js:1058:12
+@(shell):1:1
+> db.cities.aggregate([{$group : {_id : {country : '$country'} , max_population : {$max : '$population'}}}]).pretty()
+{ "_id" : { "country" : "Nigeria" }, "max_population" : 13.463 }
+{ "_id" : { "country" : "India" }, "max_population" : 19.98 }
+{ "_id" : { "country" : "China" }, "max_population" : 19.618 }
+{ "_id" : { "country" : "Japan" }, "max_population" : 19.281 }
+{ "_id" : { "country" : "Egypt" }, "max_population" : 20.076 }
+{ "_id" : { "country" : "South Korea" }, "max_population" : 25.674 }
+{ "_id" : { "country" : "Pakistan" }, "max_population" : 15.4 }
+> db.cities.aggregate([{$group : {_id : {country : '$country'} , max_population : {$max : '$population'}}, cities : {$sum : 1}}]).pretty()
+uncaught exception: Error: command failed: {
+        "ok" : 0,
+        "errmsg" : "A pipeline stage specification object must contain exactly one field.",
+        "code" : 40323,
+        "codeName" : "Location40323"
+} with original command request: {
+        "aggregate" : "cities",
+        "pipeline" : [
+                {
+                        "$group" : {
+                                "_id" : {
+                                        "country" : "$country"
+                                },
+                                "max_population" : {
+                                        "$max" : "$population"
+                                }
+                        },
+                        "cities" : {
+                                "$sum" : 1
+                        }
+                }
+        ],
+        "cursor" : {
+
+        },
+        "lsid" : {
+                "id" : UUID("27568f79-e5de-4e18-a64f-274cf9bfd840")
+        }
+} on connection: connection to 127.0.0.1:27017 : aggregate failed :
+_getErrorWithCode@src/mongo/shell/utils.js:25:13
+doassert@src/mongo/shell/assert.js:18:14
+_assertCommandWorked@src/mongo/shell/assert.js:737:17
+> db.cities.aggregate([{$group : {_id : {country : '$country'} , max_population : {$max : '$population'}, cities : {$sum : 1}}}]).pretty()
+{
+        "_id" : {
+                "country" : "Pakistan"
+        },
+        "max_population" : 15.4,
+        "cities" : 2
+}
+{
+        "_id" : {
+                "country" : "China"
+        },
+        "max_population" : 19.618,
+        "cities" : 1
+}
+{
+        "_id" : {
+                "country" : "India"
+        },
+        "max_population" : 19.98,
+        "cities" : 1
+}
+{
+        "_id" : {
+                "country" : "Nigeria"
+        },
+        "max_population" : 13.463,
+        "cities" : 1
+}
+{
+        "_id" : {
+                "country" : "Japan"
+        },
+        "max_population" : 19.281,
+        "cities" : 1
+}
+{
+        "_id" : {
+                "country" : "Egypt"
+        },
+        "max_population" : 20.076,
+        "cities" : 1
+}
+{
+        "_id" : {
+                "country" : "South Korea"
+        },
+        "max_population" : 25.674,
+        "cities" : 1
+}
+> db.cities.aggregate([{$project : {_id : 0, population : 0, name : '$name', location : {country : '$country', continent : '$continent'}}}])
+uncaught exception: Error: command failed: {
+        "ok" : 0,
+        "errmsg" : "Invalid $project :: caused by :: Cannot use an expression name: \"$name\" in an exclusion projection",
+        "code" : 31310,
+        "codeName" : "Location31310"
+} with original command request: {
+        "aggregate" : "cities",
+        "pipeline" : [
+                {
+                        "$project" : {
+                                "_id" : 0,
+                                "population" : 0,
+                                "name" : "$name",
+                                "location" : {
+                                        "country" : "$country",
+                                        "continent" : "$continent"
+                                }
+                        }
+                }
+        ],
+        "cursor" : {
+
+        },
+        "lsid" : {
+                "id" : UUID("ed4af7f9-e9be-4711-bbfb-817622449597")
+        }
+} on connection: connection to 127.0.0.1:27017 : aggregate failed :
+_getErrorWithCode@src/mongo/shell/utils.js:25:13
+doassert@src/mongo/shell/assert.js:18:14
+_assertCommandWorked@src/mongo/shell/assert.js:737:17
+assert.commandWorked@src/mongo/shell/assert.js:829:16
+DB.prototype._runAggregate@src/mongo/shell/db.js:281:5
+DBCollection.prototype.aggregate@src/mongo/shell/collection.js:1058:12
+@(shell):1:1
+> db.cities.aggregate([{$project : {_id : 0, 'name' : '$name', location : {country : '$country', continent : '$continent'}}}])
+{ "name" : "Seoul", "location" : { "country" : "South Korea", "continent" : "Asia" } }
+{ "name" : "Mumbai", "location" : { "country" : "India", "continent" : "Asia" } }
+{ "name" : "Lagos", "location" : { "country" : "Nigeria", "continent" : "Africa" } }
+{ "name" : "Beijing", "location" : { "country" : "China", "continent" : "Asia" } }
+{ "name" : "Osaka", "location" : { "country" : "Japan", "continent" : "Asia" } }
+{ "name" : "Cairo", "location" : { "country" : "Egypt", "continent" : "Africa" } }
+{ "name" : "Karachi", "location" : { "country" : "Pakistan", "continent" : "Asia" } }
+{ "name" : "Karachi", "location" : { "country" : "Pakistan", "continent" : "Asia" } }
+> db.cities.aggregate([{ $match : {country : {$in : ['India', 'China']} }}]).pretty()
+{
+        "_id" : ObjectId("623c02770450cd8a171d2f50"),
+        "name" : "Mumbai",
+        "country" : "India",
+        "continent" : "Asia",
+        "population" : 19.98
+}
+{
+        "_id" : ObjectId("623c02770450cd8a171d2f52"),
+        "name" : "Beijing",
+        "country" : "China",
+        "continent" : "Asia",
+        "population" : 19.618
+}
+> db.cities.aggregate([{ $match : {country : {$in : ['India', 'China']} }}, {$sort : {population : -1}}]).pretty()
+{
+        "_id" : ObjectId("623c02770450cd8a171d2f50"),
+        "name" : "Mumbai",
+        "country" : "India",
+        "continent" : "Asia",
+        "population" : 19.98
+}
+{
+        "_id" : ObjectId("623c02770450cd8a171d2f52"),
+        "name" : "Beijing",
+        "country" : "China",
+        "continent" : "Asia",
+        "population" : 19.618
+}
+> db.cities.aggregate([{ $match : {country : {$in : ['Asia', 'Africa']} }}, {$sort : {population : -1}}]).pretty()
+> db.cities.aggregate([{ $match : {continent : {$in : ['Asia', 'Africa']} }}, {$sort : {population : -1}}]).pretty()
+{
+        "_id" : ObjectId("623c02770450cd8a171d2f4f"),
+        "name" : "Seoul",
+        "country" : "South Korea",
+        "continent" : "Asia",
+        "population" : 25.674
+}
+{
+        "_id" : ObjectId("623c03130450cd8a171d2f54"),
+        "name" : "Cairo",
+        "country" : "Egypt",
+        "continent" : "Africa",
+        "population" : 20.076
+}
+{
+        "_id" : ObjectId("623c02770450cd8a171d2f50"),
+        "name" : "Mumbai",
+        "country" : "India",
+        "continent" : "Asia",
+        "population" : 19.98
+}
+{
+        "_id" : ObjectId("623c02770450cd8a171d2f52"),
+        "name" : "Beijing",
+        "country" : "China",
+        "continent" : "Asia",
+        "population" : 19.618
+}
+{
+        "_id" : ObjectId("623c03130450cd8a171d2f53"),
+        "name" : "Osaka",
+        "country" : "Japan",
+        "continent" : "Asia",
+        "population" : 19.281
+}
+{
+        "_id" : ObjectId("623c03130450cd8a171d2f55"),
+        "name" : "Karachi",
+        "country" : "Pakistan",
+        "continent" : "Asia",
+        "population" : 15.4
+}
+{
+        "_id" : ObjectId("623c03130450cd8a171d2f56"),
+        "name" : "Karachi",
+        "country" : "Pakistan",
+        "continent" : "Asia",
+        "population" : 15.4
+}
+{
+        "_id" : ObjectId("623c02770450cd8a171d2f51"),
+        "name" : "Lagos",
+        "country" : "Nigeria",
+        "continent" : "Africa",
+        "population" : 13.463
+}
+> db.cities.aggregate([{ $match : {continent : {$in : ['Asia', 'Africa']} }}, {$sort : {population : -1}}, {$group : {_id : {continent : '$continent', country : '$country'}}}]).pretty()
+{ "_id" : { "continent" : "Asia", "country" : "Pakistan" } }
+{ "_id" : { "continent" : "Asia", "country" : "South Korea" } }
+{ "_id" : { "continent" : "Asia", "country" : "Japan" } }
+{ "_id" : { "continent" : "Asia", "country" : "India" } }
+{ "_id" : { "continent" : "Africa", "country" : "Egypt" } }
+{ "_id" : { "continent" : "Asia", "country" : "China" } }
+{ "_id" : { "continent" : "Africa", "country" : "Nigeria" } }
+> db.cities.aggregate([{ $match : {continent : {$in : ['Asia', 'Africa']} }}, {$sort : {population : -1}}, {$group : {_id : {continent : '$continent', country : '$country'}}, cities : {$sum : 1}}]).pretty()
+uncaught exception: Error: command failed: {
+        "ok" : 0,
+        "errmsg" : "A pipeline stage specification object must contain exactly one field.",
+        "code" : 40323,
+        "codeName" : "Location40323"
+} with original command request: {
+        "aggregate" : "cities",
+        "pipeline" : [
+                {
+                        "$match" : {
+                                "continent" : {
+                                        "$in" : [
+                                                "Asia",
+                                                "Africa"
+                                        ]
+                                }
+                        }
+                },
+                {
+                        "$sort" : {
+                                "population" : -1
+                        }
+                },
+                {
+                        "$group" : {
+                                "_id" : {
+                                        "continent" : "$continent",
+                                        "country" : "$country"
+                                }
+                        },
+                        "cities" : {
+                                "$sum" : 1
+                        }
+                }
+        ],
+        "cursor" : {
+
+        },
+        "lsid" : {
+                "id" : UUID("ed4af7f9-e9be-4711-bbfb-817622449597")
+        }
+} on connection: connection to 127.0.0.1:27017 : aggregate failed :
+_getErrorWithCode@src/mongo/shell/utils.js:25:13
+doassert@src/mongo/shell/assert.js:18:14
+_assertCommandWorked@src/mongo/shell/assert.js:737:17
+assert.commandWorked@src/mongo/shell/assert.js:829:16
+DB.prototype._runAggregate@src/mongo/shell/db.js:281:5
+DBCollection.prototype.aggregate@src/mongo/shell/collection.js:1058:12
+@(shell):1:1
+> db.cities.aggregate([{ $match : {continent : {$in : ['Asia', 'Africa']} }}, {$sort : {population : -1}}, {$group : {_id : {continent : '$continent', country : '$country'}, cities : {$sum : 1}}}]).pretty()
+{ "_id" : { "continent" : "Asia", "country" : "Japan" }, "cities" : 1 }
+{
+        "_id" : {
+                "continent" : "Asia",
+                "country" : "Pakistan"
+        },
+        "cities" : 2
+}
+{ "_id" : { "continent" : "Asia", "country" : "China" }, "cities" : 1 }
+{
+        "_id" : {
+                "continent" : "Africa",
+                "country" : "Egypt"
+        },
+        "cities" : 1
+}
+{ "_id" : { "continent" : "Asia", "country" : "India" }, "cities" : 1 }
+{
+        "_id" : {
+                "continent" : "Africa",
+                "country" : "Nigeria"
+        },
+        "cities" : 1
+}
+{
+        "_id" : {
+                "continent" : "Asia",
+                "country" : "South Korea"
+        },
+        "cities" : 1
+}
+> db.cities.aggregate([{ $match : {continent : {$in : ['Asia', 'Africa']} }}, {$sort : {population : -1}}, {$group : {_id : {continent : '$continent', country : '$country'}, cities : {$sum : 1}, max_population_city : {$first : '$name'}}}]).pretty()
+{
+        "_id" : {
+                "continent" : "Africa",
+                "country" : "Egypt"
+        },
+        "cities" : 1,
+        "max_population_city" : "Cairo"
+}
+{
+        "_id" : {
+                "continent" : "Asia",
+                "country" : "India"
+        },
+        "cities" : 1,
+        "max_population_city" : "Mumbai"
+}
+{
+        "_id" : {
+                "continent" : "Asia",
+                "country" : "China"
+        },
+        "cities" : 1,
+        "max_population_city" : "Beijing"
+}
+{
+        "_id" : {
+                "continent" : "Asia",
+                "country" : "Pakistan"
+        },
+        "cities" : 2,
+        "max_population_city" : "Karachi"
+}
+{
+        "_id" : {
+                "continent" : "Africa",
+                "country" : "Nigeria"
+        },
+        "cities" : 1,
+        "max_population_city" : "Lagos"
+}
+{
+        "_id" : {
+                "continent" : "Asia",
+                "country" : "South Korea"
+        },
+        "cities" : 1,
+        "max_population_city" : "Seoul"
+}
+{
+        "_id" : {
+                "continent" : "Asia",
+                "country" : "Japan"
+        },
+        "cities" : 1,
+        "max_population_city" : "Osaka"
+}
+> db.cities.aggregate([{ $match : {continent : {$in : ['Asia', 'Africa']} }}, {$sort : {population : -1}}, {$group : {_id : {continent : '$continent', country : '$country'}, cities : {$sum : 1}, max_population_city : {$first : '$name'}, population : {$max : '$population'}}}]).pretty()
+{
+        "_id" : {
+                "continent" : "Asia",
+                "country" : "South Korea"
+        },
+        "cities" : 1,
+        "max_population_city" : "Seoul",
+        "population" : 25.674
+}
+{
+        "_id" : {
+                "continent" : "Asia",
+                "country" : "Japan"
+        },
+        "cities" : 1,
+        "max_population_city" : "Osaka",
+        "population" : 19.281
+}
+{
+        "_id" : {
+                "continent" : "Africa",
+                "country" : "Egypt"
+        },
+        "cities" : 1,
+        "max_population_city" : "Cairo",
+        "population" : 20.076
+}
+{
+        "_id" : {
+                "continent" : "Asia",
+                "country" : "China"
+        },
+        "cities" : 1,
+        "max_population_city" : "Beijing",
+        "population" : 19.618
+}
+{
+        "_id" : {
+                "continent" : "Asia",
+                "country" : "Pakistan"
+        },
+        "cities" : 2,
+        "max_population_city" : "Karachi",
+        "population" : 15.4
+}
+{
+        "_id" : {
+                "continent" : "Asia",
+                "country" : "India"
+        },
+        "cities" : 1,
+        "max_population_city" : "Mumbai",
+        "population" : 19.98
+}
+{
+        "_id" : {
+                "continent" : "Africa",
+                "country" : "Nigeria"
+        },
+        "cities" : 1,
+        "max_population_city" : "Lagos",
+        "population" : 13.463
+}
+> db.cities.aggregate([{ $match : {continent : {$in : ['Asia', 'Africa']} }}, {$sort : {population : -1}}, {$group : {_id : {continent : '$continent', country : '$country'}, cities : {$sum : 1}, max_population_city : {$first : '$name'}, population : {$max : '$population'}}}, {$match : {population : {$gt : 16}}}]).pretty()
+{
+        "_id" : {
+                "continent" : "Africa",
+                "country" : "Egypt"
+        },
+        "cities" : 1,
+        "max_population_city" : "Cairo",
+        "population" : 20.076
+}
+{
+        "_id" : {
+                "continent" : "Asia",
+                "country" : "India"
+        },
+        "cities" : 1,
+        "max_population_city" : "Mumbai",
+        "population" : 19.98
+}
+{
+        "_id" : {
+                "continent" : "Asia",
+                "country" : "China"
+        },
+        "cities" : 1,
+        "max_population_city" : "Beijing",
+        "population" : 19.618
+}
+{
+        "_id" : {
+                "continent" : "Asia",
+                "country" : "South Korea"
+        },
+        "cities" : 1,
+        "max_population_city" : "Seoul",
+        "population" : 25.674
+}
+{
+        "_id" : {
+                "continent" : "Asia",
+                "country" : "Japan"
+        },
+        "cities" : 1,
+        "max_population_city" : "Osaka",
+        "population" : 19.281
+}
+> db.cities.aggregate([{ $match : {continent : {$in : ['Asia', 'Africa']} }}, {$sort : {population : -1}}, {$group : {_id : {continent : '$continent', country : '$country'}, cities : {$sum : 1}, max_population_city : {$first : '$name'}, population : {$max : '$population'}}}, {$match : {population : {$gt : 16}}}, {$sort : {population : -1}}]).pretty()
+{
+        "_id" : {
+                "continent" : "Asia",
+                "country" : "South Korea"
+        },
+        "cities" : 1,
+        "max_population_city" : "Seoul",
+        "population" : 25.674
+}
+{
+        "_id" : {
+                "continent" : "Africa",
+                "country" : "Egypt"
+        },
+        "cities" : 1,
+        "max_population_city" : "Cairo",
+        "population" : 20.076
+}
+{
+        "_id" : {
+                "continent" : "Asia",
+                "country" : "India"
+        },
+        "cities" : 1,
+        "max_population_city" : "Mumbai",
+        "population" : 19.98
+}
+{
+        "_id" : {
+                "continent" : "Asia",
+                "country" : "China"
+        },
+        "cities" : 1,
+        "max_population_city" : "Beijing",
+        "population" : 19.618
+}
+{
+        "_id" : {
+                "continent" : "Asia",
+                "country" : "Japan"
+        },
+        "cities" : 1,
+        "max_population_city" : "Osaka",
+        "population" : 19.281
+}
+> db.cities.aggregate([{ $match : {continent : {$in : ['Asia', 'Africa']} }}, {$sort : {population : -1}}, {$group : {_id : {continent : '$continent', country : '$country'}, cities : {$sum : 1}, max_population_city : {$first : '$name'}, population : {$max : '$population'}}}, {$match : {population : {$gt : 16}}}, {$sort : {population : -1}},{$project : {_id : 0, max_population_city : '$max_population_city', location : {continent : '$_id.continent', country : '$_id.country'}}} ]).pretty()
+{
+        "max_population_city" : "Seoul",
+        "location" : {
+                "continent" : "Asia",
+                "country" : "South Korea"
+        }
+}
+{
+        "max_population_city" : "Cairo",
+        "location" : {
+                "continent" : "Africa",
+                "country" : "Egypt"
+        }
+}
+{
+        "max_population_city" : "Mumbai",
+        "location" : {
+                "continent" : "Asia",
+                "country" : "India"
+        }
+}
+{
+        "max_population_city" : "Beijing",
+        "location" : {
+                "continent" : "Asia",
+                "country" : "China"
+        }
+}
+{
+        "max_population_city" : "Osaka",
+        "location" : {
+                "continent" : "Asia",
+                "country" : "Japan"
+        }
+}
+>
